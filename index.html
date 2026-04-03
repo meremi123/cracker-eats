@@ -25,7 +25,7 @@ input,select,button,textarea{font-family:inherit;font-size:13px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px;}
 
-/* ── LAYOUT ── */
+/* -- LAYOUT -- */
 #app{display:flex;flex-direction:column;height:100vh;}
 #header{background:#111;flex-shrink:0;z-index:200;}
 #filterbar{background:var(--surf);border-bottom:1px solid var(--border);flex-shrink:0;z-index:190;overflow-x:auto;}
@@ -35,7 +35,7 @@ input,select,button,textarea{font-family:inherit;font-size:13px;}
 #panel{width:320px;flex-shrink:0;background:var(--surf);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;transition:width .25s;}
 #panel.collapsed{width:0;border:none;}
 
-/* ── MAP MARKERS ── */
+/* -- MAP MARKERS -- */
 .mk{position:absolute;display:flex;flex-direction:column;align-items:center;cursor:pointer;user-select:none;transform:translate(-50%,-100%);pointer-events:auto;z-index:1;}
 .mk.active{z-index:100;}
 .mk-pill{background:#fff;border-radius:20px;padding:4px 10px 4px 8px;display:flex;align-items:center;gap:5px;box-shadow:0 2px 8px rgba(0,0,0,.22);border:1.5px solid #ddd;white-space:nowrap;transition:box-shadow .12s,transform .12s;}
@@ -51,7 +51,7 @@ input,select,button,textarea{font-family:inherit;font-size:13px;}
 .mk-tip{width:6px;height:6px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);flex-shrink:0;margin-top:-1px;}
 .mk.fav .mk-pill{border-color:var(--gold);}
 
-/* ── DETAIL DRAWER (fixed bottom of map) ── */
+/* -- DETAIL DRAWER (fixed bottom of map) -- */
 #drawer{
   position:absolute; bottom:0; left:0; right:0; z-index:80;
   background:#fff; border-radius:16px 16px 0 0;
@@ -75,7 +75,7 @@ input,select,button,textarea{font-family:inherit;font-size:13px;}
 .cmt-date{font-size:10px;color:var(--ink3);margin-top:2px;}
 .cmt-form{padding:10px 14px;border-top:1px solid var(--border2);display:flex;flex-direction:column;gap:7px;}
 
-/* ── PANEL ── */
+/* -- PANEL -- */
 #panel-tabs{display:flex;border-bottom:1px solid var(--border);}
 .ptab{flex:1;padding:11px 8px;text-align:center;font-size:12px;font-weight:600;cursor:pointer;color:var(--ink3);border-bottom:2px solid transparent;transition:all .12s;}
 .ptab.on{color:var(--ink);border-bottom-color:var(--ink);}
@@ -84,19 +84,19 @@ input,select,button,textarea{font-family:inherit;font-size:13px;}
 .prow:hover{background:var(--bg);}
 .prow.active{background:var(--bg);}
 
-/* ── CHIPS ── */
+/* -- CHIPS -- */
 .chip{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:500;border:1.5px solid var(--border);background:var(--surf);color:var(--ink2);cursor:pointer;transition:all .12s;white-space:nowrap;flex-shrink:0;}
 .chip:hover{border-color:var(--ink);color:var(--ink);}
 .chip.on{background:var(--ink);border-color:var(--ink);color:#fff;}
 .chip.price-chip.on{background:var(--green);border-color:var(--green);}
 
-/* ── CARDS (list view) ── */
+/* -- CARDS (list view) -- */
 #list-panel{display:none;flex:1;overflow-y:auto;padding:16px;}
 .lcard{background:var(--surf);border-radius:var(--r);box-shadow:var(--sh0);border:1px solid var(--border2);overflow:hidden;margin-bottom:12px;transition:box-shadow .15s,transform .15s;cursor:pointer;}
 .lcard:hover{box-shadow:var(--sh1);transform:translateY(-1px);}
 .lcard.fav-card .lcard-head{border-left:3px solid var(--gold);}
 
-/* ── MISC ── */
+/* -- MISC -- */
 .sel-inp{padding:5px 26px 5px 10px;border-radius:8px;border:1.5px solid var(--border);font-size:12px;font-weight:500;color:var(--ink);background:var(--surf);cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;flex-shrink:0;}
 .lbl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);}
 .btn{border:none;cursor:pointer;font-weight:600;transition:opacity .12s;border-radius:8px;padding:7px 14px;font-size:12px;}
@@ -130,12 +130,99 @@ input,select,button,textarea{font-family:inherit;font-size:13px;}
   #mobile-panel{display:flex!important;}
 }
 #mobile-panel{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:#fff;border-radius:16px 16px 0 0;box-shadow:0 -4px 30px rgba(0,0,0,.15);flex-direction:column;max-height:60vh;}
+
+/* ══ MOBILE LAYOUT ══ */
+@media (max-width: 768px) {
+  /* Hide desktop panel */
+  #panel { display: none !important; }
+  
+  /* Filterbar: smaller, scrollable */
+  #fbar > div { padding: 6px 12px; gap: 5px; }
+  
+  /* Header: compact */
+  #hdr > div { height: 48px; padding: 0 12px; gap: 8px; }
+  
+  /* Body takes full height */
+  #body { flex-direction: column; }
+  #map-wrap { flex: 1; min-height: 0; }
+  
+  /* Drawer: larger on mobile */
+  #drawer { max-height: 80%; }
+  
+  /* Bottom nav bar */
+  #mobile-nav {
+    display: flex !important;
+    flex-shrink: 0;
+    background: #111;
+    border-top: 1px solid #333;
+    z-index: 100;
+  }
+  
+  /* List view takes full screen on mobile */
+  #list-view { 
+    display: none;
+    position: fixed;
+    inset: 0;
+    top: 48px; /* header height */
+    background: var(--bg);
+    z-index: 90;
+    overflow-y: auto;
+    padding: 12px;
+    padding-bottom: 60px; /* nav bar */
+  }
+  #list-view.mobile-active { display: block; }
+  
+  /* Map view - push up when list showing */  
+  #map-wrap.list-active { display: none; }
+  #fbar.list-active { display: none; }
+  
+  /* Smaller chips on mobile */
+  .chip { padding: 3px 9px; font-size: 11px; }
+  .sel-inp { font-size: 11px; }
+  
+  /* Near me button: icon only */
+  #nearme-text { display: none; }
+  
+  /* Search: shorter */
+  #search-inp { max-width: 140px; }
+}
+
+@media (min-width: 769px) {
+  #mobile-nav { display: none !important; }
+  #list-view { display: none; }
+}
+
+/* Mobile nav */
+#mobile-nav {
+  display: none;
+}
+.mnav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,.5);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  transition: color .12s;
+}
+.mnav-btn.active { color: #F5C842; }
+.mnav-btn svg { opacity: .7; }
+.mnav-btn.active svg { opacity: 1; }
 </style>
 </head>
 <body>
 <div id="loading">
   <div class="spinner" id="load-spinner"></div>
-  <p style="font-size:13px;color:var(--ink3);" id="load-msg">Loading map…</p>
+  <p style="font-size:13px;color:var(--ink3);" id="load-msg">Loading map...</p>
   <p style="font-size:12px;color:#C0392B;display:none;max-width:320px;text-align:center;line-height:1.5;" id="load-err"></p>
 </div>
 <div id="toast"></div>
@@ -152,7 +239,7 @@ input,select,button,textarea{font-family:inherit;font-size:13px;}
     <!-- Search -->
     <div style="flex:1;max-width:340px;position:relative;margin-left:8px;">
       <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.35;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input id="search-inp" placeholder="Search restaurants, dishes…" style="width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;padding:8px 12px 8px 30px;border-radius:8px;font-size:13px;"/>
+      <input id="search-inp" placeholder="Search restaurants, dishes..." style="width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;padding:8px 12px 8px 30px;border-radius:8px;font-size:13px;"/>
     </div>
     <!-- View toggle -->
     <div style="display:flex;background:rgba(255,255,255,.1);border-radius:8px;padding:3px;gap:2px;margin-left:auto;">
@@ -236,6 +323,26 @@ input,select,button,textarea{font-family:inherit;font-size:13px;}
 
 </div><!-- #body -->
 
+
+<!-- Mobile Bottom Nav -->
+<div id="mobile-nav">
+  <button class="mnav-btn active" id="mnav-map" onclick="setMobileView('map')">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+    Map
+  </button>
+  <button class="mnav-btn" id="mnav-list" onclick="setMobileView('list')">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+    List
+  </button>
+  <button class="mnav-btn" id="mnav-saved" onclick="setMobileView('saved')">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    Saved
+  </button>
+  <button class="mnav-btn" id="mnav-add" onclick="openAdd()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+    Add
+  </button>
+</div>
 </div><!-- #app -->
 
 <!-- Mobile bottom panel -->
@@ -278,16 +385,16 @@ var CAT={
 var SUBURBS=["Haymarket","CBD","Surry Hills","The Rocks","Newtown","Glebe","Pyrmont","Parramatta","Chatswood","Eastwood","Strathfield","Bondi Junction","Kingsford","Cabramatta","Hornsby","Marrickville","Bankstown","Chester Hill","Campbelltown","Darlinghurst","Chippendale","Redfern","Mittagong"];
 
 var SEED=[
-  {id:"kb1", name:"Krazy Bird — World Square",   suburb:"CBD",           category:"Korean",    address:"644 George St, World Square", lat:-33.8768,lng:151.2063, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Half & Half Chicken 6pcs",price:22.9},{item:"Tteok-Bokki",price:18.9},{item:"Korean Corn Dog",price:9.9}],   rating:4.2,votes:{up:88,down:12},chain:true,updatedAt:"2026-03-15"},
-  {id:"kb2", name:"Krazy Bird — Kingsford",      suburb:"Kingsford",     category:"Korean",    address:"522 Anzac Pde",               lat:-33.9188,lng:151.2268, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Teriyaki Chicken Rice Bowl",price:20.5},{item:"Buldak Loaded Chips",price:16.9},{item:"K-Dumpling 5pcs",price:12.9}],  rating:4.3,votes:{up:71,down:8}, chain:true,updatedAt:"2026-03-15"},
-  {id:"kb3", name:"Krazy Bird — Cabramatta",     suburb:"Cabramatta",    category:"Korean",    address:"Shop 16/180 Railway Pde",     lat:-33.8956,lng:150.9354, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Snow Cheese Chips",price:16.9},{item:"Tteok-Bokki",price:18.9},{item:"Cup Chicken",price:14.9}],                      rating:4.2,votes:{up:65,down:14},chain:true,updatedAt:"2026-03-15"},
-  {id:"kb4", name:"Krazy Bird — Bondi Junction", suburb:"Bondi Junction", category:"Korean",   address:"Shop 24-25 Eastgate",         lat:-33.8917,lng:151.2489, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Chicken Curry Rice Bowl",price:15.5},{item:"Tteok-Bokki",price:18.9},{item:"Korean Corn Dog",price:9.9},{item:"Wingettes & Drumettes 6pcs",price:20.9}], rating:4.7,votes:{up:102,down:6},chain:true,updatedAt:"2026-03-15"},
-  {id:"kb5", name:"Krazy Bird — Hornsby",        suburb:"Hornsby",       category:"Korean",    address:"276 Peats Ferry Rd",          lat:-33.7033,lng:151.0994, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Buldak Loaded Chips",price:16.9},{item:"Takoyaki 6pcs",price:12.9}],                                                rating:4.4,votes:{up:58,down:7}, chain:true,updatedAt:"2026-03-15"},
-  {id:"kb6", name:"Krazy Bird — Marrickville",   suburb:"Marrickville",  category:"Korean",    address:"356 Illawarra Rd",            lat:-33.9108,lng:151.1597, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Teriyaki Chicken Rice Bowl",price:20.5},{item:"Tteok-Bokki",price:18.9},{item:"Sweet Sticky Burger",price:16.9}],                                             rating:4.3,votes:{up:49,down:9}, chain:true,updatedAt:"2026-03-15"},
-  {id:"kb7", name:"Krazy Bird — Bankstown",      suburb:"Bankstown",     category:"Korean",    address:"1 North Terrace",             lat:-33.9175,lng:151.0334, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Half & Half Chicken 6pcs",price:22.9},{item:"Buldak Burger",price:16.9}],                                          rating:4.2,votes:{up:43,down:11},chain:true,updatedAt:"2026-03-15"},
-  {id:"kb8", name:"Krazy Bird — Chester Hill",   suburb:"Chester Hill",  category:"Korean",    address:"Shop 19/1 Leicester St",      lat:-33.8804,lng:150.9992, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"K-Dumpling 5pcs",price:12.9},{item:"Tteok-Bokki",price:18.9}],                                                   rating:4.3,votes:{up:55,down:8}, chain:true,updatedAt:"2026-03-15"},
-  {id:"kb9", name:"Krazy Bird — Campbelltown",   suburb:"Campbelltown",  category:"Korean",    address:"Shop 1/119 Queen St",         lat:-34.0647,lng:150.8142, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Teriyaki Chicken Ramen",price:21.5},{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Korean Corn Dog",price:9.9}],                                          rating:4.3,votes:{up:38,down:6}, chain:true,updatedAt:"2026-03-15"},
-  {id:"kb10",name:"Krazy Bird — Mittagong",      suburb:"Mittagong",     category:"Korean",    address:"Shop 4/130 Main St",          lat:-34.4459,lng:150.4481, menus:[{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Teriyaki Chicken Rice Bowl",price:20.5},{item:"Teriyaki Chicken Ramen",price:21.5},{item:"Korean Corn Dog",price:9.9}],                                            rating:4.7,votes:{up:92,down:5}, chain:true,updatedAt:"2026-03-15"},
+  {id:"kb1", name:"Krazy Bird  -  World Square",   suburb:"CBD",           category:"Korean",    address:"644 George St, World Square", lat:-33.8768,lng:151.2063, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Half & Half Chicken 6pcs",price:22.9},{item:"Tteok-Bokki",price:18.9},{item:"Korean Corn Dog",price:9.9}],   rating:4.2,votes:{up:88,down:12},chain:true,updatedAt:"2026-03-15"},
+  {id:"kb2", name:"Krazy Bird  -  Kingsford",      suburb:"Kingsford",     category:"Korean",    address:"522 Anzac Pde",               lat:-33.9188,lng:151.2268, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Teriyaki Chicken Rice Bowl",price:20.5},{item:"Buldak Loaded Chips",price:16.9},{item:"K-Dumpling 5pcs",price:12.9}],  rating:4.3,votes:{up:71,down:8}, chain:true,updatedAt:"2026-03-15"},
+  {id:"kb3", name:"Krazy Bird  -  Cabramatta",     suburb:"Cabramatta",    category:"Korean",    address:"Shop 16/180 Railway Pde",     lat:-33.8956,lng:150.9354, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Snow Cheese Chips",price:16.9},{item:"Tteok-Bokki",price:18.9},{item:"Cup Chicken",price:14.9}],                      rating:4.2,votes:{up:65,down:14},chain:true,updatedAt:"2026-03-15"},
+  {id:"kb4", name:"Krazy Bird  -  Bondi Junction", suburb:"Bondi Junction", category:"Korean",   address:"Shop 24-25 Eastgate",         lat:-33.8917,lng:151.2489, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Chicken Curry Rice Bowl",price:15.5},{item:"Tteok-Bokki",price:18.9},{item:"Korean Corn Dog",price:9.9},{item:"Wingettes & Drumettes 6pcs",price:20.9}], rating:4.7,votes:{up:102,down:6},chain:true,updatedAt:"2026-03-15"},
+  {id:"kb5", name:"Krazy Bird  -  Hornsby",        suburb:"Hornsby",       category:"Korean",    address:"276 Peats Ferry Rd",          lat:-33.7033,lng:151.0994, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Buldak Loaded Chips",price:16.9},{item:"Takoyaki 6pcs",price:12.9}],                                                rating:4.4,votes:{up:58,down:7}, chain:true,updatedAt:"2026-03-15"},
+  {id:"kb6", name:"Krazy Bird  -  Marrickville",   suburb:"Marrickville",  category:"Korean",    address:"356 Illawarra Rd",            lat:-33.9108,lng:151.1597, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Teriyaki Chicken Rice Bowl",price:20.5},{item:"Tteok-Bokki",price:18.9},{item:"Sweet Sticky Burger",price:16.9}],                                             rating:4.3,votes:{up:49,down:9}, chain:true,updatedAt:"2026-03-15"},
+  {id:"kb7", name:"Krazy Bird  -  Bankstown",      suburb:"Bankstown",     category:"Korean",    address:"1 North Terrace",             lat:-33.9175,lng:151.0334, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Half & Half Chicken 6pcs",price:22.9},{item:"Buldak Burger",price:16.9}],                                          rating:4.2,votes:{up:43,down:11},chain:true,updatedAt:"2026-03-15"},
+  {id:"kb8", name:"Krazy Bird  -  Chester Hill",   suburb:"Chester Hill",  category:"Korean",    address:"Shop 19/1 Leicester St",      lat:-33.8804,lng:150.9992, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"K-Dumpling 5pcs",price:12.9},{item:"Tteok-Bokki",price:18.9}],                                                   rating:4.3,votes:{up:55,down:8}, chain:true,updatedAt:"2026-03-15"},
+  {id:"kb9", name:"Krazy Bird  -  Campbelltown",   suburb:"Campbelltown",  category:"Korean",    address:"Shop 1/119 Queen St",         lat:-34.0647,lng:150.8142, menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Teriyaki Chicken Ramen",price:21.5},{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Korean Corn Dog",price:9.9}],                                          rating:4.3,votes:{up:38,down:6}, chain:true,updatedAt:"2026-03-15"},
+  {id:"kb10",name:"Krazy Bird  -  Mittagong",      suburb:"Mittagong",     category:"Korean",    address:"Shop 4/130 Main St",          lat:-34.4459,lng:150.4481, menus:[{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Teriyaki Chicken Rice Bowl",price:20.5},{item:"Teriyaki Chicken Ramen",price:21.5},{item:"Korean Corn Dog",price:9.9}],                                            rating:4.7,votes:{up:92,down:5}, chain:true,updatedAt:"2026-03-15"},
   {id:"c1", name:"Mamak",                suburb:"Haymarket",   category:"Malaysian",  address:"15 Goulburn St",           lat:-33.8771,lng:151.2044, menus:[{item:"Roti Canai with Curry",price:12.9},{item:"Nasi Lemak",price:14.5},{item:"Mee Goreng",price:17.5},{item:"Char Kway Teow",price:17.5}],           rating:4.5,votes:{up:312,down:18},chain:false,updatedAt:"2026-03-15"},
   {id:"c2", name:"Din Tai Fung",          suburb:"CBD",         category:"Chinese",    address:"644 George St World Sq",   lat:-33.8769,lng:151.2064, menus:[{item:"Xiao Long Bao 10pcs",price:22},{item:"Pork Chop Fried Rice",price:18},{item:"Wonton Soup",price:16},{item:"Steamed Pork Bun 3pcs",price:12}],       rating:4.6,votes:{up:320,down:12},chain:false,updatedAt:"2026-03-01"},
   {id:"c3", name:"Ippudo Sydney",         suburb:"CBD",         category:"Japanese",   address:"Level 5 Westfield Sydney", lat:-33.8706,lng:151.2081, menus:[{item:"Shiromaru Ramen",price:24},{item:"Karaka Ramen",price:24},{item:"Takoyaki 6pcs",price:12}],                                                        rating:4.4,votes:{up:198,down:11},chain:false,updatedAt:"2026-03-01"},
@@ -370,7 +477,7 @@ function applyFilter(){
 var toastT;
 function toast(msg){var el=document.getElementById("toast");el.textContent=msg;el.style.display="block";clearTimeout(toastT);toastT=setTimeout(function(){el.style.display="none";},2200);}
 
-/* GOOGLE MAPS — all inside initMap */
+/* GOOGLE MAPS  -  all inside initMap */
 window.initMap=function(){
   document.getElementById("loading").style.display="none";
 
@@ -391,8 +498,8 @@ window.initMap=function(){
   PinOverlay.prototype=Object.create(google.maps.OverlayView.prototype);
   PinOverlay.prototype.onAdd=function(){
     var r=this.r, m=CAT[r.category]||CAT.Other;
-    var mn=menuMin(r), label=mn?"A$"+mn:"–";
-    var name=r.name.length>18?r.name.slice(0,17)+"…":r.name;
+    var mn=menuMin(r), label=mn?"A$"+mn:"-";
+    var name=r.name.length>18?r.name.slice(0,17)+"...":r.name;
     var el=document.createElement("div");
     el.className="mk"+(isFav(r.id)?" fav":"");
     el.setAttribute("data-id",r.id);
@@ -497,7 +604,7 @@ function showDrawer(r){
           +'<div class="cmt-body">'+escHTML(c.text)+'</div>'
           +'</div>';
       }).join("")
-    : '<div style="padding:12px 16px;font-size:12px;color:var(--ink3);">No comments yet — be the first!</div>';
+    : '<div style="padding:12px 16px;font-size:12px;color:var(--ink3);">No comments yet  -  be the first!</div>';
 
   document.getElementById("drawer-inner").innerHTML=
     '<div class="popup-head">'
@@ -535,7 +642,7 @@ function showDrawer(r){
     +'<div style="padding:12px 14px;border-top:1px solid var(--border2);display:flex;flex-direction:column;gap:8px;">'
       +'<div style="display:grid;grid-template-columns:140px 1fr;gap:8px;">'
         +'<input id="cmt-name" placeholder="Your name" maxlength="40" style="padding:8px 11px;border-radius:8px;border:1.5px solid var(--border);font-size:13px;"/>'
-        +'<input id="cmt-text" placeholder="Leave a comment…" maxlength="200" style="padding:8px 11px;border-radius:8px;border:1.5px solid var(--border);font-size:13px;"/>'
+        +'<input id="cmt-text" placeholder="Leave a comment..." maxlength="200" style="padding:8px 11px;border-radius:8px;border:1.5px solid var(--border);font-size:13px;"/>'
       +'</div>'
       +'<button onclick="postComment(\''+r.id+'\')" style="background:#111;color:#fff;border:none;border-radius:8px;padding:9px;font-size:13px;font-weight:600;cursor:pointer;width:100%;">Post Comment</button>'
     +'</div>';
@@ -677,7 +784,7 @@ function renderModal(){
   var el=document.getElementById("modal");
   el.style.display=S.showAdd?"flex":"none";
   if(!S.showAdd)return;
-  document.getElementById("modal-step").textContent="Step "+S.addStep+" of 2 — "+(S.addStep===1?"Basic info":"Menu & prices");
+  document.getElementById("modal-step").textContent="Step "+S.addStep+" of 2  -  "+(S.addStep===1?"Basic info":"Menu & prices");
   var f=S.addForm,menus=S.addMenus;
   var errHtml=S.addErr?'<div style="background:#FDF3F3;border:1px solid #F5C4C4;border-radius:8px;padding:10px 14px;font-size:13px;color:#A01C1C;margin-bottom:16px;">'+S.addErr+'</div>':"";
   var iS="width:100%;padding:10px 13px;border-radius:8px;border:1.5px solid var(--border);font-size:13px;background:#fff;box-sizing:border-box;";
@@ -693,13 +800,13 @@ function renderModal(){
           '<div><label style="'+lS+'">Category</label><select onchange="S.addForm.category=this.value" style="'+sS+'">'+Object.keys(CAT).map(function(c){return '<option'+(f.category===c?" selected":"")+'>'+c+'</option>';}).join("")+'</select></div>'+
         '</div>'+
         '<div style="background:var(--bg);border-radius:8px;padding:12px;">'+
-          '<p style="font-size:11px;color:var(--ink3);line-height:1.5;margin-bottom:8px;">Optional: paste lat/lng for a precise map pin. Right-click on Google Maps → "What\'s here?"</p>'+
+          '<p style="font-size:11px;color:var(--ink3);line-height:1.5;margin-bottom:8px;">Optional: paste lat/lng for a precise map pin. Right-click on Google Maps -> "What\'s here?"</p>'+
           '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">'+
             '<input value="'+f.lat+'" oninput="S.addForm.lat=this.value" placeholder="Latitude -33.870" type="number" step="any" style="'+iS+'font-size:12px;"/>'+
             '<input value="'+f.lng+'" oninput="S.addForm.lng=this.value" placeholder="Longitude 151.207" type="number" step="any" style="'+iS+'font-size:12px;"/>'+
           '</div>'+
         '</div>'+
-        '<button onclick="doNext()" class="btn btn-dark" style="width:100%;padding:13px;font-size:13px;">Next — Add Prices</button>'+
+        '<button onclick="doNext()" class="btn btn-dark" style="width:100%;padding:13px;font-size:13px;">Next  -  Add Prices</button>'+
       '</div>';
   } else {
     document.getElementById("modal-body").innerHTML=errHtml+
@@ -816,7 +923,81 @@ function doSubmit(){
 }
 
 /* Expose all globals */
-["setView","toggleCat","togglePrice","toggleFavFilter","setPTab","togglePanel","showMobilePanel","vote","goNearMe","openAdd","closeAdd","doNext","doAddMenu","rmMenu","doSubmit","selectR","toggleFav","submitComment","closeDrawer"].forEach(function(fn){window[fn]=eval(fn);});
+["setView","setMobileView","renderMobileList","toggleCat","togglePrice","toggleFavFilter","setPTab","togglePanel","showMobilePanel","vote","goNearMe","openAdd","closeAdd","doNext","doAddMenu","rmMenu","doSubmit","selectR","toggleFav","submitComment","closeDrawer"].forEach(function(fn){window[fn]=eval(fn);});
+
+function setMobileView(view){
+  var isMobile = window.innerWidth <= 768;
+  if(!isMobile) return;
+  
+  // Update nav buttons
+  ["map","list","saved","add"].forEach(function(v){
+    var btn = document.getElementById("mnav-"+v);
+    if(btn) btn.classList.toggle("active", v===view);
+  });
+  
+  var mapWrap = document.getElementById("map-wrap");
+  var listView = document.getElementById("list-view");
+  var fbar = document.getElementById("fbar");
+  var drawer = document.getElementById("drawer");
+  
+  if(view==="map"){
+    if(mapWrap) mapWrap.classList.remove("list-active");
+    if(listView) listView.classList.remove("mobile-active");
+    if(fbar) fbar.classList.remove("list-active");
+    if(drawer) drawer.style.zIndex = "80";
+    if(MAP) setTimeout(function(){google.maps.event.trigger(MAP,"resize");},100);
+  } else if(view==="list"){
+    if(mapWrap) mapWrap.classList.add("list-active");
+    if(fbar) fbar.classList.add("list-active");
+    if(listView){
+      listView.classList.add("mobile-active");
+      renderMobileList(false);
+    }
+    closeDrawer();
+  } else if(view==="saved"){
+    if(mapWrap) mapWrap.classList.add("list-active");
+    if(fbar) fbar.classList.add("list-active");
+    if(listView){
+      listView.classList.add("mobile-active");
+      renderMobileList(true);
+    }
+    closeDrawer();
+  }
+}
+
+function renderMobileList(savedOnly){
+  var el = document.getElementById("list-view");
+  if(!el) return;
+  var list = savedOnly 
+    ? S.restaurants.filter(function(r){return isFav(r.id);})
+    : S.filtered;
+  
+  if(!list.length){
+    el.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--ink3);font-size:14px;">'+(savedOnly?"No saved restaurants yet":"No restaurants found")+'</div>';
+    return;
+  }
+  
+  el.innerHTML = list.map(function(r){
+    var m = CAT[r.category]||CAT.Other;
+    var mn = minP(r);
+    var fv = isFav(r.id);
+    return '<div onclick="selectR(\''+r.id+'\');setMobileView(\'map\')" style="background:#fff;border-radius:12px;border:1px solid var(--border2);margin-bottom:10px;overflow:hidden;box-shadow:var(--sh0);">'
+      +'<div style="height:3px;background:'+m.color+'"></div>'
+      +'<div style="padding:12px 14px;">'
+        +'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">'
+          +'<div style="min-width:0;">'
+            +'<div style="font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+escHTML(r.name)+'</div>'
+            +'<div style="font-size:11px;color:var(--ink3);margin-top:2px;">'+r.category+' &middot; '+escHTML(r.suburb||"")+'</div>'
+          +'</div>'
+          +'<div style="text-align:right;flex-shrink:0;">'
+            +(mn?'<div style="font-size:17px;font-weight:800;color:'+m.color+';">A$'+mn+'</div><div style="font-size:10px;color:var(--ink3);">from</div>':'')
+            +(fv?'<div style="font-size:11px;color:var(--gold);margin-top:2px;">&#9733; Saved</div>':'')
+          +'</div>'
+        +'</div>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+}
 
 document.addEventListener("DOMContentLoaded",function(){
   document.getElementById("search-inp").addEventListener("input",function(e){S.q=e.target.value;applyFilter();refresh();});
@@ -870,7 +1051,7 @@ console.log("Firebase ready");
 </script>
 
 <script>
-// ── Comments ──
+// -- Comments --
 function postComment(rid){
   var n=(document.getElementById("cmt-name")||{}).value||"";
   var t=(document.getElementById("cmt-text")||{}).value||"";
@@ -925,7 +1106,7 @@ window.showDrawer=function(r){
   });
 };
 
-// ── Admin ──
+// -- Admin --
 function checkAdmin(){
   if(new URLSearchParams(window.location.search).get("admin")==="cracker2024"){
     openAdmin();
@@ -950,16 +1131,16 @@ function loadPending(){
   window._fs.collection("pending_restaurants").get()
   .then(function(snap){
     if(snap.empty){
-      el.innerHTML='<p style="text-align:center;color:#999;padding:40px;">No pending submissions ✓</p>';
+      el.innerHTML='<p style="text-align:center;color:#999;padding:40px;">No pending submissions OK</p>';
       return;
     }
     var html="";
     snap.forEach(function(doc){
       var r=doc.data(), id=doc.id;
-      var menus=(r.menus||[]).map(function(m){return m.item+" A$"+m.price;}).join(" · ");
+      var menus=(r.menus||[]).map(function(m){return m.item+" A$"+m.price;}).join(" &middot; ");
       html+='<div style="border:1px solid #ddd;border-radius:10px;padding:16px;margin-bottom:12px;">'
         +'<div style="font-size:15px;font-weight:700;margin-bottom:4px;">'+escA(r.name)+'</div>'
-        +'<div style="font-size:12px;color:#888;margin-bottom:4px;">'+escA(r.category)+" · "+escA(r.suburb)+(r.address?" · "+escA(r.address):"")+'</div>'
+        +'<div style="font-size:12px;color:#888;margin-bottom:4px;">'+escA(r.category)+" &middot; "+escA(r.suburb)+(r.address?" &middot; "+escA(r.address):"")+'</div>'
         +'<div style="font-size:12px;color:#444;margin-bottom:8px;">'+escA(menus)+'</div>'
         +'<div style="display:flex;gap:8px;">'
         +'<button onclick="approveR(this,\''+id+'\')" style="flex:1;padding:9px;border-radius:8px;border:none;background:#1A7A3C;color:#fff;font-size:13px;font-weight:600;cursor:pointer;">Approve</button>'
@@ -992,6 +1173,80 @@ function rejectR(btn,docId){
   window._fs.collection("pending_restaurants").doc(docId).delete()
   .then(function(){toast("Rejected.");loadPending();})
   .catch(function(e){toast("Error: "+e.message);});
+}
+
+function setMobileView(view){
+  var isMobile = window.innerWidth <= 768;
+  if(!isMobile) return;
+  
+  // Update nav buttons
+  ["map","list","saved","add"].forEach(function(v){
+    var btn = document.getElementById("mnav-"+v);
+    if(btn) btn.classList.toggle("active", v===view);
+  });
+  
+  var mapWrap = document.getElementById("map-wrap");
+  var listView = document.getElementById("list-view");
+  var fbar = document.getElementById("fbar");
+  var drawer = document.getElementById("drawer");
+  
+  if(view==="map"){
+    if(mapWrap) mapWrap.classList.remove("list-active");
+    if(listView) listView.classList.remove("mobile-active");
+    if(fbar) fbar.classList.remove("list-active");
+    if(drawer) drawer.style.zIndex = "80";
+    if(MAP) setTimeout(function(){google.maps.event.trigger(MAP,"resize");},100);
+  } else if(view==="list"){
+    if(mapWrap) mapWrap.classList.add("list-active");
+    if(fbar) fbar.classList.add("list-active");
+    if(listView){
+      listView.classList.add("mobile-active");
+      renderMobileList(false);
+    }
+    closeDrawer();
+  } else if(view==="saved"){
+    if(mapWrap) mapWrap.classList.add("list-active");
+    if(fbar) fbar.classList.add("list-active");
+    if(listView){
+      listView.classList.add("mobile-active");
+      renderMobileList(true);
+    }
+    closeDrawer();
+  }
+}
+
+function renderMobileList(savedOnly){
+  var el = document.getElementById("list-view");
+  if(!el) return;
+  var list = savedOnly 
+    ? S.restaurants.filter(function(r){return isFav(r.id);})
+    : S.filtered;
+  
+  if(!list.length){
+    el.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--ink3);font-size:14px;">'+(savedOnly?"No saved restaurants yet":"No restaurants found")+'</div>';
+    return;
+  }
+  
+  el.innerHTML = list.map(function(r){
+    var m = CAT[r.category]||CAT.Other;
+    var mn = minP(r);
+    var fv = isFav(r.id);
+    return '<div onclick="selectR(\''+r.id+'\');setMobileView(\'map\')" style="background:#fff;border-radius:12px;border:1px solid var(--border2);margin-bottom:10px;overflow:hidden;box-shadow:var(--sh0);">'
+      +'<div style="height:3px;background:'+m.color+'"></div>'
+      +'<div style="padding:12px 14px;">'
+        +'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">'
+          +'<div style="min-width:0;">'
+            +'<div style="font-size:13px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+escHTML(r.name)+'</div>'
+            +'<div style="font-size:11px;color:var(--ink3);margin-top:2px;">'+r.category+' &middot; '+escHTML(r.suburb||"")+'</div>'
+          +'</div>'
+          +'<div style="text-align:right;flex-shrink:0;">'
+            +(mn?'<div style="font-size:17px;font-weight:800;color:'+m.color+';">A$'+mn+'</div><div style="font-size:10px;color:var(--ink3);">from</div>':'')
+            +(fv?'<div style="font-size:11px;color:var(--gold);margin-top:2px;">&#9733; Saved</div>':'')
+          +'</div>'
+        +'</div>'
+      +'</div>'
+    +'</div>';
+  }).join('');
 }
 
 document.addEventListener("DOMContentLoaded",function(){checkAdmin();});
