@@ -142,7 +142,7 @@ input,select,button,textarea{font-family:inherit;font-size:13px;}
 
 <div id="app">
 
-<!-- ═══ HEADER ═══ -->
+<!-- ===== HEADER ===== -->
 <div id="header">
   <div style="max-width:1400px;margin:0 auto;padding:0 20px;height:56px;display:flex;align-items:center;gap:14px;">
     <div style="flex-shrink:0;">
@@ -167,7 +167,7 @@ input,select,button,textarea{font-family:inherit;font-size:13px;}
   </div>
 </div>
 
-<!-- ═══ FILTER BAR ═══ -->
+<!-- ===== FILTER BAR ===== -->
 <div id="filterbar">
   <div style="padding:8px 20px;display:flex;align-items:center;gap:6px;">
     <!-- Price range chips -->
@@ -197,7 +197,7 @@ input,select,button,textarea{font-family:inherit;font-size:13px;}
   </div>
 </div>
 
-<!-- ═══ BODY ═══ -->
+<!-- ===== BODY ===== -->
 <div id="body">
 
   <!-- Map side -->
@@ -247,7 +247,7 @@ input,select,button,textarea{font-family:inherit;font-size:13px;}
   <div style="overflow-y:auto;flex:1;" id="mobile-list"></div>
 </div>
 
-<!-- ═══ ADD MODAL ═══ -->
+<!-- ===== ADD MODAL ===== -->
 <div id="modal" onclick="if(event.target===this)closeAdd()">
   <div class="modal-box">
     <div style="padding:20px 22px;border-bottom:1px solid var(--border2);display:flex;justify-content:space-between;align-items:flex-start;">
@@ -262,9 +262,7 @@ input,select,button,textarea{font-family:inherit;font-size:13px;}
 </div>
 
 <script>
-/* ════════════════════════════════════
-   DATA
-════════════════════════════════════ */
+/* DATA */
 var CAT={
   Korean:    {color:"#B83258",bg:"#FDF0F4"},
   Japanese:  {color:"#2848A8",bg:"#EEF1FA"},
@@ -316,9 +314,7 @@ var SEED=[
   {id:"c24",name:"Kazan Lunch",          suburb:"CBD",         category:"Japanese",   address:"25 Martin Place",          lat:-33.8686,lng:151.2090, menus:[{item:"Lunch Set (per person)",price:25},{item:"Edamame",price:8},{item:"Salmon Maki 6pcs",price:18}],                                                   rating:4.7,votes:{up:89,down:3},  chain:false,updatedAt:"2026-03-01"},
 ];
 
-/* ════════════════════════════════════
-   STATE
-════════════════════════════════════ */
+/* STATE */
 var S={
   restaurants:[], filtered:[], favs:[],
   view:"map", panelTab:"list",
@@ -333,9 +329,7 @@ var S={
 };
 var mapInst=null, mkEls={}, myLocOverlay=null;
 
-/* ════════════════════════════════════
-   HELPERS
-════════════════════════════════════ */
+/* HELPERS */
 function load(){
   try{
     var d=localStorage.getItem("cracker_v2");
@@ -376,9 +370,7 @@ function applyFilter(){
 var toastT;
 function toast(msg){var el=document.getElementById("toast");el.textContent=msg;el.style.display="block";clearTimeout(toastT);toastT=setTimeout(function(){el.style.display="none";},2200);}
 
-/* ════════════════════════════════════
-   GOOGLE MAPS — all inside initMap
-════════════════════════════════════ */
+/* GOOGLE MAPS — all inside initMap */
 window.initMap=function(){
   document.getElementById("loading").style.display="none";
 
@@ -458,9 +450,7 @@ window.initMap=function(){
   renderAll();
 };
 
-/* ════════════════════════════════════
-   SELECT / POPUP
-════════════════════════════════════ */
+/* SELECT / POPUP */
 function selectR(id,anchorEl){
   S.selected=S.selected===id?null:id;
   updateMkStates(); renderSideList(); renderFavList();
@@ -534,9 +524,9 @@ function showDrawer(r){
     +'<div style="padding:8px 16px 4px;"><span class="lbl">Menu Prices</span></div>'
     +'<div>'+rows+'</div>'
     +'<div class="popup-actions">'
-      +'<button onclick="toggleFav(''+r.id+'')" class="btn-fav'+(fv?' on':'')+'">&#9733; '+(fv?'Saved':'Save')+'</button>'
-      +'<button onclick="vote(''+r.id+'','up')" style="flex:1;padding:6px 10px;border-radius:8px;border:1px solid #D0F0DA;background:#F0FBF4;color:#166534;font-size:12px;font-weight:600;cursor:pointer;">Correct '+r.votes.up+'</button>'
-      +'<button onclick="vote(''+r.id+'','down')" style="padding:6px 10px;border-radius:8px;border:1px solid #FAD4D4;background:#FDF4F4;color:#9F1239;font-size:12px;font-weight:600;cursor:pointer;">Wrong '+r.votes.down+'</button>'
+      +'<button onclick="toggleFav(\''+r.id+'\')" class="btn-fav'+(fv?' on':'')+'">&#9733; '+(fv?'Saved':'Save')+'</button>'
+      +'<button onclick="vote(\''+r.id+'\',\'up\')" style="flex:1;padding:6px 10px;border-radius:8px;border:1px solid #D0F0DA;background:#F0FBF4;color:#166534;font-size:12px;font-weight:600;cursor:pointer;">Correct '+r.votes.up+'</button>'
+      +'<button onclick="vote(\''+r.id+'\',\'down\')" style="padding:6px 10px;border-radius:8px;border:1px solid #FAD4D4;background:#FDF4F4;color:#9F1239;font-size:12px;font-weight:600;cursor:pointer;">Wrong '+r.votes.down+'</button>'
     +'</div>'
     +'<div style="padding:10px 16px 6px;border-top:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center;">'
       +'<span class="lbl">Comments ('+comments.length+')</span>'
@@ -547,7 +537,7 @@ function showDrawer(r){
         +'<input id="cmt-name" placeholder="Your name" maxlength="40" style="padding:8px 11px;border-radius:8px;border:1.5px solid var(--border);font-size:13px;"/>'
         +'<input id="cmt-text" placeholder="Leave a comment…" maxlength="200" style="padding:8px 11px;border-radius:8px;border:1.5px solid var(--border);font-size:13px;"/>'
       +'</div>'
-      +'<button onclick="postComment(''+r.id+'')" style="background:#111;color:#fff;border:none;border-radius:8px;padding:9px;font-size:13px;font-weight:600;cursor:pointer;width:100%;">Post Comment</button>'
+      +'<button onclick="postComment(\''+r.id+'\')" style="background:#111;color:#fff;border:none;border-radius:8px;padding:9px;font-size:13px;font-weight:600;cursor:pointer;width:100%;">Post Comment</button>'
     +'</div>';
 
   document.getElementById("drawer").classList.add("open");
@@ -564,9 +554,7 @@ function hidePopup(){closeDrawer();}
 function submitComment(rid){postComment(rid);}
 
 
-/* ════════════════════════════════════
-   RENDER
-════════════════════════════════════ */
+/* RENDER */
 function renderAll(){
   renderViewBtns(); renderChips(); renderSuburbSel();
   document.getElementById("result-count").textContent=S.filtered.length+" results";
@@ -736,9 +724,7 @@ function renderModal(){
   }
 }
 
-/* ════════════════════════════════════
-   ACTIONS
-════════════════════════════════════ */
+/* ACTIONS */
 function setView(v){
   S.view=v; applyFilter(); renderAll();
   if(v==="map"&&mapInst)setTimeout(function(){google.maps.event.trigger(mapInst,"resize");},60);
@@ -976,8 +962,8 @@ function loadPending(){
         +'<div style="font-size:12px;color:#888;margin-bottom:4px;">'+escA(r.category)+" · "+escA(r.suburb)+(r.address?" · "+escA(r.address):"")+'</div>'
         +'<div style="font-size:12px;color:#444;margin-bottom:8px;">'+escA(menus)+'</div>'
         +'<div style="display:flex;gap:8px;">'
-        +'<button onclick="approveR(this,''+id+'')" style="flex:1;padding:9px;border-radius:8px;border:none;background:#1A7A3C;color:#fff;font-size:13px;font-weight:600;cursor:pointer;">Approve</button>'
-        +'<button onclick="rejectR(this,''+id+'')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #ddd;background:#fff;color:#C0392B;font-size:13px;font-weight:600;cursor:pointer;">Reject</button>'
+        +'<button onclick="approveR(this,\''+id+'\')" style="flex:1;padding:9px;border-radius:8px;border:none;background:#1A7A3C;color:#fff;font-size:13px;font-weight:600;cursor:pointer;">Approve</button>'
+        +'<button onclick="rejectR(this,\''+id+'\')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #ddd;background:#fff;color:#C0392B;font-size:13px;font-weight:600;cursor:pointer;">Reject</button>'
         +'</div></div>';
     });
     el.innerHTML=html;
