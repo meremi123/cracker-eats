@@ -845,10 +845,8 @@ function doSubmit(){
 }
 
 /* Expose all globals */
-// aliases
-function submitComment(rid){if(typeof postComment==="function")postComment(rid);else if(window.postComment)window.postComment(rid);}
+function submitComment(rid){postComment(rid);}
 function closeDrawer(){var d=document.getElementById("drawer");if(d)d.classList.remove("open");S.selected=null;updateMkStates();renderSideList();renderFavList();}
-
 ["setView","toggleCat","togglePrice","toggleFavFilter","setPTab","togglePanel","showMobilePanel","vote","goNearMe","openAdd","closeAdd","doNext","doAddMenu","rmMenu","doSubmit","selectR","toggleFav","submitComment","closeDrawer"].forEach(function(fn){window[fn]=eval(fn);});
 
 document.addEventListener("DOMContentLoaded",function(){
@@ -991,7 +989,7 @@ function approveR(docId){
         if(d.id!==docId)return;
         var r=d.data();r.id="r"+Date.now();r.status="approved";
         fb.addDoc(fb.collection(fs,"restaurants"),r).then(function(){
-          S.restaurants.push(r);persist();applyFilter();renderAll();
+          S.restaurants.push(r);persist();applyFilter();refresh();
           fb.deleteDoc(fb.doc(fs,"pending_restaurants",docId));
           toast("Approved! "+r.name+" is now live.");loadPending();
         });
