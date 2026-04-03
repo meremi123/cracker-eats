@@ -845,6 +845,10 @@ function doSubmit(){
 }
 
 /* Expose all globals */
+// aliases
+function submitComment(rid){if(typeof postComment==="function")postComment(rid);else if(window.postComment)window.postComment(rid);}
+function closeDrawer(){var d=document.getElementById("drawer");if(d)d.classList.remove("open");S.selected=null;updateMkStates();renderSideList();renderFavList();}
+
 ["setView","toggleCat","togglePrice","toggleFavFilter","setPTab","togglePanel","showMobilePanel","vote","goNearMe","openAdd","closeAdd","doNext","doAddMenu","rmMenu","doSubmit","selectR","toggleFav","submitComment","closeDrawer"].forEach(function(fn){window[fn]=eval(fn);});
 
 document.addEventListener("DOMContentLoaded",function(){
@@ -949,8 +953,7 @@ function loadCmts(rid,cb){
     .catch(function(){if(cb)cb(S.comments[rid]||[]);});
   });
 }
-var _origOpenDrawer=openDrawer;
-window.openDrawer=function(r){loadCmts(r.id,function(cmts){S.comments[r.id]=cmts;_origOpenDrawer(r);});};
+window.openDrawer=function(r){loadCmts(r.id,function(cmts){S.comments[r.id]=cmts;showDrawer(r);});};
 
 function checkAdmin(){if(new URLSearchParams(window.location.search).get("admin")==="cracker2024")openAdmin();}
 function openAdmin(){document.getElementById("adm").style.display="flex";loadPending();}
