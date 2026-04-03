@@ -320,6 +320,104 @@ function addMenuItem(){S.addMenus.push({item:"",price:""});renderModal();}
 function rmMenu(i){S.addMenus.splice(i,1);renderModal();}
 function submitR(){var valid=S.addMenus.filter(function(m){return m.item.trim()&&Number(m.price)>0;});if(!valid.length){S.addErr="Add at least one menu item with a price.";renderModal();return;}var f=S.addForm,r={id:"r"+Date.now(),name:f.name.trim(),suburb:f.suburb,category:f.category,address:f.address.trim(),chain:false,lat:parseFloat(f.lat)||(-33.872+(Math.random()-.5)*.015),lng:parseFloat(f.lng)||(151.207+(Math.random()-.5)*.015),menus:valid.map(function(m){return{item:m.item.trim(),price:parseFloat(m.price)};}),rating:0,votes:{up:0,down:0},updatedAt:new Date().toISOString().slice(0,10)};S.rests.push(r);save();S.showAdd=false;S.addForm={name:"",suburb:"CBD",category:"Korean",address:"",lat:"",lng:""};S.addMenus=[{item:"",price:""}];applyFilter();renderAll();if(MAP)MAP.panTo({lat:r.lat,lng:r.lng});toast("Restaurant added — thank you!");}
 
+
+/* ===================== FIREBASE ===================== */
+var db = null;
+
+// Load Firebase SDK
+(function() {
+  var script1 = document.createElement('script');
+  script1.type = 'module';
+  script1.textContent = `
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getFirestore, collection, addDoc, getDocs, onSnapshot, query, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCb3U7T3SyJPZpLnTlLlqWRP8PXwlCwXqQ",
+      authDomain: "manifest-zephyr-492210-s1.firebaseapp.com",
+      projectId: "manifest-zephyr-492210-s1",
+      storageBucket: "manifest-zephyr-492210-s1.firebasestorage.app",
+      messagingSenderId: "1016637553303",
+      appId: "1:1016637553303:web:0bccb82f26f9566d0547d2",
+      measurementId: "G-81W3Y7JB7V"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const firestore = getFirestore(app);
+    window._firestore = firestore;
+    window._fbModules = { collection, addDoc, getDocs, onSnapshot, query, orderBy, serverTimestamp };
+    console.log('Firebase ready');
+  `;
+  document.head.appendChild(script1);
+})();
+
+function fbReady(cb) {
+  if (window._firestore) { cb(); return; }
+  var t = setInterval(function() {
+    if (window._firestore) { clearInterval(t); cb(); }
+  }, 100);
+}
+
+/* Override postComment to use Firebase */
+function postComment(rid) {
+  var n = (document.getElementById("cmt-name") || {}).value || "";
+  var t = (document.getElementById("cmt-text") || {}).value || "";
+  n = n.trim(); t = t.trim();
+  if (!n) { toast("Please enter your name"); return; }
+  if (!t) { toast("Please write a comment"); return; }
+
+  fbReady(function() {
+    var fs = window._firestore;
+    var m = window._fbModules;
+    m.addDoc(m.collection(fs, "comments_" + rid), {
+      name: n, text: t, date: new Date().toLocaleDateString("en-AU", {day:"numeric",month:"short",year:"numeric"}),
+      ts: m.serverTimestamp()
+    }).then(function() {
+      toast("Comment posted!");
+      loadComments(rid, function(cmts) {
+        S.comments[rid] = cmts;
+        var r = S.rests.find(function(x) { return x.id === rid; });
+        if (r) openDrawer(r);
+      });
+    }).catch(function(e) {
+      console.error(e);
+      // fallback to localStorage
+      if (!S.comments[rid]) S.comments[rid] = [];
+      var d = new Date();
+      S.comments[rid].unshift({name:n,text:t,date:d.toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric"})});
+      save();
+      var r = S.rests.find(function(x) { return x.id === rid; });
+      if (r) openDrawer(r);
+      toast("Comment posted!");
+    });
+  });
+}
+
+function loadComments(rid, cb) {
+  fbReady(function() {
+    var fs = window._firestore;
+    var m = window._fbModules;
+    m.getDocs(m.query(m.collection(fs, "comments_" + rid), m.orderBy("ts", "desc")))
+      .then(function(snap) {
+        var cmts = [];
+        snap.forEach(function(doc) { cmts.push(doc.data()); });
+        if (cb) cb(cmts);
+      }).catch(function(e) {
+        console.error(e);
+        if (cb) cb(S.comments[rid] || []);
+      });
+  });
+}
+
+/* Override openDrawer to load comments from Firebase first */
+var _origOpenDrawer = openDrawer;
+window.openDrawer = function(r) {
+  loadComments(r.id, function(cmts) {
+    S.comments[r.id] = cmts;
+    _origOpenDrawer(r);
+  });
+};
+
 document.addEventListener("DOMContentLoaded",function(){
   document.getElementById("search-inp").addEventListener("input",function(e){S.q=e.target.value;applyFilter();buildMks();renderPanel();if(S.view==="list")renderListView();document.getElementById("res-count").textContent=S.filtered.length+" results";});
 });
