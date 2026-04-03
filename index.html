@@ -481,7 +481,7 @@ function updateMkStates(){
     el.style.zIndex=isSel?"100":"1";
   });
 }
-function escHTML(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function escHTML(s){return String(s).replace(/&/g,"&amp;").replace(/\x3C/g,"&lt;").replace(/>/g,"&gt;");}
 
 function showDrawer(r){
   if(!r)return;
@@ -534,9 +534,9 @@ function showDrawer(r){
     +'<div style="padding:8px 16px 4px;"><span class="lbl">Menu Prices</span></div>'
     +'<div>'+rows+'</div>'
     +'<div class="popup-actions">'
-      +'<button onclick="toggleFav(''+r.id+'')" class="btn-fav'+(fv?' on':'')+'">&#9733; '+(fv?'Saved':'Save')+'</button>'
-      +'<button onclick="vote(''+r.id+'','up')" style="flex:1;padding:6px 10px;border-radius:8px;border:1px solid #D0F0DA;background:#F0FBF4;color:#166534;font-size:12px;font-weight:600;cursor:pointer;">Correct '+r.votes.up+'</button>'
-      +'<button onclick="vote(''+r.id+'','down')" style="padding:6px 10px;border-radius:8px;border:1px solid #FAD4D4;background:#FDF4F4;color:#9F1239;font-size:12px;font-weight:600;cursor:pointer;">Wrong '+r.votes.down+'</button>'
+      +'<button onclick="toggleFav(\''+r.id+'\')" class="btn-fav'+(fv?' on':'')+'">&#9733; '+(fv?'Saved':'Save')+'</button>'
+      +'<button onclick="vote(\''+r.id+'\',\'up\')" style="flex:1;padding:6px 10px;border-radius:8px;border:1px solid #D0F0DA;background:#F0FBF4;color:#166534;font-size:12px;font-weight:600;cursor:pointer;">Correct '+r.votes.up+'</button>'
+      +'<button onclick="vote(\''+r.id+'\',\'down\')" style="padding:6px 10px;border-radius:8px;border:1px solid #FAD4D4;background:#FDF4F4;color:#9F1239;font-size:12px;font-weight:600;cursor:pointer;">Wrong '+r.votes.down+'</button>'
     +'</div>'
     +'<div style="padding:10px 16px 6px;border-top:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center;">'
       +'<span class="lbl">Comments ('+comments.length+')</span>'
@@ -927,7 +927,7 @@ console.log('Firebase ready (compat)');
 
 <script>
 function fbReady(cb){if(window._fs){cb();return;}var t=setInterval(function(){if(window._fs){clearInterval(t);cb();}},200);}
-function escH(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function escH(s){var s2=String(s);s2=s2.replace(/&/g,"&amp;");s2=s2.replace(/[<]/g,"&lt;");s2=s2.replace(/>/g,"&gt;");return s2;}
 
 function postComment(rid){
   var n=(document.getElementById("cmt-name")||{}).value||"";
@@ -939,19 +939,21 @@ function postComment(rid){
   fbReady(function(){
     var fs=window._fs,fb=window._fb;
     fb.addDoc(fb.collection(fs,"cmts_"+rid),{name:n,text:t,date:date,ts:fb.serverTimestamp()})
-    .then(function(){toast("Comment posted!");loadCmts(rid,function(cmts){S.comments[rid]=cmts;var r=S.restaurants.find(function(x){return x.id===rid;});if(r)openDrawer(r);});})
-    .catch(function(){if(!S.comments[rid])S.comments[rid]=[];S.comments[rid].unshift({name:n,text:t,date:date});persist();var r=S.restaurants.find(function(x){return x.id===rid;});if(r)openDrawer(r);toast("Comment posted!");});
+    .then(function(){toast("Comment posted!");loadCmts(rid,function(cmts){S.comments[rid]=cmts;var r=S.restaurants.find(function(x){return x.id===rid;});if(r)showDrawer(r);});})
+    .catch(function(){if(!S.comments[rid])S.comments[rid]=[];S.comments[rid].unshift({name:n,text:t,date:date});persist();var r=S.restaurants.find(function(x){return x.id===rid;});if(r)showDrawer(r);toast("Comment posted!");});
   });
 }
 function loadCmts(rid,cb){
   fbReady(function(){
     var fs=window._fs,fb=window._fb;
     fb.getDocs(fb.query(fb.collection(fs,"cmts_"+rid),fb.orderBy("ts","desc")))
-    .then(function(snap){var c=[];snap.forEach(function(d){c.push(d.data());});if(cb)cb(c);})
+    .then(function(snap){var cmts=[];snap.forEach(function(d){cmts.push(d.data());});if(cb)cb(cmts);})
     .catch(function(){if(cb)cb(S.comments[rid]||[]);});
   });
 }
 window.openDrawer=function(r){loadCmts(r.id,function(cmts){S.comments[r.id]=cmts;showDrawer(r);});};
+function submitComment(rid){postComment(rid);}
+function closeDrawer(){var d=document.getElementById("drawer");if(d)d.classList.remove("open");S.selected=null;updateMkStates();renderSideList();renderFavList();}
 
 function checkAdmin(){if(new URLSearchParams(window.location.search).get("admin")==="cracker2024")openAdmin();}
 function openAdmin(){document.getElementById("adm").style.display="flex";loadPending();}
@@ -962,7 +964,7 @@ function loadPending(){
   fbReady(function(){
     var fs=window._fs,fb=window._fb;
     fb.getDocs(fb.collection(fs,"pending_restaurants")).then(function(snap){
-      if(snap.empty){el.innerHTML='<p style="text-align:center;color:#999;padding:40px;font-size:14px;">No pending submissions</p>';return;}
+      if(snap.empty){el.innerHTML='<p style="text-align:center;color:#999;padding:40px;">No pending submissions</p>';return;}
       var html="";
       snap.forEach(function(d){
         var r=d.data(),id=d.id;
@@ -978,7 +980,7 @@ function loadPending(){
           +'</div></div>';
       });
       el.innerHTML=html;
-    }).catch(function(e){el.innerHTML='<p style="color:#C0392B;padding:20px;font-size:13px;">'+e.message+'</p>';});
+    }).catch(function(e){el.innerHTML='<p style="color:#C0392B;padding:20px;">'+e.message+'</p>';});
   });
 }
 function approveR(docId){
