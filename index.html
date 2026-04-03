@@ -6,7 +6,7 @@
 <title>The Absolute Cracker Aussie Cheap Eats List</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#F6F4F0; --surf:#fff; --ink:#111; --ink2:#555; --ink3:#AAA;
@@ -18,8 +18,8 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-size:14px;}
-.serif{font-family:'Playfair Display',Georgia,serif;}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-size:14px;}
+.serif{font-family:'Instrument Serif',Georgia,serif;}
 input,select,button,textarea{font-family:inherit;font-size:13px;}
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
@@ -718,7 +718,7 @@ function renderModal(){
         '<div><label style="'+lS+'">Restaurant Name</label><input value="'+f.name+'" oninput="S.addForm.name=this.value" placeholder="e.g. Mamak" style="'+iS+'"/></div>'+
         '<div><label style="'+lS+'">Address <span style="text-transform:none;font-weight:400;">optional</span></label><input value="'+f.address+'" oninput="S.addForm.address=this.value" placeholder="e.g. 15 Goulburn St, Haymarket" style="'+iS+'"/></div>'+
         '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">'+
-          '<div><label style="'+lS+'">Suburb</label><input value="'+esc(f.suburb)+'" oninput="S.addForm.suburb=this.value" placeholder="e.g. Rhodes, Ryde, Newtown..." style="'+iS+'"/></div>'+
+          '<div><label style="'+lS+'">Suburb</label><select onchange="S.addForm.suburb=this.value" style="'+sS+'">'+SUBURBS.map(function(s){return '<option'+(f.suburb===s?" selected":"")+'>'+s+'</option>';}).join("")+'</select></div>'+
           '<div><label style="'+lS+'">Category</label><select onchange="S.addForm.category=this.value" style="'+sS+'">'+Object.keys(CAT).map(function(c){return '<option'+(f.category===c?" selected":"")+'>'+c+'</option>';}).join("")+'</select></div>'+
         '</div>'+
         '<div style="background:var(--bg);border-radius:8px;padding:12px;">'+
@@ -822,26 +822,13 @@ function doSubmit(){
     lng:parseFloat(f.lng)||(151.207+(Math.random()-.5)*.015),
     menus:valid.map(function(m){return{item:m.item.trim(),price:parseFloat(m.price)};}),
     rating:0,votes:{up:0,down:0},updatedAt:new Date().toISOString().slice(0,10)};
-  // Save to Firebase as pending (requires admin approval)
-  r.status="pending"; r.submittedAt=new Date().toISOString();
-  fbReady(function(){
-    var fs=window._firestore, fb=window._fbModules;
-    fb.addDoc(fb.collection(fs,"pending_restaurants"),r)
-    .then(function(){
-      S.showAdd=false;
-      S.addForm={name:"",suburb:"CBD",category:"Korean",address:"",lat:"",lng:""};
-      S.addMenus=[{item:"",price:""}];
-      renderModal();
-      toast("Submitted! Pending admin approval.");
-    }).catch(function(e){
-      console.error(e);
-      toast("Submitted! Pending admin approval.");
-      S.showAdd=false;
-      S.addForm={name:"",suburb:"CBD",category:"Korean",address:"",lat:"",lng:""};
-      S.addMenus=[{item:"",price:""}];
-      renderModal();
-    });
-  });
+  S.restaurants.push(r); persist();
+  S.showAdd=false;
+  S.addForm={name:"",suburb:"CBD",category:"Korean",address:"",lat:"",lng:""};
+  S.addMenus=[{item:"",price:""}];
+  applyFilter(); renderAll();
+  if(mapInst)mapInst.panTo({lat:r.lat,lng:r.lng});
+  toast("Restaurant added — thank you!");
 }
 
 /* Expose all globals */
@@ -881,142 +868,13 @@ window.gm_authFailure=function(){
 };
 </script>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script>
-var _firebaseApp = firebase.initializeApp({
-  apiKey:"AIzaSyCb3U7T3SyJPZpLnTlLlqWRP8PXwlCwXqQ",
-  authDomain:"manifest-zephyr-492210-s1.firebaseapp.com",
-  projectId:"manifest-zephyr-492210-s1",
-  storageBucket:"manifest-zephyr-492210-s1.firebasestorage.app",
-  messagingSenderId:"1016637553303",
-  appId:"1:1016637553303:web:0bccb82f26f9566d0547d2"
-});
-window._fs = firebase.firestore();
-window._fb = {
-  collection: function(fs, path){ return fs.collection(path); },
-  addDoc: function(ref, data){ return ref.add(data); },
-  getDocs: function(ref){ return ref.get(); },
-  deleteDoc: function(ref){ return ref.delete(); },
-  doc: function(fs, path, id){ return fs.collection(path).doc(id); },
-  query: function(ref){ return ref; },
-  orderBy: function(field, dir){ return arguments; },
-  serverTimestamp: function(){ return firebase.firestore.FieldValue.serverTimestamp(); }
-};
-// Override getDocs with orderBy support
-window._fb.getDocs = function(q){
-  if(Array.isArray(q) || (q && q[0] && q[0].orderBy)){
-    var ref = q[0];
-    var field = q[1];
-    var dir = q[2] || 'asc';
-    return ref.orderBy(field, dir).get();
-  }
-  return q.get();
-};
-window._fb.query = function(ref, orderByArgs){
-  if(orderByArgs && orderByArgs.length >= 2){
-    return [ref, orderByArgs[0], orderByArgs[1]];
-  }
-  return ref;
-};
-window._fb.orderBy = function(field, dir){ return [field, dir]; };
-console.log('Firebase ready (compat)');
+(function(){
+  var s=document.createElement("script");
+  s.src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcK8k54Xe_tSWd13aLTqCrAmc43J1ymuE&callback=initMap&loading=async";
+  s.onerror=function(){window.gm_authFailure&&window.gm_authFailure();};
+  document.head.appendChild(s);
+})();
 </script>
-
-<script>
-function fbReady(cb){if(window._fs){cb();return;}var t=setInterval(function(){if(window._fs){clearInterval(t);cb();}},200);}
-function escH(s){return String(s).replace(/&/g,"&amp;").replace(/[<]/g,"&lt;").replace(/>/g,"&gt;");}
-
-function postComment(rid){
-  var n=(document.getElementById("cmt-name")||{}).value||"";
-  var t=(document.getElementById("cmt-text")||{}).value||"";
-  n=n.trim();t=t.trim();
-  if(!n){toast("Please enter your name");return;}
-  if(!t){toast("Please write a comment");return;}
-  var date=new Date().toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric"});
-  fbReady(function(){
-    var fs=window._fs,fb=window._fb;
-    fb.addDoc(fb.collection(fs,"cmts_"+rid),{name:n,text:t,date:date,ts:fb.serverTimestamp()})
-    .then(function(){toast("Comment posted!");loadCmts(rid,function(cmts){S.comments[rid]=cmts;var r=S.restaurants.find(function(x){return x.id===rid;});if(r)openDrawer(r);});})
-    .catch(function(){if(!S.comments[rid])S.comments[rid]=[];S.comments[rid].unshift({name:n,text:t,date:date});persist();var r=S.restaurants.find(function(x){return x.id===rid;});if(r)openDrawer(r);toast("Comment posted!");});
-  });
-}
-function loadCmts(rid,cb){
-  fbReady(function(){
-    var fs=window._fs,fb=window._fb;
-    fb.getDocs(fb.query(fb.collection(fs,"cmts_"+rid),fb.orderBy("ts","desc")))
-    .then(function(snap){var c=[];snap.forEach(function(d){c.push(d.data());});if(cb)cb(c);})
-    .catch(function(){if(cb)cb(S.comments[rid]||[]);});
-  });
-}
-window.openDrawer=function(r){loadCmts(r.id,function(cmts){S.comments[r.id]=cmts;showDrawer(r);});};
-
-function checkAdmin(){if(new URLSearchParams(window.location.search).get("admin")==="cracker2024")openAdmin();}
-function openAdmin(){document.getElementById("adm").style.display="flex";loadPending();}
-function closeAdmin(){document.getElementById("adm").style.display="none";}
-function loadPending(){
-  var el=document.getElementById("adm-list");
-  el.innerHTML='<p style="text-align:center;color:#999;padding:30px;font-size:13px;">Loading...</p>';
-  fbReady(function(){
-    var fs=window._fs,fb=window._fb;
-    fb.getDocs(fb.collection(fs,"pending_restaurants")).then(function(snap){
-      if(snap.empty){el.innerHTML='<p style="text-align:center;color:#999;padding:40px;font-size:14px;">No pending submissions</p>';return;}
-      var html="";
-      snap.forEach(function(d){
-        var r=d.data(),id=d.id;
-        var menus=(r.menus||[]).map(function(m){return m.item+" A$"+m.price;}).join(" · ");
-        html+='<div style="border:1px solid #D0CCC6;border-radius:10px;padding:16px;margin-bottom:12px;">'
-          +'<div style="font-size:15px;font-weight:700;margin-bottom:3px;">'+escH(r.name||"")+'</div>'
-          +'<div style="font-size:12px;color:#888;margin-bottom:3px;">'+escH(r.category||"")+" · "+escH(r.suburb||"")+(r.address?" · "+escH(r.address):"")+'</div>'
-          +'<div style="font-size:12px;color:#3D3D3D;margin-bottom:6px;">'+escH(menus)+'</div>'
-          +'<div style="font-size:11px;color:#888;margin-bottom:10px;">Submitted: '+escH((r.submittedAt||"").slice(0,10))+'</div>'
-          +'<div style="display:flex;gap:8px;">'
-          +'<button onclick="approveR(''+id+'')" style="flex:1;padding:9px;border-radius:8px;border:none;background:#1A7A3C;color:#fff;font-size:13px;font-weight:600;cursor:pointer;">Approve</button>'
-          +'<button onclick="rejectR(''+id+'')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #D0CCC6;background:#fff;color:#C0392B;font-size:13px;font-weight:600;cursor:pointer;">Reject</button>'
-          +'</div></div>';
-      });
-      el.innerHTML=html;
-    }).catch(function(e){el.innerHTML='<p style="color:#C0392B;padding:20px;font-size:13px;">'+e.message+'</p>';});
-  });
-}
-function approveR(docId){
-  fbReady(function(){
-    var fs=window._fs,fb=window._fb;
-    fb.getDocs(fb.collection(fs,"pending_restaurants")).then(function(snap){
-      snap.forEach(function(d){
-        if(d.id!==docId)return;
-        var r=d.data();r.id="r"+Date.now();r.status="approved";
-        fb.addDoc(fb.collection(fs,"restaurants"),r).then(function(){
-          S.restaurants.push(r);persist();applyFilter();renderAll();
-          fb.deleteDoc(fb.doc(fs,"pending_restaurants",docId));
-          toast("Approved! "+r.name+" is now live.");loadPending();
-        });
-      });
-    });
-  });
-}
-function rejectR(docId){
-  fbReady(function(){
-    var fs=window._fs,fb=window._fb;
-    fb.deleteDoc(fb.doc(fs,"pending_restaurants",docId)).then(function(){toast("Rejected.");loadPending();}).catch(function(e){toast("Error: "+e.message);});
-  });
-}
-document.addEventListener("DOMContentLoaded",function(){checkAdmin();});
-</script>
-
-<div id="adm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:2000;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;">
-  <div style="background:#fff;border-radius:16px;width:100%;max-width:680px;margin-top:20px;box-shadow:0 24px 80px rgba(0,0,0,.25);">
-    <div style="padding:18px 22px;border-bottom:1px solid #E5E1DC;display:flex;justify-content:space-between;align-items:center;background:#0A0A0A;border-radius:16px 16px 0 0;">
-      <div>
-        <h2 style="font-family:'Playfair Display',serif;font-size:20px;color:#fff;font-weight:700;">Admin Panel</h2>
-        <p style="font-size:12px;color:#666;margin-top:2px;">Pending restaurant submissions</p>
-      </div>
-      <button onclick="closeAdmin()" style="background:rgba(255,255,255,.1);border:none;border-radius:8px;width:32px;height:32px;font-size:18px;color:#fff;cursor:pointer;">&times;</button>
-    </div>
-    <div id="adm-list" style="padding:20px;max-height:70vh;overflow-y:auto;"></div>
-  </div>
-</div>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcK8k54Xe_tSWd13aLTqCrAmc43J1ymuE&callback=initMap&loading=async"></script>
 </body>
 </html>
