@@ -868,13 +868,6 @@ window.gm_authFailure=function(){
 };
 </script>
 
-<script>
-(function(){
-  var s=document.createElement("script");
-  s.src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcK8k54Xe_tSWd13aLTqCrAmc43J1ymuE&callback=initMap&loading=async";
-  s.onerror=function(){window.gm_authFailure&&window.gm_authFailure();};
-  document.head.appendChild(s);
-})();
-</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcK8k54Xe_tSWd13aLTqCrAmc43J1ymuE&callback=initMap&loading=async"></script>
 </body>
 </html>
