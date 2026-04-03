@@ -881,13 +881,46 @@ window.gm_authFailure=function(){
 };
 </script>
 
-<script type="module">
-import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import{getFirestore,collection,addDoc,getDocs,deleteDoc,doc,query,orderBy,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-const cfg={apiKey:"AIzaSyCb3U7T3SyJPZpLnTlLlqWRP8PXwlCwXqQ",authDomain:"manifest-zephyr-492210-s1.firebaseapp.com",projectId:"manifest-zephyr-492210-s1",storageBucket:"manifest-zephyr-492210-s1.firebasestorage.app",messagingSenderId:"1016637553303",appId:"1:1016637553303:web:0bccb82f26f9566d0547d2"};
-const app=initializeApp(cfg);const fs=getFirestore(app);
-window._fs=fs;window._fb={collection,addDoc,getDocs,deleteDoc,doc,query,orderBy,serverTimestamp};
-console.log('Firebase ready');
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+var _firebaseApp = firebase.initializeApp({
+  apiKey:"AIzaSyCb3U7T3SyJPZpLnTlLlqWRP8PXwlCwXqQ",
+  authDomain:"manifest-zephyr-492210-s1.firebaseapp.com",
+  projectId:"manifest-zephyr-492210-s1",
+  storageBucket:"manifest-zephyr-492210-s1.firebasestorage.app",
+  messagingSenderId:"1016637553303",
+  appId:"1:1016637553303:web:0bccb82f26f9566d0547d2"
+});
+window._fs = firebase.firestore();
+window._fb = {
+  collection: function(fs, path){ return fs.collection(path); },
+  addDoc: function(ref, data){ return ref.add(data); },
+  getDocs: function(ref){ return ref.get(); },
+  deleteDoc: function(ref){ return ref.delete(); },
+  doc: function(fs, path, id){ return fs.collection(path).doc(id); },
+  query: function(ref){ return ref; },
+  orderBy: function(field, dir){ return arguments; },
+  serverTimestamp: function(){ return firebase.firestore.FieldValue.serverTimestamp(); }
+};
+// Override getDocs with orderBy support
+window._fb.getDocs = function(q){
+  if(Array.isArray(q) || (q && q[0] && q[0].orderBy)){
+    var ref = q[0];
+    var field = q[1];
+    var dir = q[2] || 'asc';
+    return ref.orderBy(field, dir).get();
+  }
+  return q.get();
+};
+window._fb.query = function(ref, orderByArgs){
+  if(orderByArgs && orderByArgs.length >= 2){
+    return [ref, orderByArgs[0], orderByArgs[1]];
+  }
+  return ref;
+};
+window._fb.orderBy = function(field, dir){ return [field, dir]; };
+console.log('Firebase ready (compat)');
 </script>
 
 <script>
@@ -985,13 +1018,6 @@ document.addEventListener("DOMContentLoaded",function(){checkAdmin();});
   </div>
 </div>
 
-<script>
-(function(){
-  var s=document.createElement("script");
-  s.src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcK8k54Xe_tSWd13aLTqCrAmc43J1ymuE&callback=initMap&loading=async";
-  s.onerror=function(){window.gm_authFailure&&window.gm_authFailure();};
-  document.head.appendChild(s);
-})();
-</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcK8k54Xe_tSWd13aLTqCrAmc43J1ymuE&callback=initMap&loading=async"></script>
 </body>
 </html>
