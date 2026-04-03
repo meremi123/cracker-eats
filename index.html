@@ -547,7 +547,7 @@ function showDrawer(r){
         +'<input id="cmt-name" placeholder="Your name" maxlength="40" style="padding:8px 11px;border-radius:8px;border:1.5px solid var(--border);font-size:13px;"/>'
         +'<input id="cmt-text" placeholder="Leave a comment…" maxlength="200" style="padding:8px 11px;border-radius:8px;border:1.5px solid var(--border);font-size:13px;"/>'
       +'</div>'
-      +'<button onclick="submitComment(''+r.id+'')" style="background:#111;color:#fff;border:none;border-radius:8px;padding:9px;font-size:13px;font-weight:600;cursor:pointer;width:100%;">Post Comment</button>'
+      +'<button onclick="postComment(''+r.id+'')" style="background:#111;color:#fff;border:none;border-radius:8px;padding:9px;font-size:13px;font-weight:600;cursor:pointer;width:100%;">Post Comment</button>'
     +'</div>';
 
   document.getElementById("drawer").classList.add("open");
@@ -561,24 +561,7 @@ function closeDrawer(){
 function showPopup(r){showDrawer(r);}
 function hidePopup(){closeDrawer();}
 
-function submitComment(rid){
-  var nameEl=document.getElementById("cmt-name");
-  var textEl=document.getElementById("cmt-text");
-  if(!nameEl||!textEl)return;
-  var name=nameEl.value.trim(), text=textEl.value.trim();
-  if(!name){toast("Please enter your name");return;}
-  if(!text){toast("Please write a comment");return;}
-  if(!S.comments[rid])S.comments[rid]=[];
-  var d=new Date();
-  S.comments[rid].unshift({
-    name:name, text:text,
-    date:d.toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric"})
-  });
-  persist();
-  var r=S.restaurants.find(function(x){return x.id===rid;});
-  if(r)showDrawer(r);
-  toast("Comment posted!");
-}
+function submitComment(rid){postComment(rid);}
 
 
 /* ════════════════════════════════════
@@ -718,7 +701,7 @@ function renderModal(){
         '<div><label style="'+lS+'">Restaurant Name</label><input value="'+f.name+'" oninput="S.addForm.name=this.value" placeholder="e.g. Mamak" style="'+iS+'"/></div>'+
         '<div><label style="'+lS+'">Address <span style="text-transform:none;font-weight:400;">optional</span></label><input value="'+f.address+'" oninput="S.addForm.address=this.value" placeholder="e.g. 15 Goulburn St, Haymarket" style="'+iS+'"/></div>'+
         '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">'+
-          '<div><label style="'+lS+'">Suburb</label><select onchange="S.addForm.suburb=this.value" style="'+sS+'">'+SUBURBS.map(function(s){return '<option'+(f.suburb===s?" selected":"")+'>'+s+'</option>';}).join("")+'</select></div>'+
+          '<div><label style="'+lS+'">Suburb</label><input value="'+f.suburb+'" oninput="S.addForm.suburb=this.value" placeholder="e.g. Rhodes, Newtown, CBD..." style="'+iS+'"/></div>'+
           '<div><label style="'+lS+'">Category</label><select onchange="S.addForm.category=this.value" style="'+sS+'">'+Object.keys(CAT).map(function(c){return '<option'+(f.category===c?" selected":"")+'>'+c+'</option>';}).join("")+'</select></div>'+
         '</div>'+
         '<div style="background:var(--bg);border-radius:8px;padding:12px;">'+
@@ -822,13 +805,28 @@ function doSubmit(){
     lng:parseFloat(f.lng)||(151.207+(Math.random()-.5)*.015),
     menus:valid.map(function(m){return{item:m.item.trim(),price:parseFloat(m.price)};}),
     rating:0,votes:{up:0,down:0},updatedAt:new Date().toISOString().slice(0,10)};
-  S.restaurants.push(r); persist();
-  S.showAdd=false;
-  S.addForm={name:"",suburb:"CBD",category:"Korean",address:"",lat:"",lng:""};
-  S.addMenus=[{item:"",price:""}];
-  applyFilter(); renderAll();
-  if(mapInst)mapInst.panTo({lat:r.lat,lng:r.lng});
-  toast("Restaurant added — thank you!");
+  r.status="pending"; r.submittedAt=new Date().toISOString();
+  if(window._fs){
+    window._fs.collection("pending_restaurants").add(r).then(function(){
+      S.showAdd=false;
+      S.addForm={name:"",suburb:"CBD",category:"Korean",address:"",lat:"",lng:""};
+      S.addMenus=[{item:"",price:""}];
+      renderModal();
+      toast("Submitted! Pending admin approval.");
+    }).catch(function(){
+      toast("Submitted! Pending admin approval.");
+      S.showAdd=false;
+      S.addForm={name:"",suburb:"CBD",category:"Korean",address:"",lat:"",lng:""};
+      S.addMenus=[{item:"",price:""}];
+      renderModal();
+    });
+  } else {
+    S.showAdd=false;
+    S.addForm={name:"",suburb:"CBD",category:"Korean",address:"",lat:"",lng:""};
+    S.addMenus=[{item:"",price:""}];
+    renderModal();
+    toast("Submitted! Pending admin approval.");
+  }
 }
 
 /* Expose all globals */
@@ -868,6 +866,165 @@ window.gm_authFailure=function(){
 };
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcK8k54Xe_tSWd13aLTqCrAmc43J1ymuE&callback=initMap&loading=async"></script>
+<!-- Firebase Compat CDN -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+// Init Firebase
+firebase.initializeApp({
+  apiKey:"AIzaSyCb3U7T3SyJPZpLnTlLlqWRP8PXwlCwXqQ",
+  authDomain:"manifest-zephyr-492210-s1.firebaseapp.com",
+  projectId:"manifest-zephyr-492210-s1",
+  storageBucket:"manifest-zephyr-492210-s1.firebasestorage.app",
+  messagingSenderId:"1016637553303",
+  appId:"1:1016637553303:web:0bccb82f26f9566d0547d2"
+});
+window._fs = firebase.firestore();
+console.log("Firebase ready");
+</script>
+
+<script>
+// ── Comments ──
+function postComment(rid){
+  var n=(document.getElementById("cmt-name")||{}).value||"";
+  var t=(document.getElementById("cmt-text")||{}).value||"";
+  n=n.trim(); t=t.trim();
+  if(!n){toast("Please enter your name");return;}
+  if(!t){toast("Please write a comment");return;}
+  var date=new Date().toLocaleDateString("en-AU",{day:"numeric",month:"short",year:"numeric"});
+  var cmt={name:n,text:t,date:date,ts:firebase.firestore.FieldValue.serverTimestamp()};
+  if(window._fs){
+    window._fs.collection("cmts_"+rid).add(cmt)
+    .then(function(){
+      toast("Comment posted!");
+      loadCmts(rid,function(cmts){
+        S.comments[rid]=cmts;
+        var r=S.restaurants.find(function(x){return x.id===rid;});
+        if(r)showDrawer(r);
+      });
+    }).catch(function(){
+      if(!S.comments[rid])S.comments[rid]=[];
+      S.comments[rid].unshift({name:n,text:t,date:date});
+      persist();
+      var r=S.restaurants.find(function(x){return x.id===rid;});
+      if(r)showDrawer(r);
+      toast("Comment posted!");
+    });
+  } else {
+    if(!S.comments[rid])S.comments[rid]=[];
+    S.comments[rid].unshift({name:n,text:t,date:date});
+    persist();
+    var r=S.restaurants.find(function(x){return x.id===rid;});
+    if(r)showDrawer(r);
+    toast("Comment posted!");
+  }
+}
+
+function loadCmts(rid,cb){
+  if(!window._fs){if(cb)cb(S.comments[rid]||[]);return;}
+  window._fs.collection("cmts_"+rid).orderBy("ts","desc").get()
+  .then(function(snap){
+    var cmts=[];
+    snap.forEach(function(d){cmts.push(d.data());});
+    if(cb)cb(cmts);
+  }).catch(function(){if(cb)cb(S.comments[rid]||[]);});
+}
+
+// Override showDrawer to load Firebase comments first
+var _origShowDrawer=showDrawer;
+window.showDrawer=function(r){
+  loadCmts(r.id,function(cmts){
+    S.comments[r.id]=cmts;
+    _origShowDrawer(r);
+  });
+};
+
+// ── Admin ──
+function checkAdmin(){
+  if(new URLSearchParams(window.location.search).get("admin")==="cracker2024"){
+    openAdmin();
+  }
+}
+function openAdmin(){
+  document.getElementById("adm").style.display="flex";
+  loadPending();
+}
+function closeAdmin(){document.getElementById("adm").style.display="none";}
+
+function escA(s){
+  var d=document.createElement("div");
+  d.textContent=String(s||"");
+  return d.innerHTML;
+}
+
+function loadPending(){
+  var el=document.getElementById("adm-list");
+  el.innerHTML='<p style="text-align:center;color:#999;padding:30px;">Loading...</p>';
+  if(!window._fs){el.innerHTML='<p style="color:#C0392B;padding:20px;">Firebase not connected</p>';return;}
+  window._fs.collection("pending_restaurants").get()
+  .then(function(snap){
+    if(snap.empty){
+      el.innerHTML='<p style="text-align:center;color:#999;padding:40px;">No pending submissions ✓</p>';
+      return;
+    }
+    var html="";
+    snap.forEach(function(doc){
+      var r=doc.data(), id=doc.id;
+      var menus=(r.menus||[]).map(function(m){return m.item+" A$"+m.price;}).join(" · ");
+      html+='<div style="border:1px solid #ddd;border-radius:10px;padding:16px;margin-bottom:12px;">'
+        +'<div style="font-size:15px;font-weight:700;margin-bottom:4px;">'+escA(r.name)+'</div>'
+        +'<div style="font-size:12px;color:#888;margin-bottom:4px;">'+escA(r.category)+" · "+escA(r.suburb)+(r.address?" · "+escA(r.address):"")+'</div>'
+        +'<div style="font-size:12px;color:#444;margin-bottom:8px;">'+escA(menus)+'</div>'
+        +'<div style="display:flex;gap:8px;">'
+        +'<button onclick="approveR(this,''+id+'')" style="flex:1;padding:9px;border-radius:8px;border:none;background:#1A7A3C;color:#fff;font-size:13px;font-weight:600;cursor:pointer;">Approve</button>'
+        +'<button onclick="rejectR(this,''+id+'')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #ddd;background:#fff;color:#C0392B;font-size:13px;font-weight:600;cursor:pointer;">Reject</button>'
+        +'</div></div>';
+    });
+    el.innerHTML=html;
+  }).catch(function(e){
+    el.innerHTML='<p style="color:#C0392B;padding:20px;">Error: '+escA(e.message)+'</p>';
+  });
+}
+
+function approveR(btn,docId){
+  btn.textContent="Approving..."; btn.disabled=true;
+  window._fs.collection("pending_restaurants").doc(docId).get().then(function(doc){
+    if(!doc.exists){toast("Not found");loadPending();return;}
+    var r=doc.data();
+    r.id="r"+Date.now(); r.status="approved";
+    window._fs.collection("restaurants").add(r).then(function(){
+      S.restaurants.push(r); persist(); applyFilter(); refresh();
+      window._fs.collection("pending_restaurants").doc(docId).delete();
+      toast("Approved! "+r.name+" is now live.");
+      loadPending();
+    });
+  }).catch(function(e){toast("Error: "+e.message);});
+}
+
+function rejectR(btn,docId){
+  btn.textContent="Rejecting..."; btn.disabled=true;
+  window._fs.collection("pending_restaurants").doc(docId).delete()
+  .then(function(){toast("Rejected.");loadPending();})
+  .catch(function(e){toast("Error: "+e.message);});
+}
+
+document.addEventListener("DOMContentLoaded",function(){checkAdmin();});
+</script>
+
+<!-- Admin Panel -->
+<div id="adm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:2000;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;">
+  <div style="background:#fff;border-radius:16px;width:100%;max-width:680px;margin-top:20px;box-shadow:0 24px 80px rgba(0,0,0,.25);">
+    <div style="padding:18px 22px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;background:#111;border-radius:16px 16px 0 0;">
+      <div>
+        <div style="font-size:18px;font-weight:700;color:#fff;">Admin Panel</div>
+        <div style="font-size:12px;color:#888;margin-top:2px;">Pending restaurant submissions</div>
+      </div>
+      <button onclick="closeAdmin()" style="background:rgba(255,255,255,.1);border:none;border-radius:8px;width:32px;height:32px;font-size:18px;color:#fff;cursor:pointer;">&times;</button>
+    </div>
+    <div id="adm-list" style="padding:20px;max-height:70vh;overflow-y:auto;"></div>
+  </div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCzTAQQTbIxLwb5OCnSdPRX7kOgSAtPcY&callback=initMap&loading=async"></script>
 </body>
 </html>
