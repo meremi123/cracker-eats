@@ -361,11 +361,40 @@ var S={
 var MAP=null,OVERLAYS=[],MK_ELS={},MY_LOC=null,PinClass=null,LocClass=null;
 
 function load(){
+  // Load favs and comments from localStorage
   try{
     var d=localStorage.getItem("crackerv4");
-    if(d){var p=JSON.parse(d);S.restaurants=p.restaurants||clone(SEED);S.favs=p.favs||[];S.comments=p.comments||{};}
-    else{S.restaurants=clone(SEED);}
-  }catch(e){S.restaurants=clone(SEED);}
+    if(d){var p=JSON.parse(d);S.favs=p.favs||[];S.comments=p.comments||{};}
+  }catch(e){}
+  // Start with seed data immediately (map shows right away)
+  if(!S.restaurants.length) S.restaurants=clone(SEED);
+  // Then update from Firebase in background
+  loadFromFirebase();
+}
+
+function loadFromFirebase(){
+  if(!window._fs){
+    setTimeout(loadFromFirebase, 300);
+    return;
+  }
+  window._fs.collection("restaurants").get()
+  .then(function(snap){
+    if(!snap.empty){
+      S.restaurants=[];
+      snap.forEach(function(doc){
+        var r=doc.data();
+        r._docId=doc.id;
+        S.restaurants.push(r);
+      });
+      console.log("Loaded "+S.restaurants.length+" restaurants from Firebase");
+      applyFilter();buildMks();renderAll();
+    } else {
+      console.log("Firebase empty, using seed data");
+    }
+  })
+  .catch(function(e){
+    console.error("Firebase load failed, using seed data:", e);
+  });
 }
 function persist(){try{localStorage.setItem("crackerv4",JSON.stringify({restaurants:S.restaurants,favs:S.favs,comments:S.comments}));}catch(e){}}
 function clone(o){return JSON.parse(JSON.stringify(o));}
@@ -828,7 +857,7 @@ function approveR(btn,docId){
     if(!doc.exists){toast("Not found");loadPending();return;}
     var r=doc.data();r.id="r"+Date.now();r.status="approved";
     window._fs.collection("restaurants").add(r).then(function(){
-      S.restaurants.push(r);persist();applyFilter();buildMks();renderPanel();
+      S.restaurants.push(r);persist();applyFilter();buildMks();renderPanel();renderAll();
       window._fs.collection("pending_restaurants").doc(docId).delete();
       toast("Approved! "+r.name+" is now live.");loadPending();
     });
