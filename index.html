@@ -1226,9 +1226,19 @@ function loadAdmRestaurants(){
 function admDeleteRestaurant(ri){
   var r=S.restaurants[ri];
   if(!r||!confirm("Delete "+r.name+"? This cannot be undone."))return;
+  var rname=r.name;
+  // Delete from Firebase
+  if(window._fs){
+    // Find Firebase doc by id field
+    window._fs.collection("restaurants").where("id","==",r.id).get()
+    .then(function(snap){
+      snap.forEach(function(doc){doc.ref.delete();});
+    }).catch(function(e){console.error("Firebase delete error:",e);});
+  }
+  // Also delete from local state
   S.restaurants.splice(ri,1);
   persist();applyFilter();buildMks();renderPanel();
-  toast("Deleted "+r.name);
+  toast("Deleted "+rname);
   loadAdmRestaurants();
 }
 function deleteRestaurant(rid){
