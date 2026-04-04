@@ -6,7 +6,7 @@
 <title>The 'Absolute Cracker' Aussie Cheap Eats List</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#F6F4F0;--surf:#fff;--ink:#0A0A0A;--ink2:#3A3A3A;--ink3:#888;
@@ -21,7 +21,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
 body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-size:14px;}
-.serif{font-family:'Playfair Display',Georgia,serif;}
+.serif{font-family:'DM Serif Display',Georgia,serif;}
 input,select,button{font-family:inherit;font-size:13px;}
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
@@ -159,6 +159,8 @@ input,select,button{font-family:inherit;font-size:13px;}
   #map-wrap{flex:1;}
 }
 </style>
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8267795564637907" crossorigin="anonymous"></script>
 </head>
 <body>
 <div id="loading"><div class="spinner"></div><p style="font-size:13px;color:var(--ink3);">Loading map...</p></div>
@@ -170,8 +172,8 @@ input,select,button{font-family:inherit;font-size:13px;}
 <div id="hdr">
   <div style="max-width:1400px;margin:0 auto;padding:0 20px;height:56px;display:flex;align-items:center;gap:12px;">
     <div style="flex-shrink:0;">
-      <div class="serif" style="font-size:17px;color:#fff;line-height:1.1;">The <span style="font-style:italic;color:#F5C842;">'Absolute Cracker'</span></div>
-      <div style="font-size:9px;color:#666;letter-spacing:.15em;text-transform:uppercase;margin-top:1px;">Aussie Cheap Eats List</div>
+      <div style="font-family:'DM Serif Display',Georgia,serif;font-size:18px;color:#fff;line-height:1;letter-spacing:-.2px;">The <span style="font-style:italic;color:#F5C842;">'Absolute Cracker'</span></div>
+      <div style="font-family:'Inter',sans-serif;font-size:8.5px;color:#F5C842;letter-spacing:.25em;text-transform:uppercase;margin-top:3px;opacity:.75;font-weight:600;">Aussie Cheap Eats List</div>
     </div>
     <div style="flex:1;max-width:320px;position:relative;">
       <svg style="position:absolute;left:9px;top:50%;transform:translateY(-50%);opacity:.35;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -216,6 +218,15 @@ input,select,button{font-family:inherit;font-size:13px;}
   </div>
 </div>
 
+<!-- Ad Banner (below filter bar) -->
+<div id="ad-bar" style="background:#fff;border-bottom:1px solid var(--border);padding:4px 0;text-align:center;min-height:60px;display:flex;align-items:center;justify-content:center;">
+  <ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:60px"
+     data-ad-client="ca-pub-8267795564637907"
+     data-ad-slot="auto"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
 <!-- BODY -->
 <div id="body">
   <!-- Map -->
@@ -240,7 +251,14 @@ input,select,button{font-family:inherit;font-size:13px;}
       <div class="ptab on" id="pt-list" onclick="setPTab('list')">Restaurants</div>
       <div class="ptab" id="pt-fav" onclick="setPTab('fav')">Saved</div>
     </div>
-    <div id="plist" style="overflow-y:auto;flex:1;"></div>
+    <div id="ad-panel" style="padding:8px;text-align:center;border-bottom:1px solid var(--border2);">
+  <ins class="adsbygoogle"
+     style="display:inline-block;width:280px;height:250px"
+     data-ad-client="ca-pub-8267795564637907"
+     data-ad-slot="auto"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div id="plist" style="overflow-y:auto;flex:1;"></div>
     <div id="pfav" style="overflow-y:auto;flex:1;display:none;"></div>
   </div>
 
@@ -249,6 +267,14 @@ input,select,button{font-family:inherit;font-size:13px;}
 </div><!-- #body -->
 
 <!-- Bottom Nav (mobile only) -->
+<!-- Mobile sticky bottom ad (above nav) -->
+<div id="ad-mobile" style="display:none;background:#fff;border-top:1px solid var(--border);text-align:center;padding:4px 0;">
+  <ins class="adsbygoogle"
+     style="display:inline-block;width:320px;height:50px"
+     data-ad-client="ca-pub-8267795564637907"
+     data-ad-slot="auto"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 <div id="bnav">
   <button class="bnav-btn on" id="bnav-map" onclick="setMobileTab('map')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
@@ -300,7 +326,7 @@ input,select,button{font-family:inherit;font-size:13px;}
   <div id="adm-login" style="display:flex;align-items:center;justify-content:center;width:100%;">
     <div style="background:#fff;border-radius:16px;width:100%;max-width:380px;box-shadow:0 24px 80px rgba(0,0,0,.3);overflow:hidden;">
       <div style="padding:24px 28px 20px;background:#111;text-align:center;">
-        <div style="font-size:22px;font-weight:800;color:#fff;font-family:'Playfair Display',serif;">Admin Login</div>
+        <div style="font-size:22px;font-weight:800;color:#fff;font-family:'DM Serif Display',Georgia,serif;">Admin Login</div>
         <div style="font-size:12px;color:#666;margin-top:4px;">Cracker Eats</div>
       </div>
       <div style="padding:28px;">
@@ -324,7 +350,7 @@ input,select,button{font-family:inherit;font-size:13px;}
     <div style="background:#fff;border-radius:16px;box-shadow:0 24px 80px rgba(0,0,0,.3);overflow:hidden;">
       <div style="padding:16px 20px;background:#111;display:flex;justify-content:space-between;align-items:center;">
         <div>
-          <div style="font-size:18px;font-weight:800;color:#fff;font-family:'Playfair Display',serif;">Admin Panel</div>
+          <div style="font-size:18px;font-weight:800;color:#fff;font-family:'DM Serif Display',Georgia,serif;">Admin Panel</div>
           <div style="font-size:11px;color:#666;margin-top:2px;">crackereatlist.com.au</div>
         </div>
         <button onclick="closeAdmin()" style="background:rgba(255,255,255,.1);border:none;border-radius:8px;width:32px;height:32px;font-size:18px;color:#fff;cursor:pointer;">&times;</button>
@@ -369,19 +395,19 @@ var SEED=[
   {id:"kb10",name:"Krazy Bird - Mittagong",suburb:"Mittagong",category:"Korean",address:"Shop 4/130 Main St",lat:-34.4459,lng:150.4481,menus:[{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Teriyaki Chicken Ramen",price:21.5},{item:"Korean Corn Dog",price:9.9}],rating:4.7,votes:{up:92,down:5},chain:true,updatedAt:"2026-03-15"},
   {id:"c1",name:"Mamak",suburb:"Haymarket",category:"Malaysian",address:"15 Goulburn St",lat:-33.8771,lng:151.2044,menus:[{item:"Roti Canai with Curry",price:12.9},{item:"Nasi Lemak",price:14.5},{item:"Mee Goreng",price:17.5}],rating:4.5,votes:{up:312,down:18},chain:false,updatedAt:"2026-03-15"},
   {id:"c2",name:"Din Tai Fung",suburb:"CBD",category:"Chinese",address:"644 George St",lat:-33.8769,lng:151.2064,menus:[{item:"Xiao Long Bao 10pcs",price:22},{item:"Pork Chop Fried Rice",price:18},{item:"Wonton Soup",price:16}],rating:4.6,votes:{up:320,down:12},chain:false,updatedAt:"2026-03-01"},
-  {id:"c3",name:"Ippudo Sydney",suburb:"CBD",category:"Japanese",address:"Westfield Sydney",lat:-33.8706,lng:151.2081,menus:[{item:"Shiromaru Ramen",price:24},{item:"Karaka Ramen",price:24},{item:"Takoyaki 6pcs",price:12}],rating:4.4,votes:{up:198,down:11},chain:false,updatedAt:"2026-03-01"},
-  {id:"c4",name:"Spice I Am",suburb:"Surry Hills",category:"Thai",address:"90 Wentworth Ave",lat:-33.8816,lng:151.2101,menus:[{item:"Green Curry with Rice",price:20},{item:"Pad Thai",price:19},{item:"Tom Yum Soup",price:15}],rating:4.5,votes:{up:224,down:10},chain:false,updatedAt:"2026-03-15"},
-  {id:"c5",name:"Bourke St Bakery",suburb:"Surry Hills",category:"Cafe",address:"633 Bourke St",lat:-33.8868,lng:151.2108,menus:[{item:"Sausage Roll",price:9},{item:"Ginger Brulee Tart",price:7},{item:"Almond Croissant",price:9}],rating:4.5,votes:{up:276,down:8},chain:false,updatedAt:"2026-03-01"},
-  {id:"c6",name:"Lode Pies",suburb:"Surry Hills",category:"Cafe",address:"487 Crown St",lat:-33.8882,lng:151.2132,menus:[{item:"Wagyu Mushroom Pie",price:20},{item:"Croissant",price:8},{item:"Sausage Roll",price:10}],rating:4.6,votes:{up:143,down:6},chain:false,updatedAt:"2026-03-01"},
+  {id:"c3",name:"Ippudo Sydney",suburb:"CBD",category:"Japanese",address:"Westfield Sydney",lat:-33.8706,lng:151.2081,menus:[{item:"Shiromaru Ramen",price:24},{item:"Karaka Ramen",price:24},{item:"Tori Paitan Ramen",price:24}],rating:4.4,votes:{up:198,down:11},chain:false,updatedAt:"2026-03-01"},
+  {id:"c4",name:"Spice I Am",suburb:"Surry Hills",category:"Thai",address:"90 Wentworth Ave",lat:-33.8816,lng:151.2101,menus:[{item:"Green Curry with Rice",price:20},{item:"Pad Thai",price:19},{item:"Stir-fry with Rice",price:19}],rating:4.5,votes:{up:224,down:10},chain:false,updatedAt:"2026-03-15"},
+  {id:"c5",name:"Bourke St Bakery",suburb:"Surry Hills",category:"Cafe",address:"633 Bourke St",lat:-33.8868,lng:151.2108,menus:[{item:"Sausage Roll",price:9},{item:"Sandwich/Toastie",price:15},{item:"Coffee + Pastry Combo",price:12}],rating:4.5,votes:{up:276,down:8},chain:false,updatedAt:"2026-03-01"},
+  {id:"c6",name:"Lode Pies",suburb:"Surry Hills",category:"Cafe",address:"487 Crown St",lat:-33.8882,lng:151.2132,menus:[{item:"Wagyu Mushroom Pie",price:20},{item:"Beef & Cheese Pie",price:19},{item:"Sausage Roll",price:10}],rating:4.6,votes:{up:143,down:6},chain:false,updatedAt:"2026-03-01"},
   {id:"c7",name:"New Shanghai",suburb:"CBD",category:"Chinese",address:"Westfield Sydney",lat:-33.8697,lng:151.2070,menus:[{item:"Pan-fried Pork Bun 4pcs",price:14},{item:"Dumplings 6pcs",price:18},{item:"Hand-pulled Noodles",price:20}],rating:4.3,votes:{up:167,down:14},chain:false,updatedAt:"2026-03-15"},
   {id:"c8",name:"Ommi Don",suburb:"Surry Hills",category:"Japanese",address:"414 Elizabeth St",lat:-33.8834,lng:151.2100,menus:[{item:"Braised Pork Hock Don",price:17.5},{item:"Wagyu Beef Don",price:22},{item:"Fried Chicken Don",price:17.5}],rating:4.5,votes:{up:189,down:9},chain:false,updatedAt:"2026-03-15"},
-  {id:"c9",name:"Saigon Summer",suburb:"Newtown",category:"Vietnamese",address:"255 King St",lat:-33.8971,lng:151.1793,menus:[{item:"Pho Ga",price:16},{item:"Banh Mi",price:13},{item:"Rice Paper Rolls 3pcs",price:12}],rating:4.4,votes:{up:143,down:8},chain:false,updatedAt:"2026-03-15"},
-  {id:"c10",name:"Patizzi",suburb:"Newtown",category:"Italian",address:"211 King St",lat:-33.8982,lng:151.1779,menus:[{item:"Pasta from",price:20},{item:"Pizza from",price:22},{item:"Pastizzi",price:3}],rating:4.4,votes:{up:121,down:9},chain:false,updatedAt:"2026-03-15"},
+  {id:"c9",name:"Saigon Summer",suburb:"Newtown",category:"Vietnamese",address:"255 King St",lat:-33.8971,lng:151.1793,menus:[{item:"Pho Ga",price:16},{item:"Banh Mi",price:13},{item:"Bun Bo Hue",price:16}],rating:4.4,votes:{up:143,down:8},chain:false,updatedAt:"2026-03-15"},
+  {id:"c10",name:"Patizzi",suburb:"Newtown",category:"Italian",address:"211 King St",lat:-33.8982,lng:151.1779,menus:[{item:"Pasta from",price:20},{item:"Pizza from",price:22},{item:"Calzone",price:22}],rating:4.4,votes:{up:121,down:9},chain:false,updatedAt:"2026-03-15"},
   {id:"c11",name:"Albee's Kitchen",suburb:"Haymarket",category:"Malaysian",address:"723 George St",lat:-33.8784,lng:151.2049,menus:[{item:"Nasi Lemak Set",price:18},{item:"Laksa",price:19},{item:"Curry Chicken with Rice",price:17}],rating:4.4,votes:{up:198,down:12},chain:false,updatedAt:"2026-03-15"},
-  {id:"c12",name:"Ama Thai",suburb:"Surry Hills",category:"Thai",address:"47 Cooper St",lat:-33.8846,lng:151.2087,menus:[{item:"Beef Noodle Soup",price:19},{item:"Pad Kra Pao",price:20},{item:"Mango Sticky Rice",price:12}],rating:4.6,votes:{up:87,down:4},chain:false,updatedAt:"2026-03-15"},
-  {id:"c13",name:"Pho Pasteur",suburb:"Haymarket",category:"Vietnamese",address:"709 George St",lat:-33.8781,lng:151.2046,menus:[{item:"Beef Pho large",price:19},{item:"Chicken Pho",price:18},{item:"Banh Mi",price:12}],rating:4.4,votes:{up:234,down:14},chain:false,updatedAt:"2026-03-15"},
+  {id:"c12",name:"Ama Thai",suburb:"Surry Hills",category:"Thai",address:"47 Cooper St",lat:-33.8846,lng:151.2087,menus:[{item:"Beef Noodle Soup",price:19},{item:"Pad Kra Pao",price:20},{item:"Massaman Curry + Rice",price:19}],rating:4.6,votes:{up:87,down:4},chain:false,updatedAt:"2026-03-15"},
+  {id:"c13",name:"Pho Pasteur",suburb:"Haymarket",category:"Vietnamese",address:"709 George St",lat:-33.8781,lng:151.2046,menus:[{item:"Beef Pho large",price:19},{item:"Chicken Pho",price:18},{item:"Rice Vermicelli Bowl",price:17}],rating:4.4,votes:{up:234,down:14},chain:false,updatedAt:"2026-03-15"},
   {id:"c14",name:"King's Banh Mi",suburb:"Surry Hills",category:"Vietnamese",address:"325 Crown St",lat:-33.8851,lng:151.2112,menus:[{item:"Char Siu Banh Mi",price:12},{item:"Roast Duck Banh Mi",price:13},{item:"Pork Crackling Roll",price:12}],rating:4.6,votes:{up:302,down:11},chain:false,updatedAt:"2026-03-15"},
-  {id:"c15",name:"Bar Reggio",suburb:"Darlinghurst",category:"Italian",address:"135 Crown St",lat:-33.8799,lng:151.2169,menus:[{item:"Pasta",price:22},{item:"Margherita Pizza",price:22},{item:"Tiramisu",price:12}],rating:4.5,votes:{up:187,down:9},chain:false,updatedAt:"2026-03-15"},
+  {id:"c15",name:"Bar Reggio",suburb:"Darlinghurst",category:"Italian",address:"135 Crown St",lat:-33.8799,lng:151.2169,menus:[{item:"Pasta from",price:22},{item:"Margherita Pizza",price:22},{item:"Gnocchi",price:23}],rating:4.5,votes:{up:187,down:9},chain:false,updatedAt:"2026-03-15"},
   {id:"c16",name:"Dae Jang Kum",suburb:"Haymarket",category:"Korean",address:"35 Goulburn St",lat:-33.8779,lng:151.2052,menus:[{item:"Kimchi Jjigae Set (per person)",price:22},{item:"Dolsot Bibimbap",price:20},{item:"Korean Fried Rice",price:18}],rating:4.7,votes:{up:124,down:8},chain:false,updatedAt:"2026-03-01"},
   {id:"c17",name:"Seoul Ria",suburb:"CBD",category:"Korean",address:"605 George St",lat:-33.8776,lng:151.2055,menus:[{item:"Galbi Lunch Set (per person)",price:24},{item:"Bibimbap",price:22},{item:"Snow Chicken",price:22}],rating:4.7,votes:{up:98,down:5},chain:false,updatedAt:"2026-03-01"},
   {id:"c18",name:"Myung Jang & Obaltan",suburb:"CBD",category:"Korean",address:"363A Pitt St",lat:-33.8758,lng:151.2076,menus:[{item:"BBQ Buffet (per person)",price:24},{item:"Fried Chicken",price:22},{item:"Cold Noodles",price:20}],rating:4.5,votes:{up:76,down:4},chain:false,updatedAt:"2026-03-01"},
@@ -389,22 +415,22 @@ var SEED=[
   {id:"c20",name:"Sayong Laksa",suburb:"CBD",category:"Malaysian",address:"World Square",lat:-33.8770,lng:151.2059,menus:[{item:"Signature Laksa",price:19},{item:"Curry Laksa",price:18},{item:"Asam Laksa",price:18}],rating:4.3,votes:{up:156,down:11},chain:false,updatedAt:"2026-03-15"},
   // ── RAMEN & JAPANESE ──
   {id:"n1",name:"Gumshara Ramen",suburb:"Haymarket",category:"Japanese",address:"Kimber Lane & Little Hay St",lat:-33.8764,lng:151.2041,menus:[{item:"Tonkotsu Ramen (small)",price:14.5},{item:"Tonkotsu Ramen (large)",price:18.5},{item:"Miso Ramen",price:16.5}],rating:4.7,votes:{up:245,down:8},chain:false,updatedAt:"2026-03-15"},
-  {id:"n2",name:"Mappen",suburb:"CBD",category:"Japanese",address:"Shop T14 World Square",lat:-33.8770,lng:151.2058,menus:[{item:"Tonkotsu Ramen",price:9.9},{item:"Shoyu Ramen",price:9.9},{item:"Gyoza 6pcs",price:7.9}],rating:4.4,votes:{up:189,down:12},chain:false,updatedAt:"2026-03-15"},
-  {id:"n3",name:"Chaco Ramen",suburb:"Darlinghurst",category:"Japanese",address:"2 Kensington St",lat:-33.8789,lng:151.2155,menus:[{item:"Hakata Ramen",price:19},{item:"Char Siu Ramen",price:21},{item:"Karaage Chicken",price:14}],rating:4.5,votes:{up:167,down:9},chain:false,updatedAt:"2026-03-15"},
-  {id:"n4",name:"Menya Mappen",suburb:"CBD",category:"Japanese",address:"480 George St",lat:-33.8727,lng:151.2068,menus:[{item:"Ramen",price:9.9},{item:"Karaage set",price:12.9},{item:"Gyoza",price:7.9}],rating:4.3,votes:{up:134,down:11},chain:false,updatedAt:"2026-03-15"},
-  {id:"n5",name:"Neko Neko Ramen",suburb:"Surry Hills",category:"Japanese",address:"557 Crown St",lat:-33.8872,lng:151.2119,menus:[{item:"Pork Ramen",price:18},{item:"Vegan Ramen",price:17},{item:"Chashu Rice",price:14}],rating:4.4,votes:{up:98,down:6},chain:false,updatedAt:"2026-03-15"},
+  {id:"n2",name:"Mappen",suburb:"CBD",category:"Japanese",address:"Shop T14 World Square",lat:-33.8770,lng:151.2058,menus:[{item:"Tonkotsu Ramen",price:9.9},{item:"Shoyu Ramen",price:9.9},{item:"Miso Ramen",price:9.9}],rating:4.4,votes:{up:189,down:12},chain:false,updatedAt:"2026-03-15"},
+  {id:"n3",name:"Chaco Ramen",suburb:"Darlinghurst",category:"Japanese",address:"2 Kensington St",lat:-33.8789,lng:151.2155,menus:[{item:"Hakata Ramen",price:19},{item:"Char Siu Ramen",price:21},{item:"Yuzu Ramen",price:20}],rating:4.5,votes:{up:167,down:9},chain:false,updatedAt:"2026-03-15"},
+  {id:"n4",name:"Menya Mappen",suburb:"CBD",category:"Japanese",address:"480 George St",lat:-33.8727,lng:151.2068,menus:[{item:"Ramen",price:9.9},{item:"Karaage Ramen Set",price:12.9},{item:"Chicken Ramen",price:9.9}],rating:4.3,votes:{up:134,down:11},chain:false,updatedAt:"2026-03-15"},
+  {id:"n5",name:"Neko Neko Ramen",suburb:"Surry Hills",category:"Japanese",address:"557 Crown St",lat:-33.8872,lng:151.2119,menus:[{item:"Pork Ramen",price:18},{item:"Vegan Ramen",price:17},{item:"Miso Ramen",price:18}],rating:4.4,votes:{up:98,down:6},chain:false,updatedAt:"2026-03-15"},
 
   // ── VIETNAMESE ──
   {id:"n6",name:"Tan Viet Noodle House",suburb:"Cabramatta",category:"Vietnamese",address:"100 John St",lat:-33.8956,lng:150.9341,menus:[{item:"Crispy Chicken with Rice",price:19},{item:"Roast Pork Noodle Soup",price:18},{item:"Combination Pho",price:19}],rating:4.7,votes:{up:312,down:11},chain:false,updatedAt:"2026-03-15"},
   {id:"n7",name:"Pho Tau Bay",suburb:"Bankstown",category:"Vietnamese",address:"421 Chapel Rd",lat:-33.9175,lng:151.0355,menus:[{item:"Pho Dac Biet",price:19},{item:"Pho Bo Vien",price:17},{item:"Sate Pho",price:19}],rating:4.6,votes:{up:276,down:14},chain:false,updatedAt:"2026-03-15"},
-  {id:"n8",name:"An Restaurant",suburb:"Bankstown",category:"Vietnamese",address:"26 The Appian Way",lat:-33.9192,lng:151.0361,menus:[{item:"Pho Large",price:18},{item:"Banh Mi",price:8},{item:"Lemongrass Chicken",price:20}],rating:4.5,votes:{up:198,down:13},chain:false,updatedAt:"2026-03-15"},
-  {id:"n9",name:"Marrickville Pork Roll",suburb:"Marrickville",category:"Vietnamese",address:"358 Illawarra Rd",lat:-33.9102,lng:151.1589,menus:[{item:"Pork Roll",price:8},{item:"Chicken Roll",price:8},{item:"Vietnamese Iced Coffee",price:5}],rating:4.6,votes:{up:342,down:9},chain:false,updatedAt:"2026-03-15"},
-  {id:"n10",name:"VN Street Foods",suburb:"Haymarket",category:"Vietnamese",address:"Shop 2, 28 Dixon St",lat:-33.8773,lng:151.2037,menus:[{item:"Vietnamese Meal Box",price:16},{item:"Pho",price:16},{item:"Banh Mi",price:9}],rating:4.3,votes:{up:143,down:10},chain:false,updatedAt:"2026-03-15"},
+  {id:"n8",name:"An Restaurant",suburb:"Bankstown",category:"Vietnamese",address:"26 The Appian Way",lat:-33.9192,lng:151.0361,menus:[{item:"Pho Large",price:18},{item:"Lemongrass Chicken",price:20},{item:"Vermicelli Bowl",price:17}],rating:4.5,votes:{up:198,down:13},chain:false,updatedAt:"2026-03-15"},
+  {id:"n9",name:"Marrickville Pork Roll",suburb:"Marrickville",category:"Vietnamese",address:"358 Illawarra Rd",lat:-33.9102,lng:151.1589,menus:[{item:"Pork Roll",price:8},{item:"Chicken Roll",price:8},{item:"Combination Roll",price:9}],rating:4.6,votes:{up:342,down:9},chain:false,updatedAt:"2026-03-15"},
+  {id:"n10",name:"VN Street Foods",suburb:"Haymarket",category:"Vietnamese",address:"Shop 2, 28 Dixon St",lat:-33.8773,lng:151.2037,menus:[{item:"Vietnamese Meal Box",price:16},{item:"Pho",price:16},{item:"Rice Vermicelli Bowl",price:15}],rating:4.3,votes:{up:143,down:10},chain:false,updatedAt:"2026-03-15"},
 
   // ── CHINESE & DUMPLINGS ──
   {id:"n11",name:"Chinese Noodle Restaurant",suburb:"Haymarket",category:"Chinese",address:"8 Quay St",lat:-33.8779,lng:151.2040,menus:[{item:"Pan-fried Dumplings (half)",price:8.8},{item:"Hand-pulled Noodles",price:15},{item:"Braised Eggplant",price:16}],rating:4.6,votes:{up:287,down:10},chain:false,updatedAt:"2026-03-15"},
   {id:"n12",name:"Xi'an Biang Biang",suburb:"Haymarket",category:"Chinese",address:"Eating World Food Court, 25 Dixon St",lat:-33.8768,lng:151.2038,menus:[{item:"Biang Biang Noodles",price:16},{item:"Rou Jia Mo Burger",price:12},{item:"Cold Noodles in Chilli",price:14}],rating:4.5,votes:{up:198,down:11},chain:false,updatedAt:"2026-03-15"},
-  {id:"n13",name:"Baba Wu",suburb:"CBD",category:"Chinese",address:"Town Hall Square",lat:-33.8752,lng:151.2066,menus:[{item:"Pan-fried Dumplings",price:3.9},{item:"Boiled Dumplings 12pcs",price:13},{item:"Wonton Noodle Soup",price:14}],rating:4.4,votes:{up:167,down:8},chain:false,updatedAt:"2026-03-15"},
+  {id:"n13",name:"Baba Wu",suburb:"CBD",category:"Chinese",address:"Town Hall Square",lat:-33.8752,lng:151.2066,menus:[{item:"Dumplings 6pcs",price:9},{item:"Boiled Dumplings 12pcs",price:13},{item:"Wonton Noodle Soup",price:14}],rating:4.4,votes:{up:167,down:8},chain:false,updatedAt:"2026-03-15"},
   {id:"n14",name:"Kowloon Cafe",suburb:"Haymarket",category:"Chinese",address:"26 Dixon St",lat:-33.8766,lng:151.2039,menus:[{item:"Wonton Noodle Soup",price:14},{item:"Char Siu Rice",price:15},{item:"HK Milk Tea",price:6}],rating:4.4,votes:{up:156,down:9},chain:false,updatedAt:"2026-03-15"},
   {id:"n15",name:"Emperor's Garden BBQ",suburb:"Haymarket",category:"Chinese",address:"213 Thomas St",lat:-33.8784,lng:151.2044,menus:[{item:"Roast Duck Rice",price:16},{item:"BBQ Pork Rice",price:15},{item:"Wonton Soup",price:14}],rating:4.5,votes:{up:234,down:12},chain:false,updatedAt:"2026-03-15"},
 
@@ -441,9 +467,9 @@ var SEED=[
   {id:"n35",name:"Il Baretto",suburb:"Surry Hills",category:"Italian",address:"496 Bourke St",lat:-33.8874,lng:151.2105,menus:[{item:"Pasta from",price:22},{item:"Risotto",price:24},{item:"Tiramisu",price:10}],rating:4.5,votes:{up:145,down:6},chain:false,updatedAt:"2026-03-15"},
 
   // ── CAFES & BAKERIES ──
-  {id:"n36",name:"Luxe Bakery",suburb:"Newtown",category:"Cafe",address:"382 King St",lat:-33.8989,lng:151.1802,menus:[{item:"Croissant",price:7},{item:"Meat Pie",price:9},{item:"Coffee + Pastry",price:10}],rating:4.5,votes:{up:156,down:6},chain:false,updatedAt:"2026-03-15"},
+  {id:"n36",name:"Luxe Bakery",suburb:"Newtown",category:"Cafe",address:"382 King St",lat:-33.8989,lng:151.1802,menus:[{item:"Meat Pie",price:9},{item:"Sausage Roll",price:8},{item:"Toastie",price:12}],rating:4.5,votes:{up:156,down:6},chain:false,updatedAt:"2026-03-15"},
   {id:"n37",name:"Grounds of Alexandria",suburb:"Alexandria",category:"Cafe",address:"7A, 2 Huntley St",lat:-33.9078,lng:151.1944,menus:[{item:"Eggs Benedict",price:22},{item:"Avocado Toast",price:20},{item:"Pancakes",price:19}],rating:4.4,votes:{up:243,down:14},chain:false,updatedAt:"2026-03-15"},
-  {id:"n38",name:"Single O",suburb:"Surry Hills",category:"Cafe",address:"60 Reservoir St",lat:-33.8862,lng:151.2101,menus:[{item:"Eggs on Toast",price:16},{item:"Granola Bowl",price:14},{item:"Flat White",price:5}],rating:4.5,votes:{up:198,down:8},chain:false,updatedAt:"2026-03-15"},
+  {id:"n38",name:"Single O",suburb:"Surry Hills",category:"Cafe",address:"60 Reservoir St",lat:-33.8862,lng:151.2101,menus:[{item:"Eggs on Toast",price:16},{item:"Granola Bowl",price:14},{item:"Brekky Plate",price:18}],rating:4.5,votes:{up:198,down:8},chain:false,updatedAt:"2026-03-15"},
 
   // ── MIDDLE EASTERN / LEBANESE ──
   {id:"n39",name:"Cairo Bakehouse",suburb:"Newtown",category:"Other",address:"268 King St",lat:-33.8970,lng:151.1788,menus:[{item:"Chicken Shawarma",price:14},{item:"Falafel Wrap",price:12},{item:"Hummus + Pita",price:10}],rating:4.4,votes:{up:134,down:7},chain:false,updatedAt:"2026-03-15"},
@@ -459,7 +485,7 @@ var SEED=[
   {id:"n45",name:"Coogee Bay Seafood",suburb:"Coogee",category:"Other",address:"Coogee Bay Rd",lat:-33.9225,lng:151.2540,menus:[{item:"Fish & Chips",price:18},{item:"Battered Flathead",price:20},{item:"Calamari",price:18}],rating:4.3,votes:{up:134,down:10},chain:false,updatedAt:"2026-03-15"},
 
   // ── MIXED / OTHERS ──
-  {id:"n46",name:"Pastizzi Cafe",suburb:"Newtown",category:"Italian",address:"220 King St",lat:-33.8975,lng:151.1783,menus:[{item:"Pastizzi (Cheese)",price:2},{item:"Pastizzi (Pea)",price:2},{item:"Pasta from",price:19}],rating:4.5,votes:{up:198,down:8},chain:false,updatedAt:"2026-03-15"},
+  {id:"n46",name:"Pastizzi Cafe",suburb:"Newtown",category:"Italian",address:"220 King St",lat:-33.8975,lng:151.1783,menus:[{item:"Pasta from",price:19},{item:"Pizza from",price:21},{item:"Pastizzi Platter",price:12}],rating:4.5,votes:{up:198,down:8},chain:false,updatedAt:"2026-03-15"},
   {id:"n47",name:"Oiden",suburb:"CBD",category:"Japanese",address:"Level 1, World Square",lat:-33.8769,lng:151.2059,menus:[{item:"Beef Bowl",price:12},{item:"Chicken Karaage Bowl",price:12},{item:"Gyudon Large",price:15}],rating:4.5,votes:{up:167,down:7},chain:false,updatedAt:"2026-03-15"},
   {id:"n48",name:"Azuma Sushi",suburb:"CBD",category:"Japanese",address:"L1 Chifley Plaza",lat:-33.8659,lng:151.2100,menus:[{item:"Sushi Train plate from",price:5.5},{item:"Ramen",price:18},{item:"Bento Set",price:22}],rating:4.3,votes:{up:112,down:9},chain:false,updatedAt:"2026-03-15"},
   {id:"n49",name:"Thai Riffic",suburb:"Pyrmont",category:"Thai",address:"Star City Mall",lat:-33.8692,lng:151.1942,menus:[{item:"Green Curry + Rice",price:19},{item:"Pad See Ew",price:18},{item:"Tom Kha Soup",price:16}],rating:4.3,votes:{up:98,down:8},chain:false,updatedAt:"2026-03-15"},
@@ -788,7 +814,7 @@ function renderModal(){
     setTimeout(initPlaceWidget,50);
   } else {
     document.getElementById("modal-body").innerHTML=err
-      +'<p style="font-size:13px;color:var(--ink2);margin-bottom:16px;line-height:1.5;">Add menu items for <strong>'+escHTML(f.name)+'</strong>.</p>'
+      +'<p style="font-size:13px;color:var(--ink2);margin-bottom:16px;line-height:1.5;">Add <strong>main menu items only</strong> (no sides, drinks, or desserts). For <strong>'+escHTML(f.name)+'</strong>.</p>'
       +'<div style="display:flex;flex-direction:column;gap:9px;margin-bottom:10px;">'
       +ms.map(function(mm,i){return '<div style="display:flex;gap:8px;align-items:center;"><input value="'+escHTML(mm.item)+'" oninput="S.addMenus['+i+'].item=this.value" placeholder="e.g. Ramen (per person)" style="'+iS+'flex:1;box-sizing:border-box;"/><div style="display:flex;align-items:center;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;flex-shrink:0;width:95px;"><span style="padding:9px 8px;background:var(--bg);font-size:12px;color:var(--ink3);border-right:1px solid var(--border);">A$</span><input value="'+escHTML(String(mm.price||""))+'" oninput="S.addMenus['+i+'].price=this.value" placeholder="0" type="number" min="0" style="flex:1;padding:9px 7px;border:none;font-size:13px;background:transparent;width:50px;outline:none;"/></div>'+(ms.length>1?'<button onclick="rmMenu('+i+')" style="width:34px;height:36px;flex-shrink:0;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;font-size:16px;cursor:pointer;">&times;</button>':'')+'</div>';}).join("")
       +'</div>'
@@ -1125,7 +1151,8 @@ function loadAdmRestaurants(){
         +'</div>'
         // Menu
         +'<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border2);">'
-          +'<label style="'+lS+'">Menu Items & Prices</label>'
+          +'<label style="'+lS+'">Main Menu Items & Prices</label>'
+        +'<p style="font-size:11px;color:var(--ink3);margin-bottom:6px;">Main dishes only - no sides, drinks or desserts</p>'
           +'<div id="menu-rows-'+ri+'" style="margin-top:6px;">'+menuRows+'</div>'
           +'<button data-type="addmenu" data-ri="'+ri+'" style="width:100%;margin-top:4px;padding:8px;border-radius:7px;border:1.5px dashed var(--border);background:transparent;color:#888;font-size:12px;cursor:pointer;">+ Add menu item</button>'
         +'</div>'
@@ -1333,7 +1360,8 @@ function openSuggestEdit(rid){
     +'<div style="padding:20px;" id="se-form">'
       +'<label style="'+lS+'">Your Name</label>'
       +'<input id="se-name" placeholder="Your name" style="'+iS+'"/>'
-      +'<label style="'+lS+'">Menu Items & Prices</label>'
+      +'<label style="'+lS+'">Main Menu Items & Prices</label>'
+        +'<p style="font-size:11px;color:var(--ink3);margin-bottom:6px;">Main dishes only - no sides, drinks or desserts</p>'
       +'<div id="se-rows" style="margin-top:6px;">'+rows+'</div>'
       +'<div id="se-err" style="color:var(--red);font-size:12px;margin-top:8px;"></div>'
       +'<button onclick="submitPriceEdit(\''+rid+'\')" style="width:100%;padding:11px;border-radius:9px;border:none;background:#111;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px;">Submit for Approval</button>'
