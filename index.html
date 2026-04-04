@@ -600,7 +600,7 @@ function showDrawer(r){
     _renderDrawer(r);
   });
 }
-function _renderDrawer(r){
+function _renderDrawer(r){window._currentRid=r.id;
   var m=CAT[r.category]||CAT.Other,mn=minP(r),fv=isFav(r.id),cmts=S.comments[r.id]||[];
   var rows=r.menus.map(function(mm,i){
     return '<div class="d-row" style="background:'+(i%2===0?"#fff":"var(--bg)")+'"><span style="font-size:13px;color:var(--ink2);">'+escHTML(mm.item)+'</span><span style="font-size:14px;font-weight:800;color:'+m.color+';">A$'+mm.price+'</span></div>';
@@ -638,7 +638,7 @@ function _renderDrawer(r){
       +'<button onclick="vote(\''+r.id+'\',\'up\')" style="flex:1;padding:6px 10px;border-radius:8px;border:1px solid #D0F0DA;background:#F0FBF4;color:#166534;font-size:12px;font-weight:700;cursor:pointer;">Correct '+r.votes.up+'</button>'
       +'<button onclick="vote(\''+r.id+'\',\'down\')" style="padding:6px 10px;border-radius:8px;border:1px solid #FAD4D4;background:#FDF4F4;color:#9F1239;font-size:12px;font-weight:700;cursor:pointer;">Wrong '+r.votes.down+'</button>'
     
-      +'<button onclick="openSuggestEdit(\\\''+r.id+'\\\')" style="width:100%;padding:7px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--ink2);font-size:12px;font-weight:600;cursor:pointer;margin-top:2px;">&#9998; Suggest Price/Menu Edit</button>'+'</div>'
+      +'<button onclick="openSuggestEdit()" style="width:100%;padding:7px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--ink2);font-size:12px;font-weight:600;cursor:pointer;margin-top:2px;">&#9998; Suggest Price/Menu Edit</button>'
     +'<div style="padding:10px 16px 6px;border-top:1px solid var(--border2);"><span class="lbl">Comments ('+cmts.length+')</span></div>'
     +cmtHTML
     +'<div style="padding:12px 14px;border-top:1px solid var(--border2);display:flex;flex-direction:column;gap:8px;">'
@@ -793,7 +793,7 @@ function renderModal(){
       +ms.map(function(mm,i){return '<div style="display:flex;gap:8px;align-items:center;"><input value="'+escHTML(mm.item)+'" oninput="S.addMenus['+i+'].item=this.value" placeholder="e.g. Ramen (per person)" style="'+iS+'flex:1;box-sizing:border-box;"/><div style="display:flex;align-items:center;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;flex-shrink:0;width:95px;"><span style="padding:9px 8px;background:var(--bg);font-size:12px;color:var(--ink3);border-right:1px solid var(--border);">A$</span><input value="'+escHTML(String(mm.price||""))+'" oninput="S.addMenus['+i+'].price=this.value" placeholder="0" type="number" min="0" style="flex:1;padding:9px 7px;border:none;font-size:13px;background:transparent;width:50px;outline:none;"/></div>'+(ms.length>1?'<button onclick="rmMenu('+i+')" style="width:34px;height:36px;flex-shrink:0;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;font-size:16px;cursor:pointer;">&times;</button>':'')+'</div>';}).join("")
       +'</div>'
       +'<button onclick="addItem()" style="width:100%;padding:9px;border-radius:8px;border:1.5px dashed var(--border);background:transparent;color:var(--ink3);font-size:12px;cursor:pointer;margin-bottom:18px;">+ Add item</button>'
-      +'<div style="display:flex;gap:10px;"><button onclick="S.addStep=1;S.addErr="";renderModal()" style="flex:1;padding:12px;border-radius:10px;border:1.5px solid var(--border);background:transparent;color:var(--ink2);font-size:13px;cursor:pointer;">Back</button><button onclick="doSubmit()" style="flex:2;padding:12px;border-radius:10px;border:none;background:#111;color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Submit for Approval</button></div>';
+      +'<button onclick="submitPriceEdit()" style="width:100%;padding:11px;border-radius:9px;border:none;background:#111;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px;">Submit for Approval</button>'
   }
 }
 
@@ -1307,6 +1307,7 @@ function geocodeAndSave(r,ri){
 
 // -- User Price/Menu Edit Suggestions --
 function openSuggestEdit(rid){
+  rid=rid||window._currentRid;
   var r=S.restaurants.find(function(x){return x.id===rid;});
   if(!r)return;
   // Build modal HTML
@@ -1348,6 +1349,7 @@ function closeSuggestEdit(){
 }
 
 function submitPriceEdit(rid){
+  rid=rid||window._currentRid;
   var nameEl=document.getElementById("se-name");
   var errEl=document.getElementById("se-err");
   var name=(nameEl&&nameEl.value||"").trim();
