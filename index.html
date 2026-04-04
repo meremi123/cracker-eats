@@ -392,7 +392,10 @@ input,select,button{font-family:inherit;font-size:13px;}
           <div style="font-size:18px;font-weight:800;color:#fff;font-family:'DM Serif Display',Georgia,serif;">Admin Panel</div>
           <div style="font-size:11px;color:#666;margin-top:2px;">crackereatlist.com.au</div>
         </div>
+        <div style="display:flex;gap:6px;align-items:center;">
+        <button onclick="logoutAdmin()" style="padding:5px 10px;border-radius:7px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.6);font-size:11px;font-weight:600;cursor:pointer;">Logout</button>
         <button onclick="closeAdmin()" style="background:rgba(255,255,255,.1);border:none;border-radius:8px;width:32px;height:32px;font-size:18px;color:#fff;cursor:pointer;">&times;</button>
+      </div>
       </div>
       <div style="display:flex;background:#111;padding:0 16px;gap:4px;">
         <button id="adm-tab-pending" onclick="showAdmTab('pending')" style="padding:10px 14px;border:none;font-size:13px;font-weight:600;cursor:pointer;color:#F5C842;background:rgba(255,255,255,.08);border-radius:8px 8px 0 0;">Pending</button>
@@ -1039,7 +1042,8 @@ function openAdmin(){
   // Focus username field
   if(!_admAuthed){setTimeout(function(){var u=document.getElementById("adm-user");if(u)u.focus();},100);}
 }
-function closeAdmin(){document.getElementById("adm").style.display="none";_admAuthed=false;}
+function closeAdmin(){document.getElementById("adm").style.display="none";}
+function logoutAdmin(){_admAuthed=false;closeAdmin();toast("Logged out.");}
 function showAdmLogin(err){
   document.getElementById("adm-login").style.display="flex";
   document.getElementById("adm-main").style.display="none";
