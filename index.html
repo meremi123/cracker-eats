@@ -680,22 +680,25 @@ function renderModal(){
   el.style.display=S.showAdd?"flex":"none";
   if(!S.showAdd)return;
   document.getElementById("modal-step").textContent="Step "+S.addStep+" of 2 - "+(S.addStep===1?"Basic info":"Menu & prices");
-  var f=S.addForm,ms=S.addMenus;
+  var f=S.addForm, ms=S.addMenus;
   var err=S.addErr?'<div style="background:#FDF3F3;border:1px solid #F5C4C4;border-radius:8px;padding:10px 14px;font-size:13px;color:var(--red);margin-bottom:14px;">'+S.addErr+'</div>':"";
   var iS="width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid var(--border);font-size:13px;background:#fff;box-sizing:border-box;";
-  var sS=iS+"cursor:pointer;appearance:none;padding-right:26px;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 8px center;";
+  var sS=iS+"cursor:pointer;appearance:none;";
   var lS="display:block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin-bottom:5px;";
   if(S.addStep===1){
+    var catOpts=Object.keys(CAT).map(function(cat){return '<option'+(f.category===cat?' selected':'')+'>'+cat+'</option>';}).join("");
     document.getElementById("modal-body").innerHTML=err
       +'<div style="display:flex;flex-direction:column;gap:14px;">'
-      +'<div>'+'<label style=\''+lS+'\'>'+'Restaurant Name'+'</label>'+'<input id=\"place-autocomplete\" value=\''+escHTML(f.name)+'\''+' placeholder=\"Search restaurant from Google Maps...\"'+' style=\''+iS+'\''+' autocomplete=\"off\"'+' oninput=\"handlePlaceInput(this.value)\"/>'+'<div id=\"place-dropdown\" style=\"display:none;border:1.5px solid var(--border);border-radius:8px;margin-top:3px;background:#fff;box-shadow:var(--sh1);overflow:hidden;max-height:180px;overflow-y:auto;\"></div>'+'<p style=\"font-size:11px;color:var(--ink3);margin-top:4px;\">Search to auto-fill from Google Maps, or type manually below</p>'+'</div>'
+      +'<div>'
+        +'<label style="'+lS+'">Restaurant Name</label>'
+        +'<input id="place-autocomplete" value="'+escHTML(f.name)+'" placeholder="Search restaurant name..." autocomplete="off" style="'+iS+'" oninput="handlePlaceInput(this.value)"/>'
+        +'<div id="place-dropdown" style="display:none;border:1.5px solid var(--border);border-radius:8px;margin-top:3px;background:#fff;box-shadow:var(--sh1);overflow:hidden;max-height:180px;overflow-y:auto;"></div>'
+        +'<p style="font-size:11px;color:var(--ink3);margin-top:4px;">Type to search from Google Maps, or fill in manually</p>'
+      +'</div>'
       +'<div><label style="'+lS+'">Address <span style="text-transform:none;font-weight:400;">optional</span></label><input value="'+escHTML(f.address)+'" oninput="S.addForm.address=this.value" placeholder="e.g. 15 Goulburn St" style="'+iS+'"/></div>'
       +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">'
-        +'<div><label style="'+lS+'">Suburb</label><input value="'+escHTML(f.suburb)+'" oninput="S.addForm.suburb=this.value" placeholder="e.g. Rhodes, Ryde..." style="'+iS+'"/></div>'
-        +'<div><label style="'+lS+'">Category</label><select onchange="S.addForm.category=this.value" style="'+sS+'">'+Object.keys(CAT).map(function(c){return '<option'+(f.category===c?" selected":"")+'>'+c+'</option>';}).join("")+'</select></div>'
-      +'</div>'
-      +'<div style="background:var(--bg);border-radius:8px;padding:12px;"><p style="font-size:11px;color:var(--ink3);line-height:1.5;margin-bottom:8px;">Optional: lat/lng for precise pin. Right-click on Google Maps - "Whats here?"</p>'
-        +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"><input value="'+escHTML(f.lat)+'" oninput="S.addForm.lat=this.value" placeholder="Latitude" type="number" step="any" style="'+iS+'font-size:12px;"/><input value="'+escHTML(f.lng)+'" oninput="S.addForm.lng=this.value" placeholder="Longitude" type="number" step="any" style="'+iS+'font-size:12px;"/></div>'
+        +'<div><label style="'+lS+'">Suburb</label><input value="'+escHTML(f.suburb)+'" oninput="S.addForm.suburb=this.value" placeholder="e.g. Newtown, CBD..." style="'+iS+'"/></div>'
+        +'<div><label style="'+lS+'">Category</label><select onchange="S.addForm.category=this.value" style="'+sS+'">'+catOpts+'</select></div>'
       +'</div>'
       +'<button onclick="addNext()" style="width:100%;padding:12px;border-radius:10px;border:none;background:#111;color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Next - Add Prices</button>'
       +'</div>';
@@ -703,10 +706,10 @@ function renderModal(){
     document.getElementById("modal-body").innerHTML=err
       +'<p style="font-size:13px;color:var(--ink2);margin-bottom:16px;line-height:1.5;">Add menu items for <strong>'+escHTML(f.name)+'</strong>.</p>'
       +'<div style="display:flex;flex-direction:column;gap:9px;margin-bottom:10px;">'
-      +ms.map(function(mm,i){return '<div style="display:flex;gap:8px;align-items:center;"><input value="'+escHTML(mm.item)+'" oninput="S.addMenus['+i+'].item=this.value" placeholder="e.g. Ramen (per person)" style="'+iS+'flex:1;"/><div style="display:flex;align-items:center;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;flex-shrink:0;width:95px;"><span style="padding:9px 8px;background:var(--bg);font-size:12px;color:var(--ink3);border-right:1px solid var(--border);">A$</span><input value="'+escHTML(String(mm.price||""))+'" oninput="S.addMenus['+i+'].price=this.value" placeholder="0" type="number" min="0" style="flex:1;padding:9px 7px;border:none;font-size:13px;background:transparent;width:50px;outline:none;"/></div>'+(ms.length>1?'<button onclick="rmMenu('+i+')" style="width:34px;height:36px;flex-shrink:0;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;font-size:16px;cursor:pointer;">&times;</button>':'')+'</div>';}).join("")
+      +ms.map(function(mm,i){return '<div style="display:flex;gap:8px;align-items:center;"><input value="'+escHTML(mm.item)+'" oninput="S.addMenus['+i+'].item=this.value" placeholder="e.g. Ramen (per person)" style="'+iS+'flex:1;box-sizing:border-box;"/><div style="display:flex;align-items:center;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;flex-shrink:0;width:95px;"><span style="padding:9px 8px;background:var(--bg);font-size:12px;color:var(--ink3);border-right:1px solid var(--border);">A$</span><input value="'+escHTML(String(mm.price||""))+'" oninput="S.addMenus['+i+'].price=this.value" placeholder="0" type="number" min="0" style="flex:1;padding:9px 7px;border:none;font-size:13px;background:transparent;width:50px;outline:none;"/></div>'+(ms.length>1?'<button onclick="rmMenu('+i+')" style="width:34px;height:36px;flex-shrink:0;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;font-size:16px;cursor:pointer;">&times;</button>':'')+'</div>';}).join("")
       +'</div>'
       +'<button onclick="addItem()" style="width:100%;padding:9px;border-radius:8px;border:1.5px dashed var(--border);background:transparent;color:var(--ink3);font-size:12px;cursor:pointer;margin-bottom:18px;">+ Add item</button>'
-      +'<div style="display:flex;gap:10px;"><button onclick="S.addStep=1;S.addErr=\'\';renderModal()" style="flex:1;padding:12px;border-radius:10px;border:1.5px solid var(--border);background:transparent;color:var(--ink2);font-size:13px;cursor:pointer;">Back</button><button onclick="doSubmit()" style="flex:2;padding:12px;border-radius:10px;border:none;background:#111;color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Submit for Approval</button></div>';
+      +'<div style="display:flex;gap:10px;"><button onclick="S.addStep=1;S.addErr="";renderModal()" style="flex:1;padding:12px;border-radius:10px;border:1.5px solid var(--border);background:transparent;color:var(--ink2);font-size:13px;cursor:pointer;">Back</button><button onclick="doSubmit()" style="flex:2;padding:12px;border-radius:10px;border:none;background:#111;color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Submit for Approval</button></div>';
   }
 }
 
