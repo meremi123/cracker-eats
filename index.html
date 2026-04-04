@@ -894,6 +894,11 @@ function addNext(){if(!S.addForm.name.trim()){S.addErr="Please enter a restauran
 function addItem(){S.addMenus.push({item:"",price:""});renderModal();}
 function rmMenu(i){S.addMenus.splice(i,1);renderModal();}
 function doSubmit(){
+  // Collect latest values directly from DOM inputs (fixes mobile oninput issue)
+  var itemInputs=document.querySelectorAll("#modal-body input[oninput*='item']");
+  var priceInputs=document.querySelectorAll("#modal-body input[oninput*='price']");
+  itemInputs.forEach(function(inp,i){if(S.addMenus[i])S.addMenus[i].item=inp.value;});
+  priceInputs.forEach(function(inp,i){if(S.addMenus[i])S.addMenus[i].price=inp.value;});
   var valid=S.addMenus.filter(function(m){return m.item.trim()&&Number(m.price)>0;});
   if(!valid.length){S.addErr="Add at least one menu item with a price.";renderModal();return;}
   var f=S.addForm;
