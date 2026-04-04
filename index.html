@@ -1049,6 +1049,8 @@ function showAdmPanel(){
   document.getElementById("adm-login").style.display="none";
   document.getElementById("adm-main").style.display="block";
   showAdmTab("pending");
+  // Refresh board if open so Del buttons appear
+  if(_boardTab)loadBoardPosts(_boardTab);
 }
 function doAdmLogin(){
   var u=(document.getElementById("adm-user")||{}).value||"";
@@ -1556,7 +1558,7 @@ function loadBoardPosts(tab){
             +'<div style="font-size:14px;color:var(--ink2);line-height:1.5;margin-top:4px;">'+escHTML(d.text||'')+'</div>'
             +'<div style="font-size:11px;color:var(--ink3);margin-top:6px;">'+escHTML(date)+'</div>'
           +'</div>'
-          +(_admAuthed?'<button data-col="'+col+'" data-id="'+id+'" onclick="deleteBoardPost(this)" style="flex-shrink:0;padding:4px 8px;border-radius:6px;border:1px solid #fdd;background:#fff;color:var(--red);font-size:11px;cursor:pointer;">Del</button>':'')
+          +'<button data-col="'+col+'" data-id="'+id+'" onclick="deleteBoardPost(this)" style="flex-shrink:0;padding:4px 8px;border-radius:6px;border:1px solid #fdd;background:#fff;color:var(--red);font-size:11px;cursor:pointer;display:'+(isAdminLoggedIn()?'block':'none')+';">Del</button>'
         +'</div>'
       +'</div>';
     });
@@ -1613,6 +1615,8 @@ function postNotice(){
   }).catch(function(e){toast('Error: '+e.message);});
 }
 
+function isAdminLoggedIn(){return _admAuthed===true;}
+
 function closeNoticePopup(){
   document.getElementById('notice-popup').style.display='none';
   // Mark as seen in sessionStorage so it doesn't show again this session
@@ -1621,16 +1625,19 @@ function closeNoticePopup(){
 
 function checkNoticePopup(){
   if(sessionStorage.getItem('notice_seen'))return;
-  if(!window._fs)return;
-  window._fs.collection('board_notices')
-    .where('showPopup','==',true)
-    .orderBy('ts','desc').limit(1).get()
+  if(!window._fs){setTimeout(checkNoticePopup,1000);return;}
+  // Get latest notice, check showPopup client-side (avoids Firestore index requirement)
+  window._fs.collection('board_notices').orderBy('ts','desc').limit(5).get()
   .then(function(snap){
-    if(snap.empty)return;
-    var d=snap.docs[0].data();
-    document.getElementById('popup-body').textContent=d.text||'';
+    var found=null;
+    snap.forEach(function(doc){
+      var d=doc.data();
+      if(!found&&d.showPopup)found=d;
+    });
+    if(!found)return;
+    document.getElementById('popup-body').textContent=found.text||'';
     document.getElementById('notice-popup').style.display='flex';
-  }).catch(function(){});
+  }).catch(function(e){console.log('popup err:',e);});
 }
 
 document.addEventListener("DOMContentLoaded",function(){
