@@ -806,7 +806,7 @@ function renderModal(){
       +ms.map(function(mm,i){return '<div style="display:flex;gap:8px;align-items:center;"><input value="'+escHTML(mm.item)+'" oninput="S.addMenus['+i+'].item=this.value" placeholder="e.g. Ramen (per person)" style="'+iS+'flex:1;box-sizing:border-box;"/><div style="display:flex;align-items:center;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;flex-shrink:0;width:95px;"><span style="padding:9px 8px;background:var(--bg);font-size:12px;color:var(--ink3);border-right:1px solid var(--border);">A$</span><input value="'+escHTML(String(mm.price||""))+'" oninput="S.addMenus['+i+'].price=this.value" placeholder="0" type="number" min="0" style="flex:1;padding:9px 7px;border:none;font-size:13px;background:transparent;width:50px;outline:none;"/></div>'+(ms.length>1?'<button onclick="rmMenu('+i+')" style="width:34px;height:36px;flex-shrink:0;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;font-size:16px;cursor:pointer;">&times;</button>':'')+'</div>';}).join("")
       +'</div>'
       +'<button onclick="addItem()" style="width:100%;padding:9px;border-radius:8px;border:1.5px dashed var(--border);background:transparent;color:var(--ink3);font-size:12px;cursor:pointer;margin-bottom:18px;">+ Add item</button>'
-      +'<button onclick="submitPriceEdit()" style="width:100%;padding:11px;border-radius:9px;border:none;background:#111;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px;">Submit for Approval</button>'
+      +'<button onclick="doSubmit()" style="width:100%;padding:11px;border-radius:9px;border:none;background:#111;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px;">Submit for Approval</button>'
   }
 }
 
