@@ -361,46 +361,11 @@ var S={
 var MAP=null,OVERLAYS=[],MK_ELS={},MY_LOC=null,PinClass=null,LocClass=null;
 
 function load(){
-  // Load favs and comments from localStorage
   try{
     var d=localStorage.getItem("crackerv4");
-    if(d){var p=JSON.parse(d);S.favs=p.favs||[];S.comments=p.comments||{};}
-  }catch(e){}
-  // Load restaurants from Firebase
-  loadFromFirebase();
-}
-
-function loadFromFirebase(){
-  if(!window._fs){
-    // Firebase not ready yet, wait and retry
-    setTimeout(loadFromFirebase, 300);
-    return;
-  }
-  document.getElementById("loading").style.display="flex";
-  window._fs.collection("restaurants").get()
-  .then(function(snap){
-    if(snap.empty){
-      // Firebase empty - use seed data
-      S.restaurants=clone(SEED);
-      console.log("Firebase empty, using seed data");
-    } else {
-      S.restaurants=[];
-      snap.forEach(function(doc){
-        var r=doc.data();
-        r._docId=doc.id; // store Firebase doc ID for updates
-        S.restaurants.push(r);
-      });
-      console.log("Loaded "+S.restaurants.length+" restaurants from Firebase");
-    }
-    document.getElementById("loading").style.display="none";
-    applyFilter();buildMks();renderAll();
-  })
-  .catch(function(e){
-    console.error("Firebase load failed:", e);
-    S.restaurants=clone(SEED);
-    document.getElementById("loading").style.display="none";
-    applyFilter();buildMks();renderAll();
-  });
+    if(d){var p=JSON.parse(d);S.restaurants=p.restaurants||clone(SEED);S.favs=p.favs||[];S.comments=p.comments||{};}
+    else{S.restaurants=clone(SEED);}
+  }catch(e){S.restaurants=clone(SEED);}
 }
 function persist(){try{localStorage.setItem("crackerv4",JSON.stringify({restaurants:S.restaurants,favs:S.favs,comments:S.comments}));}catch(e){}}
 function clone(o){return JSON.parse(JSON.stringify(o));}
@@ -460,7 +425,7 @@ window.initMap=function(){
   LocClass.prototype.draw=function(){if(!this.el)return;var p=this.getProjection();if(!p)return;var pt=p.fromLatLngToDivPixel(new google.maps.LatLng(this.lat,this.lng));if(!pt)return;this.el.style.left=Math.round(pt.x)+"px";this.el.style.top=Math.round(pt.y)+"px";};
   LocClass.prototype.onRemove=function(){if(this.el&&this.el.parentNode)this.el.parentNode.removeChild(this.el);this.el=null;};
 
-  load(); // async - Firebase will trigger applyFilter/buildMks/renderAll
+  load();applyFilter();buildMks();renderAll();
 };
 
 function buildMks(){
@@ -863,7 +828,7 @@ function approveR(btn,docId){
     if(!doc.exists){toast("Not found");loadPending();return;}
     var r=doc.data();r.id="r"+Date.now();r.status="approved";
     window._fs.collection("restaurants").add(r).then(function(){
-      S.restaurants.push(r);persist();applyFilter();buildMks();renderPanel();renderAll();
+      S.restaurants.push(r);persist();applyFilter();buildMks();renderPanel();
       window._fs.collection("pending_restaurants").doc(docId).delete();
       toast("Approved! "+r.name+" is now live.");loadPending();
     });
