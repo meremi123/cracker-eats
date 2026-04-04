@@ -288,6 +288,11 @@ input,select,button{font-family:inherit;font-size:13px;}
   </div>
 </div>
 
+<!-- Suggest Edit Overlay -->
+<div id="suggest-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);z-index:1500;align-items:center;justify-content:center;padding:16px;" onclick="if(event.target===this)closeSuggestEdit()">
+  <div id="suggest-body" style="background:#fff;border-radius:16px;width:100%;max-width:460px;max-height:88vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.25);"></div>
+</div>
+
 <!-- Admin Panel -->
 <div id="adm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:2000;align-items:center;justify-content:center;padding:20px;">
 
@@ -326,7 +331,8 @@ input,select,button{font-family:inherit;font-size:13px;}
       </div>
       <div style="display:flex;background:#111;padding:0 16px;gap:4px;">
         <button id="adm-tab-pending" onclick="showAdmTab('pending')" style="padding:10px 14px;border:none;font-size:13px;font-weight:600;cursor:pointer;color:#F5C842;background:rgba(255,255,255,.08);border-radius:8px 8px 0 0;">Pending</button>
-        <button id="adm-tab-restaurants" onclick="showAdmTab('restaurants')" style="padding:10px 14px;border:none;font-size:13px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.5);background:transparent;border-radius:8px 8px 0 0;">Restaurants</button>
+        <button id="adm-tab-edits" onclick="showAdmTab('edits')" style="padding:10px 14px;border:none;font-size:13px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.5);background:transparent;border-radius:8px 8px 0 0;">Edits</button>
+      <button id="adm-tab-restaurants" onclick="showAdmTab('restaurants')" style="padding:10px 14px;border:none;font-size:13px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.5);background:transparent;border-radius:8px 8px 0 0;">Restaurants</button>
         <button id="adm-tab-comments" onclick="showAdmTab('comments')" style="padding:10px 14px;border:none;font-size:13px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.5);background:transparent;border-radius:8px 8px 0 0;">Comments</button>
       </div>
       <div id="adm-list" style="padding:20px;max-height:60vh;overflow-y:auto;"></div>
@@ -631,7 +637,8 @@ function _renderDrawer(r){
       +'<button onclick="toggleFav(\''+r.id+'\')" class="btn-fav'+(fv?" on":"")+'">&#9733; '+(fv?"Saved":"Save")+'</button>'
       +'<button onclick="vote(\''+r.id+'\',\'up\')" style="flex:1;padding:6px 10px;border-radius:8px;border:1px solid #D0F0DA;background:#F0FBF4;color:#166534;font-size:12px;font-weight:700;cursor:pointer;">Correct '+r.votes.up+'</button>'
       +'<button onclick="vote(\''+r.id+'\',\'down\')" style="padding:6px 10px;border-radius:8px;border:1px solid #FAD4D4;background:#FDF4F4;color:#9F1239;font-size:12px;font-weight:700;cursor:pointer;">Wrong '+r.votes.down+'</button>'
-    +'</div>'
+    
+      +'<button onclick="openSuggestEdit(\\\''+r.id+'\\\')" style="width:100%;padding:7px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--ink2);font-size:12px;font-weight:600;cursor:pointer;margin-top:2px;">&#9998; Suggest Price/Menu Edit</button>'+'</div>'
     +'<div style="padding:10px 16px 6px;border-top:1px solid var(--border2);"><span class="lbl">Comments ('+cmts.length+')</span></div>'
     +cmtHTML
     +'<div style="padding:12px 14px;border-top:1px solid var(--border2);display:flex;flex-direction:column;gap:8px;">'
@@ -964,16 +971,66 @@ function doAdmLogin(){
 var _admTab="pending";
 function showAdmTab(tab){
   _admTab=tab;
-  ["pending","restaurants","comments"].forEach(function(t){
+  ["pending","edits","restaurants","comments"].forEach(function(t){
     var btn=document.getElementById("adm-tab-"+t);
     if(!btn)return;
     if(t===tab){btn.style.color="#F5C842";btn.style.background="rgba(255,255,255,.08)";}
     else{btn.style.color="rgba(255,255,255,.5)";btn.style.background="transparent";}
   });
   if(tab==="pending")loadPending();
+  else if(tab==="edits")loadAdmEdits();
   else if(tab==="restaurants")loadAdmRestaurants();
   else loadAdmComments();
 }
+
+function loadAdmEdits(){
+  var el=document.getElementById("adm-list");
+  el.innerHTML='<p style="text-align:center;color:#999;padding:30px;font-size:13px;">Loading...</p>';
+  if(!window._fs){el.innerHTML='<p style="color:var(--red);padding:20px;">Firebase not connected</p>';return;}
+  window._fs.collection("pending_edits").get()
+  .then(function(snap){
+    if(snap.empty){el.innerHTML='<p style="text-align:center;color:#888;padding:40px;font-size:14px;">No pending edits</p>';return;}
+    var html="";
+    snap.forEach(function(doc){
+      var e=doc.data(),id=doc.id;
+      var menus=(e.menus||[]).map(function(m){return "<b>"+escA(m.item)+"</b> A$"+m.price;}).join(" &middot; ");
+      html+='<div style="border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;">'
+        +'<div style="font-size:15px;font-weight:700;margin-bottom:3px;">'+escA(e.rname||"")+'</div>'
+        +'<div style="font-size:12px;color:#888;margin-bottom:5px;">Suggested by <b>'+escA(e.submittedBy||"")+'</b> &middot; '+escA((e.submittedAt||"").slice(0,10))+'</div>'
+        +'<div style="font-size:12px;color:#444;margin-bottom:10px;line-height:1.6;">'+menus+'</div>'
+        +'<div style="display:flex;gap:8px;">'
+          +'<button onclick="approveEdit(this,\''+id+'\')" style="flex:1;padding:9px;border-radius:8px;border:none;background:#1A7A3C;color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Approve</button>'
+          +'<button onclick="rejectEdit(this,\''+id+'\')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #ddd;background:#fff;color:var(--red);font-size:13px;font-weight:600;cursor:pointer;">Reject</button>'
+        +'</div></div>';
+    });
+    el.innerHTML=html;
+  }).catch(function(e){el.innerHTML='<p style="color:var(--red);padding:20px;">'+escA(e.message)+'</p>';});
+}
+
+function approveEdit(btn,docId){
+  btn.textContent="Approving...";btn.disabled=true;
+  window._fs.collection("pending_edits").doc(docId).get().then(function(doc){
+    if(!doc.exists){toast("Not found");loadAdmEdits();return;}
+    var e=doc.data();
+    var r=S.restaurants.find(function(x){return x.id===e.rid;});
+    if(r){
+      r.menus=e.menus;
+      r.updatedAt=new Date().toISOString().slice(0,10);
+      persist();applyFilter();buildMks();renderPanel();
+    }
+    window._fs.collection("pending_edits").doc(docId).delete();
+    toast("Edit approved for "+escA(e.rname));
+    loadAdmEdits();
+  }).catch(function(er){toast("Error: "+er.message);});
+}
+
+function rejectEdit(btn,docId){
+  btn.textContent="Rejecting...";btn.disabled=true;
+  window._fs.collection("pending_edits").doc(docId).delete()
+  .then(function(){toast("Edit rejected.");loadAdmEdits();})
+  .catch(function(er){toast("Error: "+er.message);});
+}
+
 function loadPending(){
   var el=document.getElementById("adm-list");
   el.innerHTML='<p style="text-align:center;color:#999;padding:30px;font-size:13px;">Loading...</p>';
@@ -1245,6 +1302,100 @@ function geocodeAndSave(r,ri){
     persist();applyFilter();buildMks();renderPanel();
     toast("Saved & map updated: "+r.name);loadAdmRestaurants();
   });
+}
+
+
+// -- User Price/Menu Edit Suggestions --
+function openSuggestEdit(rid){
+  var r=S.restaurants.find(function(x){return x.id===rid;});
+  if(!r)return;
+  // Build modal HTML
+  var iS="width:100%;padding:8px 10px;border-radius:7px;border:1.5px solid var(--border);font-size:13px;box-sizing:border-box;";
+  var lS="display:block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#888;margin-bottom:4px;margin-top:10px;";
+  var rows=r.menus.map(function(m,i){
+    return '<div style="display:flex;gap:6px;align-items:center;margin-bottom:5px;">'
+      +'<input data-i="'+i+'" data-f="item" value="'+escHTML(m.item)+'" style="'+iS+'flex:1;font-size:12px;"/>'
+      +'<div style="display:flex;align-items:center;border:1.5px solid var(--border);border-radius:7px;overflow:hidden;flex-shrink:0;">'
+        +'<span style="padding:7px 7px;background:var(--bg);font-size:11px;color:#888;border-right:1px solid var(--border);">A$</span>'
+        +'<input data-i="'+i+'" data-f="price" type="number" min="0" step="0.5" value="'+m.price+'" style="width:60px;padding:7px 7px;border:none;font-size:12px;background:transparent;outline:none;"/>'
+      +'</div>'
+    +'</div>';
+  }).join("");
+
+  document.getElementById("suggest-overlay").style.display="flex";
+  document.getElementById("suggest-body").innerHTML=
+    '<div style="padding:20px 22px;border-bottom:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center;">'
+      +'<div><h3 style="font-size:17px;font-weight:700;margin-bottom:2px;">Suggest Edit</h3>'
+      +'<p style="font-size:12px;color:#888;">'+escHTML(r.name)+' - pending admin approval</p></div>'
+      +'<button onclick="closeSuggestEdit()" style="background:var(--bg);border:1px solid var(--border);border-radius:7px;width:30px;height:30px;font-size:17px;cursor:pointer;">&times;</button>'
+    +'</div>'
+    +'<div style="padding:20px;" id="se-form">'
+      +'<label style="'+lS+'">Your Name</label>'
+      +'<input id="se-name" placeholder="Your name" style="'+iS+'"/>'
+      +'<label style="'+lS+'">Menu Items & Prices</label>'
+      +'<div id="se-rows" style="margin-top:6px;">'+rows+'</div>'
+      +'<div id="se-err" style="color:var(--red);font-size:12px;margin-top:8px;"></div>'
+      +'<button onclick="submitPriceEdit(\''+rid+'\')" style="width:100%;padding:11px;border-radius:9px;border:none;background:#111;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px;">Submit for Approval</button>'
+      +'<p style="font-size:11px;color:#aaa;text-align:center;margin-top:8px;">Your suggestion will be reviewed before going live.</p>'
+    +'</div>';
+
+  // Store rid for submit
+  document.getElementById("suggest-body").dataset.rid=rid;
+}
+
+function closeSuggestEdit(){
+  document.getElementById("suggest-overlay").style.display="none";
+}
+
+function submitPriceEdit(rid){
+  var nameEl=document.getElementById("se-name");
+  var errEl=document.getElementById("se-err");
+  var name=(nameEl&&nameEl.value||"").trim();
+  if(!name){if(errEl)errEl.textContent="Please enter your name.";return;}
+
+  // Collect edits
+  var rows=document.querySelectorAll("#se-rows [data-i]");
+  var menus=[];
+  var byIndex={};
+  rows.forEach(function(inp){
+    var i=parseInt(inp.dataset.i),f=inp.dataset.f;
+    if(!byIndex[i])byIndex[i]={};
+    byIndex[i][f]=inp.value;
+  });
+  Object.keys(byIndex).forEach(function(i){
+    var m=byIndex[i];
+    menus.push({item:(m.item||"").trim(),price:parseFloat(m.price)||0});
+  });
+  menus=menus.filter(function(m){return m.item&&m.price>0;});
+  if(!menus.length){if(errEl)errEl.textContent="Please add at least one menu item.";return;}
+
+  var r=S.restaurants.find(function(x){return x.id===rid;});
+  var edit={
+    rid:rid,
+    rname:r?r.name:"",
+    submittedBy:name,
+    menus:menus,
+    submittedAt:new Date().toISOString(),
+    status:"pending"
+  };
+
+  var btn=document.querySelector("#se-form button");
+  if(btn){btn.disabled=true;btn.textContent="Submitting...";}
+
+  if(window._fs){
+    window._fs.collection("pending_edits").add(edit)
+    .then(function(){
+      closeSuggestEdit();
+      toast("Thanks! Your edit is pending approval.");
+    })
+    .catch(function(){
+      closeSuggestEdit();
+      toast("Thanks! Your edit is pending approval.");
+    });
+  } else {
+    closeSuggestEdit();
+    toast("Thanks! Your edit is pending approval.");
+  }
 }
 
 document.addEventListener("DOMContentLoaded",function(){
