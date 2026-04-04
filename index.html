@@ -456,6 +456,9 @@ function toast(msg){var el=document.getElementById("toast");el.textContent=msg;e
 /* ===================== MAPS ===================== */
 window.initMap=function(){
   document.getElementById("loading").style.display="none";
+  window._geocoder=new google.maps.Geocoder();
+  window._autoSvc=new google.maps.places.AutocompleteService();
+  window._placesSvc=new google.maps.places.PlacesService(document.createElement("div"));
   MAP=new google.maps.Map(document.getElementById("map"),{
     center:{lat:-33.872,lng:151.207},zoom:15,minZoom:11,maxZoom:19,
     mapTypeControl:false,fullscreenControl:false,streetViewControl:false,clickableIcons:false,
@@ -685,7 +688,7 @@ function renderModal(){
   if(S.addStep===1){
     document.getElementById("modal-body").innerHTML=err
       +'<div style="display:flex;flex-direction:column;gap:14px;">'
-      +'<div><label style="'+lS+'">Restaurant Name</label><input value="'+escHTML(f.name)+'" oninput="S.addForm.name=this.value" placeholder="e.g. Mamak" style="'+iS+'"/></div>'
+      +'<div>'+'<label style=\''+lS+'\'>'+'Restaurant Name'+'</label>'+'<input id=\"place-autocomplete\" value=\''+escHTML(f.name)+'\''+' placeholder=\"Search restaurant from Google Maps...\"'+' style=\''+iS+'\''+' autocomplete=\"off\"'+' oninput=\"handlePlaceInput(this.value)\"/>'+'<div id=\"place-dropdown\" style=\"display:none;border:1.5px solid var(--border);border-radius:8px;margin-top:3px;background:#fff;box-shadow:var(--sh1);overflow:hidden;max-height:180px;overflow-y:auto;\"></div>'+'<p style=\"font-size:11px;color:var(--ink3);margin-top:4px;\">Search to auto-fill from Google Maps, or type manually below</p>'+'</div>'
       +'<div><label style="'+lS+'">Address <span style="text-transform:none;font-weight:400;">optional</span></label><input value="'+escHTML(f.address)+'" oninput="S.addForm.address=this.value" placeholder="e.g. 15 Goulburn St" style="'+iS+'"/></div>'
       +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">'
         +'<div><label style="'+lS+'">Suburb</label><input value="'+escHTML(f.suburb)+'" oninput="S.addForm.suburb=this.value" placeholder="e.g. Rhodes, Ryde..." style="'+iS+'"/></div>'
@@ -981,10 +984,7 @@ function loadAdmRestaurants(){
             +'<select data-type="category" data-ri="'+ri+'" style="'+iS+'cursor:pointer;">'+catOpts+'</select></div>'
           +'<div style="grid-column:1/-1;"><label style="'+lS+'">Address</label>'
             +'<input data-type="address" data-ri="'+ri+'" value="'+escA(r.address||'')+'" style="'+iS+'"/></div>'
-          +'<div><label style="'+lS+'">Latitude</label>'
-            +'<input data-type="lat" data-ri="'+ri+'" type="number" step="any" value="'+r.lat+'" style="'+iS+'"/></div>'
-          +'<div><label style="'+lS+'">Longitude</label>'
-            +'<input data-type="lng" data-ri="'+ri+'" type="number" step="any" value="'+r.lng+'" style="'+iS+'"/></div>'
+          
         +'</div>'
         // Menu
         +'<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border2);">'
@@ -1117,6 +1117,76 @@ function deleteCmt(rid,cid){
   .catch(function(e){toast("Error: "+e.message);});
 }
 
+
+// -- Places Autocomplete --
+var _placeTimer=null;
+function handlePlaceInput(val){
+  S.addForm.name=val;
+  clearTimeout(_placeTimer);
+  var dd=document.getElementById("place-dropdown");
+  if(!val||val.length<2){if(dd)dd.style.display="none";return;}
+  _placeTimer=setTimeout(function(){searchPlaces(val);},350);
+}
+function searchPlaces(query){
+  var dd=document.getElementById("place-dropdown");
+  if(!dd||!window._autoSvc)return;
+  window._autoSvc.getPlacePredictions(
+    {input:query,location:new google.maps.LatLng(-33.872,151.207),radius:50000,types:["establishment"]},
+    function(preds,status){
+      if(status!==google.maps.places.PlacesServiceStatus.OK||!preds){dd.style.display="none";return;}
+      dd.innerHTML=preds.slice(0,5).map(function(p){
+        var pid=p.place_id;
+        var main=escHTML(p.structured_formatting.main_text);
+        var sec=escHTML(p.structured_formatting.secondary_text||"");
+        return '<div onclick="selectPlace(this)" data-pid="'+pid+'" style="padding:10px 14px;cursor:pointer;font-size:13px;border-bottom:1px solid var(--border2);">'
+          +'<div style="font-weight:600;">'+main+'</div>'
+          +'<div style="font-size:11px;color:var(--ink3);">'+sec+'</div>'
+          +'</div>';
+      }).join("");
+      dd.style.display="block";
+    }
+  );
+}
+function selectPlace(el){
+  var pid=el.dataset.pid;
+  var dd=document.getElementById("place-dropdown");
+  if(dd)dd.innerHTML='<div style="padding:12px 14px;font-size:13px;color:#888;">Loading...</div>';
+  if(!window._placesSvc)return;
+  window._placesSvc.getDetails(
+    {placeId:pid,fields:["name","formatted_address","geometry","address_components"]},
+    function(place,status){
+      if(status!==google.maps.places.PlacesServiceStatus.OK||!place){if(dd)dd.style.display="none";return;}
+      var suburb="Sydney";
+      (place.address_components||[]).forEach(function(comp){
+        if(comp.types.indexOf("locality")>-1||comp.types.indexOf("sublocality_level_1")>-1)suburb=comp.long_name;
+      });
+      S.addForm.name=place.name||"";
+      S.addForm.address=(place.formatted_address||"").replace(/, Australia$/,"");
+      S.addForm.suburb=suburb;
+      S.addForm.lat=place.geometry.location.lat();
+      S.addForm.lng=place.geometry.location.lng();
+      var inp=document.getElementById("place-autocomplete");
+      if(inp)inp.value=S.addForm.name;
+      if(dd)dd.style.display="none";
+      renderModal();
+    }
+  );
+}
+function geocodeAndSave(r,ri){
+  if(!r.address||!window._geocoder){
+    persist();applyFilter();buildMks();renderPanel();
+    toast("Saved: "+r.name);loadAdmRestaurants();return;
+  }
+  window._geocoder.geocode({address:r.address+", Sydney, Australia"},function(results,status){
+    if(status==="OK"&&results[0]){
+      r.lat=results[0].geometry.location.lat();
+      r.lng=results[0].geometry.location.lng();
+    }
+    persist();applyFilter();buildMks();renderPanel();
+    toast("Saved & map updated: "+r.name);loadAdmRestaurants();
+  });
+}
+
 document.addEventListener("DOMContentLoaded",function(){
   document.getElementById("search-inp").addEventListener("input",function(e){
     S.q=e.target.value;applyFilter();buildMks();renderPanel();
@@ -1149,6 +1219,6 @@ console.log("Firebase ready");
 </script>
 
 <!-- Google Maps -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCzTAQQTbIxLwb5OCnSdPRX7kOgSAtPcY&callback=initMap&loading=async"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCzTAQQTbIxLwb5OCnSdPRX7kOgSAtPcY&callback=initMap&libraries=places&loading=async"></script>
 </body>
 </html>
