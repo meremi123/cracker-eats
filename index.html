@@ -6,7 +6,7 @@
 <title>The 'Absolute Cracker' Aussie Cheap Eats List</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#F6F4F0;--surf:#fff;--ink:#0A0A0A;--ink2:#3A3A3A;--ink3:#888;
@@ -21,7 +21,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
 body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-size:14px;}
-.serif{font-family:'Playfair Display',Georgia,serif;}
+.serif{font-family:'DM Serif Display',Georgia,serif;}
 input,select,button{font-family:inherit;font-size:13px;}
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
@@ -159,6 +159,8 @@ input,select,button{font-family:inherit;font-size:13px;}
   #map-wrap{flex:1;}
 }
 </style>
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8267795564637907" crossorigin="anonymous"></script>
 </head>
 <body>
 <div id="loading"><div class="spinner"></div><p style="font-size:13px;color:var(--ink3);">Loading map...</p></div>
@@ -170,8 +172,8 @@ input,select,button{font-family:inherit;font-size:13px;}
 <div id="hdr">
   <div style="max-width:1400px;margin:0 auto;padding:0 20px;height:56px;display:flex;align-items:center;gap:12px;">
     <div style="flex-shrink:0;">
-      <div class="serif" style="font-size:17px;color:#fff;line-height:1.1;">The <span style="font-style:italic;color:#F5C842;">'Absolute Cracker'</span></div>
-      <div style="font-size:9px;color:#666;letter-spacing:.15em;text-transform:uppercase;margin-top:1px;">Aussie Cheap Eats List</div>
+      <div style="font-family:'DM Serif Display',Georgia,serif;font-size:18px;color:#fff;line-height:1;letter-spacing:-.2px;">The <span style="font-style:italic;color:#F5C842;">'Absolute Cracker'</span></div>
+      <div style="font-family:'Inter',sans-serif;font-size:8.5px;color:#F5C842;letter-spacing:.25em;text-transform:uppercase;margin-top:3px;opacity:.75;font-weight:600;">Aussie Cheap Eats List</div>
     </div>
     <div style="flex:1;max-width:320px;position:relative;">
       <svg style="position:absolute;left:9px;top:50%;transform:translateY(-50%);opacity:.35;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -187,6 +189,9 @@ input,select,button{font-family:inherit;font-size:13px;}
       <span id="nearme-txt">Near Me</span>
     </button>
     <button onclick="openAdd()" style="padding:7px 14px;border-radius:8px;border:none;background:#F5C842;color:#111;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;">+ Add</button>
+    <button onclick="openAdmin()" title="Admin" style="padding:7px 10px;border-radius:8px;border:none;background:rgba(255,255,255,.08);color:rgba(255,255,255,.4);cursor:pointer;flex-shrink:0;display:flex;align-items:center;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </button>
   </div>
 </div>
 
@@ -213,6 +218,15 @@ input,select,button{font-family:inherit;font-size:13px;}
   </div>
 </div>
 
+<!-- Ad Banner (below filter bar) -->
+<div id="ad-bar" style="background:#fff;border-bottom:1px solid var(--border);padding:4px 0;text-align:center;min-height:60px;display:flex;align-items:center;justify-content:center;">
+  <ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:60px"
+     data-ad-client="ca-pub-8267795564637907"
+     data-ad-slot="auto"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
 <!-- BODY -->
 <div id="body">
   <!-- Map -->
@@ -237,7 +251,14 @@ input,select,button{font-family:inherit;font-size:13px;}
       <div class="ptab on" id="pt-list" onclick="setPTab('list')">Restaurants</div>
       <div class="ptab" id="pt-fav" onclick="setPTab('fav')">Saved</div>
     </div>
-    <div id="plist" style="overflow-y:auto;flex:1;"></div>
+    <div id="ad-panel" style="padding:8px;text-align:center;border-bottom:1px solid var(--border2);">
+  <ins class="adsbygoogle"
+     style="display:inline-block;width:280px;height:250px"
+     data-ad-client="ca-pub-8267795564637907"
+     data-ad-slot="auto"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+<div id="plist" style="overflow-y:auto;flex:1;"></div>
     <div id="pfav" style="overflow-y:auto;flex:1;display:none;"></div>
   </div>
 
@@ -246,6 +267,14 @@ input,select,button{font-family:inherit;font-size:13px;}
 </div><!-- #body -->
 
 <!-- Bottom Nav (mobile only) -->
+<!-- Mobile sticky bottom ad (above nav) -->
+<div id="ad-mobile" style="display:none;background:#fff;border-top:1px solid var(--border);text-align:center;padding:4px 0;">
+  <ins class="adsbygoogle"
+     style="display:inline-block;width:320px;height:50px"
+     data-ad-client="ca-pub-8267795564637907"
+     data-ad-slot="auto"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 <div id="bnav">
   <button class="bnav-btn on" id="bnav-map" onclick="setMobileTab('map')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
@@ -262,6 +291,10 @@ input,select,button{font-family:inherit;font-size:13px;}
   <button class="bnav-btn" id="bnav-add" onclick="openAdd()">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
     Add
+  </button>
+  <button class="bnav-btn" id="bnav-admin" onclick="openAdmin()">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    Admin
   </button>
 </div>
 
@@ -281,23 +314,57 @@ input,select,button{font-family:inherit;font-size:13px;}
   </div>
 </div>
 
+<!-- Suggest Edit Overlay -->
+<div id="suggest-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);z-index:1500;align-items:center;justify-content:center;padding:16px;" onclick="if(event.target===this)closeSuggestEdit()">
+  <div id="suggest-body" style="background:#fff;border-radius:16px;width:100%;max-width:460px;max-height:88vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.25);"></div>
+</div>
+
 <!-- Admin Panel -->
-<div id="adm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:2000;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;">
-  <div style="background:#fff;border-radius:16px;width:100%;max-width:700px;margin-top:20px;box-shadow:0 24px 80px rgba(0,0,0,.3);overflow:hidden;">
-    <div style="padding:16px 20px;background:#111;display:flex;justify-content:space-between;align-items:center;">
-      <div>
-        <div style="font-size:18px;font-weight:800;color:#fff;font-family:'Playfair Display',serif;">Admin Panel</div>
-        <div style="font-size:11px;color:#666;margin-top:2px;">?admin=cracker2024</div>
+<div id="adm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:2000;align-items:center;justify-content:center;padding:20px;">
+
+  <!-- Login Screen -->
+  <div id="adm-login" style="display:flex;align-items:center;justify-content:center;width:100%;">
+    <div style="background:#fff;border-radius:16px;width:100%;max-width:380px;box-shadow:0 24px 80px rgba(0,0,0,.3);overflow:hidden;">
+      <div style="padding:24px 28px 20px;background:#111;text-align:center;">
+        <div style="font-size:22px;font-weight:800;color:#fff;font-family:'DM Serif Display',Georgia,serif;">Admin Login</div>
+        <div style="font-size:12px;color:#666;margin-top:4px;">Cracker Eats</div>
       </div>
-      <button onclick="closeAdmin()" style="background:rgba(255,255,255,.1);border:none;border-radius:8px;width:32px;height:32px;font-size:18px;color:#fff;cursor:pointer;">&times;</button>
+      <div style="padding:28px;">
+        <div id="adm-login-err" style="color:var(--red);font-size:13px;margin-bottom:12px;min-height:18px;text-align:center;font-weight:600;"></div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin-bottom:5px;">Username</label>
+          <input id="adm-user" type="text" placeholder="Enter username" autocomplete="username" style="width:100%;padding:11px 13px;border-radius:9px;border:1.5px solid var(--border);font-size:14px;box-sizing:border-box;" onkeydown="if(event.key==='Enter')document.getElementById('adm-pass').focus()"/>
+        </div>
+        <div style="margin-bottom:20px;">
+          <label style="display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin-bottom:5px;">Password</label>
+          <input id="adm-pass" type="password" placeholder="Enter password" autocomplete="current-password" style="width:100%;padding:11px 13px;border-radius:9px;border:1.5px solid var(--border);font-size:14px;box-sizing:border-box;" onkeydown="if(event.key==='Enter')doAdmLogin()"/>
+        </div>
+        <button onclick="doAdmLogin()" style="width:100%;padding:13px;border-radius:10px;border:none;background:#111;color:#fff;font-size:14px;font-weight:700;cursor:pointer;">Login</button>
+        <button onclick="closeAdmin()" style="width:100%;padding:10px;border-radius:10px;border:none;background:transparent;color:#aaa;font-size:13px;cursor:pointer;margin-top:8px;">Cancel</button>
+      </div>
     </div>
-    <div style="display:flex;background:#111;padding:0 16px;gap:4px;">
-      <button id="adm-tab-pending" onclick="showAdmTab('pending')" style="padding:10px 14px;border:none;font-size:13px;font-weight:600;cursor:pointer;color:#F5C842;background:rgba(255,255,255,.08);border-radius:8px 8px 0 0;">Pending</button>
-      <button id="adm-tab-restaurants" onclick="showAdmTab('restaurants')" style="padding:10px 14px;border:none;font-size:13px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.5);background:transparent;border-radius:8px 8px 0 0;">Restaurants</button>
-      <button id="adm-tab-comments" onclick="showAdmTab('comments')" style="padding:10px 14px;border:none;font-size:13px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.5);background:transparent;border-radius:8px 8px 0 0;">Comments</button>
-    </div>
-    <div id="adm-list" style="padding:20px;max-height:65vh;overflow-y:auto;"></div>
   </div>
+
+  <!-- Main Panel -->
+  <div id="adm-main" style="display:none;width:100%;max-width:720px;margin-top:20px;max-height:90vh;overflow-y:auto;">
+    <div style="background:#fff;border-radius:16px;box-shadow:0 24px 80px rgba(0,0,0,.3);overflow:hidden;">
+      <div style="padding:16px 20px;background:#111;display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <div style="font-size:18px;font-weight:800;color:#fff;font-family:'DM Serif Display',Georgia,serif;">Admin Panel</div>
+          <div style="font-size:11px;color:#666;margin-top:2px;">crackereatlist.com.au</div>
+        </div>
+        <button onclick="closeAdmin()" style="background:rgba(255,255,255,.1);border:none;border-radius:8px;width:32px;height:32px;font-size:18px;color:#fff;cursor:pointer;">&times;</button>
+      </div>
+      <div style="display:flex;background:#111;padding:0 16px;gap:4px;">
+        <button id="adm-tab-pending" onclick="showAdmTab('pending')" style="padding:10px 14px;border:none;font-size:13px;font-weight:600;cursor:pointer;color:#F5C842;background:rgba(255,255,255,.08);border-radius:8px 8px 0 0;">Pending</button>
+        <button id="adm-tab-edits" onclick="showAdmTab('edits')" style="padding:10px 14px;border:none;font-size:13px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.5);background:transparent;border-radius:8px 8px 0 0;">Edits</button>
+      <button id="adm-tab-restaurants" onclick="showAdmTab('restaurants')" style="padding:10px 14px;border:none;font-size:13px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.5);background:transparent;border-radius:8px 8px 0 0;">Restaurants</button>
+        <button id="adm-tab-comments" onclick="showAdmTab('comments')" style="padding:10px 14px;border:none;font-size:13px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.5);background:transparent;border-radius:8px 8px 0 0;">Comments</button>
+      </div>
+      <div id="adm-list" style="padding:20px;max-height:60vh;overflow-y:auto;"></div>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -328,24 +395,101 @@ var SEED=[
   {id:"kb10",name:"Krazy Bird - Mittagong",suburb:"Mittagong",category:"Korean",address:"Shop 4/130 Main St",lat:-34.4459,lng:150.4481,menus:[{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Teriyaki Chicken Ramen",price:21.5},{item:"Korean Corn Dog",price:9.9}],rating:4.7,votes:{up:92,down:5},chain:true,updatedAt:"2026-03-15"},
   {id:"c1",name:"Mamak",suburb:"Haymarket",category:"Malaysian",address:"15 Goulburn St",lat:-33.8771,lng:151.2044,menus:[{item:"Roti Canai with Curry",price:12.9},{item:"Nasi Lemak",price:14.5},{item:"Mee Goreng",price:17.5}],rating:4.5,votes:{up:312,down:18},chain:false,updatedAt:"2026-03-15"},
   {id:"c2",name:"Din Tai Fung",suburb:"CBD",category:"Chinese",address:"644 George St",lat:-33.8769,lng:151.2064,menus:[{item:"Xiao Long Bao 10pcs",price:22},{item:"Pork Chop Fried Rice",price:18},{item:"Wonton Soup",price:16}],rating:4.6,votes:{up:320,down:12},chain:false,updatedAt:"2026-03-01"},
-  {id:"c3",name:"Ippudo Sydney",suburb:"CBD",category:"Japanese",address:"Westfield Sydney",lat:-33.8706,lng:151.2081,menus:[{item:"Shiromaru Ramen",price:24},{item:"Karaka Ramen",price:24},{item:"Takoyaki 6pcs",price:12}],rating:4.4,votes:{up:198,down:11},chain:false,updatedAt:"2026-03-01"},
-  {id:"c4",name:"Spice I Am",suburb:"Surry Hills",category:"Thai",address:"90 Wentworth Ave",lat:-33.8816,lng:151.2101,menus:[{item:"Green Curry with Rice",price:20},{item:"Pad Thai",price:19},{item:"Tom Yum Soup",price:15}],rating:4.5,votes:{up:224,down:10},chain:false,updatedAt:"2026-03-15"},
-  {id:"c5",name:"Bourke St Bakery",suburb:"Surry Hills",category:"Cafe",address:"633 Bourke St",lat:-33.8868,lng:151.2108,menus:[{item:"Sausage Roll",price:9},{item:"Ginger Brulee Tart",price:7},{item:"Almond Croissant",price:9}],rating:4.5,votes:{up:276,down:8},chain:false,updatedAt:"2026-03-01"},
-  {id:"c6",name:"Lode Pies",suburb:"Surry Hills",category:"Cafe",address:"487 Crown St",lat:-33.8882,lng:151.2132,menus:[{item:"Wagyu Mushroom Pie",price:20},{item:"Croissant",price:8},{item:"Sausage Roll",price:10}],rating:4.6,votes:{up:143,down:6},chain:false,updatedAt:"2026-03-01"},
+  {id:"c3",name:"Ippudo Sydney",suburb:"CBD",category:"Japanese",address:"Westfield Sydney",lat:-33.8706,lng:151.2081,menus:[{item:"Shiromaru Ramen",price:24},{item:"Karaka Ramen",price:24},{item:"Tori Paitan Ramen",price:24}],rating:4.4,votes:{up:198,down:11},chain:false,updatedAt:"2026-03-01"},
+  {id:"c4",name:"Spice I Am",suburb:"Surry Hills",category:"Thai",address:"90 Wentworth Ave",lat:-33.8816,lng:151.2101,menus:[{item:"Green Curry with Rice",price:20},{item:"Pad Thai",price:19},{item:"Stir-fry with Rice",price:19}],rating:4.5,votes:{up:224,down:10},chain:false,updatedAt:"2026-03-15"},
+  {id:"c5",name:"Bourke St Bakery",suburb:"Surry Hills",category:"Cafe",address:"633 Bourke St",lat:-33.8868,lng:151.2108,menus:[{item:"Sausage Roll",price:9},{item:"Sandwich/Toastie",price:15},{item:"Coffee + Pastry Combo",price:12}],rating:4.5,votes:{up:276,down:8},chain:false,updatedAt:"2026-03-01"},
+  {id:"c6",name:"Lode Pies",suburb:"Surry Hills",category:"Cafe",address:"487 Crown St",lat:-33.8882,lng:151.2132,menus:[{item:"Wagyu Mushroom Pie",price:20},{item:"Beef & Cheese Pie",price:19},{item:"Sausage Roll",price:10}],rating:4.6,votes:{up:143,down:6},chain:false,updatedAt:"2026-03-01"},
   {id:"c7",name:"New Shanghai",suburb:"CBD",category:"Chinese",address:"Westfield Sydney",lat:-33.8697,lng:151.2070,menus:[{item:"Pan-fried Pork Bun 4pcs",price:14},{item:"Dumplings 6pcs",price:18},{item:"Hand-pulled Noodles",price:20}],rating:4.3,votes:{up:167,down:14},chain:false,updatedAt:"2026-03-15"},
   {id:"c8",name:"Ommi Don",suburb:"Surry Hills",category:"Japanese",address:"414 Elizabeth St",lat:-33.8834,lng:151.2100,menus:[{item:"Braised Pork Hock Don",price:17.5},{item:"Wagyu Beef Don",price:22},{item:"Fried Chicken Don",price:17.5}],rating:4.5,votes:{up:189,down:9},chain:false,updatedAt:"2026-03-15"},
-  {id:"c9",name:"Saigon Summer",suburb:"Newtown",category:"Vietnamese",address:"255 King St",lat:-33.8971,lng:151.1793,menus:[{item:"Pho Ga",price:16},{item:"Banh Mi",price:13},{item:"Rice Paper Rolls 3pcs",price:12}],rating:4.4,votes:{up:143,down:8},chain:false,updatedAt:"2026-03-15"},
-  {id:"c10",name:"Patizzi",suburb:"Newtown",category:"Italian",address:"211 King St",lat:-33.8982,lng:151.1779,menus:[{item:"Pasta from",price:20},{item:"Pizza from",price:22},{item:"Pastizzi",price:3}],rating:4.4,votes:{up:121,down:9},chain:false,updatedAt:"2026-03-15"},
+  {id:"c9",name:"Saigon Summer",suburb:"Newtown",category:"Vietnamese",address:"255 King St",lat:-33.8971,lng:151.1793,menus:[{item:"Pho Ga",price:16},{item:"Banh Mi",price:13},{item:"Bun Bo Hue",price:16}],rating:4.4,votes:{up:143,down:8},chain:false,updatedAt:"2026-03-15"},
+  {id:"c10",name:"Patizzi",suburb:"Newtown",category:"Italian",address:"211 King St",lat:-33.8982,lng:151.1779,menus:[{item:"Pasta from",price:20},{item:"Pizza from",price:22},{item:"Calzone",price:22}],rating:4.4,votes:{up:121,down:9},chain:false,updatedAt:"2026-03-15"},
   {id:"c11",name:"Albee's Kitchen",suburb:"Haymarket",category:"Malaysian",address:"723 George St",lat:-33.8784,lng:151.2049,menus:[{item:"Nasi Lemak Set",price:18},{item:"Laksa",price:19},{item:"Curry Chicken with Rice",price:17}],rating:4.4,votes:{up:198,down:12},chain:false,updatedAt:"2026-03-15"},
-  {id:"c12",name:"Ama Thai",suburb:"Surry Hills",category:"Thai",address:"47 Cooper St",lat:-33.8846,lng:151.2087,menus:[{item:"Beef Noodle Soup",price:19},{item:"Pad Kra Pao",price:20},{item:"Mango Sticky Rice",price:12}],rating:4.6,votes:{up:87,down:4},chain:false,updatedAt:"2026-03-15"},
-  {id:"c13",name:"Pho Pasteur",suburb:"Haymarket",category:"Vietnamese",address:"709 George St",lat:-33.8781,lng:151.2046,menus:[{item:"Beef Pho large",price:19},{item:"Chicken Pho",price:18},{item:"Banh Mi",price:12}],rating:4.4,votes:{up:234,down:14},chain:false,updatedAt:"2026-03-15"},
+  {id:"c12",name:"Ama Thai",suburb:"Surry Hills",category:"Thai",address:"47 Cooper St",lat:-33.8846,lng:151.2087,menus:[{item:"Beef Noodle Soup",price:19},{item:"Pad Kra Pao",price:20},{item:"Massaman Curry + Rice",price:19}],rating:4.6,votes:{up:87,down:4},chain:false,updatedAt:"2026-03-15"},
+  {id:"c13",name:"Pho Pasteur",suburb:"Haymarket",category:"Vietnamese",address:"709 George St",lat:-33.8781,lng:151.2046,menus:[{item:"Beef Pho large",price:19},{item:"Chicken Pho",price:18},{item:"Rice Vermicelli Bowl",price:17}],rating:4.4,votes:{up:234,down:14},chain:false,updatedAt:"2026-03-15"},
   {id:"c14",name:"King's Banh Mi",suburb:"Surry Hills",category:"Vietnamese",address:"325 Crown St",lat:-33.8851,lng:151.2112,menus:[{item:"Char Siu Banh Mi",price:12},{item:"Roast Duck Banh Mi",price:13},{item:"Pork Crackling Roll",price:12}],rating:4.6,votes:{up:302,down:11},chain:false,updatedAt:"2026-03-15"},
-  {id:"c15",name:"Bar Reggio",suburb:"Darlinghurst",category:"Italian",address:"135 Crown St",lat:-33.8799,lng:151.2169,menus:[{item:"Pasta",price:22},{item:"Margherita Pizza",price:22},{item:"Tiramisu",price:12}],rating:4.5,votes:{up:187,down:9},chain:false,updatedAt:"2026-03-15"},
+  {id:"c15",name:"Bar Reggio",suburb:"Darlinghurst",category:"Italian",address:"135 Crown St",lat:-33.8799,lng:151.2169,menus:[{item:"Pasta from",price:22},{item:"Margherita Pizza",price:22},{item:"Gnocchi",price:23}],rating:4.5,votes:{up:187,down:9},chain:false,updatedAt:"2026-03-15"},
   {id:"c16",name:"Dae Jang Kum",suburb:"Haymarket",category:"Korean",address:"35 Goulburn St",lat:-33.8779,lng:151.2052,menus:[{item:"Kimchi Jjigae Set (per person)",price:22},{item:"Dolsot Bibimbap",price:20},{item:"Korean Fried Rice",price:18}],rating:4.7,votes:{up:124,down:8},chain:false,updatedAt:"2026-03-01"},
   {id:"c17",name:"Seoul Ria",suburb:"CBD",category:"Korean",address:"605 George St",lat:-33.8776,lng:151.2055,menus:[{item:"Galbi Lunch Set (per person)",price:24},{item:"Bibimbap",price:22},{item:"Snow Chicken",price:22}],rating:4.7,votes:{up:98,down:5},chain:false,updatedAt:"2026-03-01"},
   {id:"c18",name:"Myung Jang & Obaltan",suburb:"CBD",category:"Korean",address:"363A Pitt St",lat:-33.8758,lng:151.2076,menus:[{item:"BBQ Buffet (per person)",price:24},{item:"Fried Chicken",price:22},{item:"Cold Noodles",price:20}],rating:4.5,votes:{up:76,down:4},chain:false,updatedAt:"2026-03-01"},
   {id:"c19",name:"Cairo Takeaway",suburb:"Newtown",category:"Other",address:"302 King St",lat:-33.8975,lng:151.1792,menus:[{item:"Meat Mix Plate",price:22},{item:"Falafel Plate",price:20},{item:"Charcoal Chicken",price:23}],rating:4.5,votes:{up:112,down:7},chain:false,updatedAt:"2026-03-15"},
-  {id:"c20",name:"Sayong Laksa",suburb:"CBD",category:"Malaysian",address:"World Square",lat:-33.8770,lng:151.2059,menus:[{item:"Signature Laksa",price:19},{item:"Curry Laksa",price:18},{item:"Asam Laksa",price:18}],rating:4.3,votes:{up:156,down:11},chain:false,updatedAt:"2026-03-15"}
+  {id:"c20",name:"Sayong Laksa",suburb:"CBD",category:"Malaysian",address:"World Square",lat:-33.8770,lng:151.2059,menus:[{item:"Signature Laksa",price:19},{item:"Curry Laksa",price:18},{item:"Asam Laksa",price:18}],rating:4.3,votes:{up:156,down:11},chain:false,updatedAt:"2026-03-15"},
+  // ── RAMEN & JAPANESE ──
+  {id:"n1",name:"Gumshara Ramen",suburb:"Haymarket",category:"Japanese",address:"Kimber Lane & Little Hay St",lat:-33.8764,lng:151.2041,menus:[{item:"Tonkotsu Ramen (small)",price:14.5},{item:"Tonkotsu Ramen (large)",price:18.5},{item:"Miso Ramen",price:16.5}],rating:4.7,votes:{up:245,down:8},chain:false,updatedAt:"2026-03-15"},
+  {id:"n2",name:"Mappen",suburb:"CBD",category:"Japanese",address:"Shop T14 World Square",lat:-33.8770,lng:151.2058,menus:[{item:"Tonkotsu Ramen",price:9.9},{item:"Shoyu Ramen",price:9.9},{item:"Miso Ramen",price:9.9}],rating:4.4,votes:{up:189,down:12},chain:false,updatedAt:"2026-03-15"},
+  {id:"n3",name:"Chaco Ramen",suburb:"Darlinghurst",category:"Japanese",address:"2 Kensington St",lat:-33.8789,lng:151.2155,menus:[{item:"Hakata Ramen",price:19},{item:"Char Siu Ramen",price:21},{item:"Yuzu Ramen",price:20}],rating:4.5,votes:{up:167,down:9},chain:false,updatedAt:"2026-03-15"},
+  {id:"n4",name:"Menya Mappen",suburb:"CBD",category:"Japanese",address:"480 George St",lat:-33.8727,lng:151.2068,menus:[{item:"Ramen",price:9.9},{item:"Karaage Ramen Set",price:12.9},{item:"Chicken Ramen",price:9.9}],rating:4.3,votes:{up:134,down:11},chain:false,updatedAt:"2026-03-15"},
+  {id:"n5",name:"Neko Neko Ramen",suburb:"Surry Hills",category:"Japanese",address:"557 Crown St",lat:-33.8872,lng:151.2119,menus:[{item:"Pork Ramen",price:18},{item:"Vegan Ramen",price:17},{item:"Miso Ramen",price:18}],rating:4.4,votes:{up:98,down:6},chain:false,updatedAt:"2026-03-15"},
+
+  // ── VIETNAMESE ──
+  {id:"n6",name:"Tan Viet Noodle House",suburb:"Cabramatta",category:"Vietnamese",address:"100 John St",lat:-33.8956,lng:150.9341,menus:[{item:"Crispy Chicken with Rice",price:19},{item:"Roast Pork Noodle Soup",price:18},{item:"Combination Pho",price:19}],rating:4.7,votes:{up:312,down:11},chain:false,updatedAt:"2026-03-15"},
+  {id:"n7",name:"Pho Tau Bay",suburb:"Bankstown",category:"Vietnamese",address:"421 Chapel Rd",lat:-33.9175,lng:151.0355,menus:[{item:"Pho Dac Biet",price:19},{item:"Pho Bo Vien",price:17},{item:"Sate Pho",price:19}],rating:4.6,votes:{up:276,down:14},chain:false,updatedAt:"2026-03-15"},
+  {id:"n8",name:"An Restaurant",suburb:"Bankstown",category:"Vietnamese",address:"26 The Appian Way",lat:-33.9192,lng:151.0361,menus:[{item:"Pho Large",price:18},{item:"Lemongrass Chicken",price:20},{item:"Vermicelli Bowl",price:17}],rating:4.5,votes:{up:198,down:13},chain:false,updatedAt:"2026-03-15"},
+  {id:"n9",name:"Marrickville Pork Roll",suburb:"Marrickville",category:"Vietnamese",address:"358 Illawarra Rd",lat:-33.9102,lng:151.1589,menus:[{item:"Pork Roll",price:8},{item:"Chicken Roll",price:8},{item:"Combination Roll",price:9}],rating:4.6,votes:{up:342,down:9},chain:false,updatedAt:"2026-03-15"},
+  {id:"n10",name:"VN Street Foods",suburb:"Haymarket",category:"Vietnamese",address:"Shop 2, 28 Dixon St",lat:-33.8773,lng:151.2037,menus:[{item:"Vietnamese Meal Box",price:16},{item:"Pho",price:16},{item:"Rice Vermicelli Bowl",price:15}],rating:4.3,votes:{up:143,down:10},chain:false,updatedAt:"2026-03-15"},
+
+  // ── CHINESE & DUMPLINGS ──
+  {id:"n11",name:"Chinese Noodle Restaurant",suburb:"Haymarket",category:"Chinese",address:"8 Quay St",lat:-33.8779,lng:151.2040,menus:[{item:"Pan-fried Dumplings (half)",price:8.8},{item:"Hand-pulled Noodles",price:15},{item:"Braised Eggplant",price:16}],rating:4.6,votes:{up:287,down:10},chain:false,updatedAt:"2026-03-15"},
+  {id:"n12",name:"Xi'an Biang Biang",suburb:"Haymarket",category:"Chinese",address:"Eating World Food Court, 25 Dixon St",lat:-33.8768,lng:151.2038,menus:[{item:"Biang Biang Noodles",price:16},{item:"Rou Jia Mo Burger",price:12},{item:"Cold Noodles in Chilli",price:14}],rating:4.5,votes:{up:198,down:11},chain:false,updatedAt:"2026-03-15"},
+  {id:"n13",name:"Baba Wu",suburb:"CBD",category:"Chinese",address:"Town Hall Square",lat:-33.8752,lng:151.2066,menus:[{item:"Dumplings 6pcs",price:9},{item:"Boiled Dumplings 12pcs",price:13},{item:"Wonton Noodle Soup",price:14}],rating:4.4,votes:{up:167,down:8},chain:false,updatedAt:"2026-03-15"},
+  {id:"n14",name:"Kowloon Cafe",suburb:"Haymarket",category:"Chinese",address:"26 Dixon St",lat:-33.8766,lng:151.2039,menus:[{item:"Wonton Noodle Soup",price:14},{item:"Char Siu Rice",price:15},{item:"HK Milk Tea",price:6}],rating:4.4,votes:{up:156,down:9},chain:false,updatedAt:"2026-03-15"},
+  {id:"n15",name:"Emperor's Garden BBQ",suburb:"Haymarket",category:"Chinese",address:"213 Thomas St",lat:-33.8784,lng:151.2044,menus:[{item:"Roast Duck Rice",price:16},{item:"BBQ Pork Rice",price:15},{item:"Wonton Soup",price:14}],rating:4.5,votes:{up:234,down:12},chain:false,updatedAt:"2026-03-15"},
+
+  // ── MALAYSIAN & SINGAPOREAN ──
+  {id:"n16",name:"Malay Chinese Takeaway",suburb:"Ashfield",category:"Malaysian",address:"37 Charlotte St",lat:-33.8866,lng:151.1246,menus:[{item:"Laksa",price:16},{item:"Char Kway Teow",price:17},{item:"Hainanese Chicken Rice",price:16}],rating:4.6,votes:{up:312,down:11},chain:false,updatedAt:"2026-03-15"},
+  {id:"n17",name:"Temasek Restaurant",suburb:"Homebush",category:"Malaysian",address:"Shop 13/7 Homebush Bay Dr",lat:-33.8623,lng:151.0853,menus:[{item:"Laksa",price:20},{item:"Hainanese Chicken Rice",price:20},{item:"Fried Noodles",price:17}],rating:4.5,votes:{up:189,down:8},chain:false,updatedAt:"2026-03-15"},
+  {id:"n18",name:"Spice Alley",suburb:"Chippendale",category:"Malaysian",address:"Kensington St",lat:-33.8873,lng:151.1997,menus:[{item:"Nasi Goreng",price:15},{item:"Char Kway Teow",price:15},{item:"Laksa",price:15}],rating:4.4,votes:{up:276,down:14},chain:false,updatedAt:"2026-03-15"},
+  {id:"n19",name:"Uncle Hung's",suburb:"Haymarket",category:"Malaysian",address:"729 George St",lat:-33.8787,lng:151.2050,menus:[{item:"Roti Canai",price:8},{item:"Curry Laksa",price:17},{item:"Mee Goreng",price:16}],rating:4.4,votes:{up:145,down:9},chain:false,updatedAt:"2026-03-15"},
+
+  // ── THAI ──
+  {id:"n20",name:"Spice Temple",suburb:"CBD",category:"Thai",address:"10 Bligh St",lat:-33.8651,lng:151.2106,menus:[{item:"Spice Temple Lunch Special",price:19},{item:"Pad See Ew",price:22},{item:"Green Papaya Salad",price:18}],rating:4.4,votes:{up:134,down:9},chain:false,updatedAt:"2026-03-15"},
+  {id:"n21",name:"Boon Cafe",suburb:"Surry Hills",category:"Thai",address:"240 Commonwealth St",lat:-33.8841,lng:151.2095,menus:[{item:"Thai Boat Noodles",price:15},{item:"Som Tam Salad",price:16},{item:"Pad Thai",price:18}],rating:4.5,votes:{up:178,down:8},chain:false,updatedAt:"2026-03-15"},
+  {id:"n22",name:"Thanon Khao San",suburb:"Newtown",category:"Thai",address:"239 King St",lat:-33.8978,lng:151.1789,menus:[{item:"Pad Krapow",price:19},{item:"Tom Yum Soup",price:16},{item:"Massaman Curry",price:20}],rating:4.4,votes:{up:134,down:8},chain:false,updatedAt:"2026-03-15"},
+
+  // ── KOREAN (NON-KRAZY BIRD) ──
+  {id:"n23",name:"Bong Su",suburb:"CBD",category:"Korean",address:"39 Erskine St",lat:-33.8672,lng:151.2072,menus:[{item:"Korean Fried Chicken",price:22},{item:"Kimchi Pancake",price:18},{item:"Sundubu Jjigae",price:20}],rating:4.5,votes:{up:167,down:8},chain:false,updatedAt:"2026-03-15"},
+  {id:"n24",name:"Kazan Lunch Set",suburb:"CBD",category:"Japanese",address:"Level 2, 428 George St",lat:-33.8718,lng:151.2070,menus:[{item:"Kazan Lunch Set A",price:8},{item:"Kazan Lunch Set B",price:10},{item:"Bento Box",price:14}],rating:4.6,votes:{up:289,down:7},chain:false,updatedAt:"2026-03-15"},
+  {id:"n25",name:"Hana Korean Restaurant",suburb:"Haymarket",category:"Korean",address:"33 Goulburn St",lat:-33.8779,lng:151.2051,menus:[{item:"Bibimbap",price:18},{item:"Sundubu Jjigae",price:19},{item:"Japchae",price:20}],rating:4.4,votes:{up:112,down:7},chain:false,updatedAt:"2026-03-15"},
+
+  // ── INDIAN ──
+  {id:"n26",name:"Dosa Hut",suburb:"Parramatta",category:"Other",address:"Westfield Parramatta",lat:-33.8144,lng:151.0027,menus:[{item:"Masala Dosa",price:14},{item:"Butter Chicken",price:18},{item:"Biryani",price:19}],rating:4.3,votes:{up:145,down:10},chain:true,updatedAt:"2026-03-15"},
+  {id:"n27",name:"Heshela Nepalese",suburb:"Newtown",category:"Other",address:"48 Enmore Rd",lat:-33.8955,lng:151.1762,menus:[{item:"Momo (Dumplings) 10pcs",price:17},{item:"Dal Bhat Set",price:16},{item:"Sekuwa Skewers",price:14}],rating:4.5,votes:{up:134,down:6},chain:false,updatedAt:"2026-03-15"},
+  {id:"n28",name:"Malaak Baghdad",suburb:"Fairfield",category:"Other",address:"Fairfield",lat:-33.8713,lng:150.9573,menus:[{item:"Falafel Sandwich",price:6},{item:"Shawarma Wrap",price:12},{item:"Hummus Plate",price:10}],rating:4.5,votes:{up:156,down:7},chain:false,updatedAt:"2026-03-15"},
+  {id:"n29",name:"Taste of India",suburb:"Harris Park",category:"Other",address:"Harris Park",lat:-33.8189,lng:150.9952,menus:[{item:"Butter Chicken + Rice",price:18},{item:"Garlic Naan",price:5},{item:"Dosa",price:14}],rating:4.4,votes:{up:123,down:8},chain:false,updatedAt:"2026-03-15"},
+
+  // ── BURGERS & WESTERN ──
+  {id:"n30",name:"Mary's Burger",suburb:"Newtown",category:"Other",address:"6 Mary St",lat:-33.8963,lng:151.1768,menus:[{item:"Mary's Burger",price:18},{item:"Mary's Cheeseburger",price:19},{item:"Fried Chicken Burger",price:19}],rating:4.6,votes:{up:234,down:11},chain:false,updatedAt:"2026-03-15"},
+  {id:"n31",name:"Burger Project",suburb:"CBD",category:"Other",address:"Westfield Sydney",lat:-33.8705,lng:151.2082,menus:[{item:"Cheeseburger",price:18},{item:"Cape Grim Beef Burger",price:21},{item:"Crispy Chicken Burger",price:18}],rating:4.4,votes:{up:178,down:10},chain:true,updatedAt:"2026-03-15"},
+  {id:"n32",name:"Belles Hot Chicken",suburb:"CBD",category:"Other",address:"Barangaroo Avenue",lat:-33.8621,lng:151.2012,menus:[{item:"Hot Chicken Tenders",price:19},{item:"Hot Chicken Sandwich",price:22},{item:"Carolina Slaw",price:7}],rating:4.5,votes:{up:198,down:9},chain:true,updatedAt:"2026-03-15"},
+
+  // ── PIZZA & ITALIAN ──
+  {id:"n33",name:"Pizza Fella",suburb:"Surry Hills",category:"Italian",address:"361 Crown St",lat:-33.8861,lng:151.2127,menus:[{item:"Margherita Pizza",price:20},{item:"Diavola Pizza",price:23},{item:"Tiramisu",price:9}],rating:4.5,votes:{up:167,down:8},chain:false,updatedAt:"2026-03-15"},
+  {id:"n34",name:"Dante's Pizzeria",suburb:"Newtown",category:"Italian",address:"79 Enmore Rd",lat:-33.8957,lng:151.1763,menus:[{item:"Margherita",price:19},{item:"Funghi Pizza",price:21},{item:"Pasta from",price:20}],rating:4.4,votes:{up:134,down:7},chain:false,updatedAt:"2026-03-15"},
+  {id:"n35",name:"Il Baretto",suburb:"Surry Hills",category:"Italian",address:"496 Bourke St",lat:-33.8874,lng:151.2105,menus:[{item:"Pasta from",price:22},{item:"Risotto",price:24},{item:"Tiramisu",price:10}],rating:4.5,votes:{up:145,down:6},chain:false,updatedAt:"2026-03-15"},
+
+  // ── CAFES & BAKERIES ──
+  {id:"n36",name:"Luxe Bakery",suburb:"Newtown",category:"Cafe",address:"382 King St",lat:-33.8989,lng:151.1802,menus:[{item:"Meat Pie",price:9},{item:"Sausage Roll",price:8},{item:"Toastie",price:12}],rating:4.5,votes:{up:156,down:6},chain:false,updatedAt:"2026-03-15"},
+  {id:"n37",name:"Grounds of Alexandria",suburb:"Alexandria",category:"Cafe",address:"7A, 2 Huntley St",lat:-33.9078,lng:151.1944,menus:[{item:"Eggs Benedict",price:22},{item:"Avocado Toast",price:20},{item:"Pancakes",price:19}],rating:4.4,votes:{up:243,down:14},chain:false,updatedAt:"2026-03-15"},
+  {id:"n38",name:"Single O",suburb:"Surry Hills",category:"Cafe",address:"60 Reservoir St",lat:-33.8862,lng:151.2101,menus:[{item:"Eggs on Toast",price:16},{item:"Granola Bowl",price:14},{item:"Brekky Plate",price:18}],rating:4.5,votes:{up:198,down:8},chain:false,updatedAt:"2026-03-15"},
+
+  // ── MIDDLE EASTERN / LEBANESE ──
+  {id:"n39",name:"Cairo Bakehouse",suburb:"Newtown",category:"Other",address:"268 King St",lat:-33.8970,lng:151.1788,menus:[{item:"Chicken Shawarma",price:14},{item:"Falafel Wrap",price:12},{item:"Hummus + Pita",price:10}],rating:4.4,votes:{up:134,down:7},chain:false,updatedAt:"2026-03-15"},
+  {id:"n40",name:"El Jannah",suburb:"Granville",category:"Other",address:"239 Woodville Rd",lat:-33.8295,lng:150.9982,menus:[{item:"Quarter Chicken + Chips",price:19},{item:"Chicken Roll",price:9},{item:"Garlic Sauce (extra)",price:2}],rating:4.7,votes:{up:456,down:12},chain:true,updatedAt:"2026-03-15"},
+  {id:"n41",name:"Mr Crackles",suburb:"Darlinghurst",category:"Other",address:"193 Oxford St",lat:-33.8798,lng:151.2163,menus:[{item:"Pork Roll",price:9},{item:"Crackle Bowl",price:18},{item:"Porchetta Roll",price:14}],rating:4.6,votes:{up:312,down:10},chain:false,updatedAt:"2026-03-15"},
+
+  // ── STEAKHOUSES & MEAT ──
+  {id:"n42",name:"Black Bar and Grill Lunch",suburb:"CBD",category:"Steakhouse",address:"Star Casino, Pyrmont",lat:-33.8700,lng:151.1944,menus:[{item:"Wagyu Burger",price:25},{item:"Steak Sandwich",price:23},{item:"Fish & Chips",price:22}],rating:4.4,votes:{up:112,down:8},chain:false,updatedAt:"2026-03-15"},
+  {id:"n43",name:"Vic's Meat Market",suburb:"Pyrmont",category:"Steakhouse",address:"Sydney Fish Market",lat:-33.8697,lng:151.1897,menus:[{item:"Beef Burger",price:18},{item:"Steak Sandwich",price:22},{item:"Meat Pie",price:9}],rating:4.3,votes:{up:98,down:9},chain:false,updatedAt:"2026-03-15"},
+
+  // ── SEAFOOD ──
+  {id:"n44",name:"Sydney Fish Market Takeaway",suburb:"Pyrmont",category:"Other",address:"Bank St, Pyrmont",lat:-33.8700,lng:151.1892,menus:[{item:"Fish & Chips",price:18},{item:"Grilled Salmon",price:22},{item:"Prawn Cocktail",price:16}],rating:4.4,votes:{up:189,down:14},chain:false,updatedAt:"2026-03-15"},
+  {id:"n45",name:"Coogee Bay Seafood",suburb:"Coogee",category:"Other",address:"Coogee Bay Rd",lat:-33.9225,lng:151.2540,menus:[{item:"Fish & Chips",price:18},{item:"Battered Flathead",price:20},{item:"Calamari",price:18}],rating:4.3,votes:{up:134,down:10},chain:false,updatedAt:"2026-03-15"},
+
+  // ── MIXED / OTHERS ──
+  {id:"n46",name:"Pastizzi Cafe",suburb:"Newtown",category:"Italian",address:"220 King St",lat:-33.8975,lng:151.1783,menus:[{item:"Pasta from",price:19},{item:"Pizza from",price:21},{item:"Pastizzi Platter",price:12}],rating:4.5,votes:{up:198,down:8},chain:false,updatedAt:"2026-03-15"},
+  {id:"n47",name:"Oiden",suburb:"CBD",category:"Japanese",address:"Level 1, World Square",lat:-33.8769,lng:151.2059,menus:[{item:"Beef Bowl",price:12},{item:"Chicken Karaage Bowl",price:12},{item:"Gyudon Large",price:15}],rating:4.5,votes:{up:167,down:7},chain:false,updatedAt:"2026-03-15"},
+  {id:"n48",name:"Azuma Sushi",suburb:"CBD",category:"Japanese",address:"L1 Chifley Plaza",lat:-33.8659,lng:151.2100,menus:[{item:"Sushi Train plate from",price:5.5},{item:"Ramen",price:18},{item:"Bento Set",price:22}],rating:4.3,votes:{up:112,down:9},chain:false,updatedAt:"2026-03-15"},
+  {id:"n49",name:"Thai Riffic",suburb:"Pyrmont",category:"Thai",address:"Star City Mall",lat:-33.8692,lng:151.1942,menus:[{item:"Green Curry + Rice",price:19},{item:"Pad See Ew",price:18},{item:"Tom Kha Soup",price:16}],rating:4.3,votes:{up:98,down:8},chain:false,updatedAt:"2026-03-15"},
+  {id:"n50",name:"Chur Burger",suburb:"Surry Hills",category:"Other",address:"48 Albion St",lat:-33.8844,lng:151.2086,menus:[{item:"Chur Burger",price:18},{item:"BBQ Bacon Burger",price:20},{item:"Loaded Fries",price:11}],rating:4.4,votes:{up:145,down:8},chain:false,updatedAt:"2026-03-15"},
 ];
 
 /* ===================== STATE ===================== */
@@ -361,11 +505,40 @@ var S={
 var MAP=null,OVERLAYS=[],MK_ELS={},MY_LOC=null,PinClass=null,LocClass=null;
 
 function load(){
+  // Load favs and comments from localStorage
   try{
     var d=localStorage.getItem("crackerv4");
-    if(d){var p=JSON.parse(d);S.restaurants=p.restaurants||clone(SEED);S.favs=p.favs||[];S.comments=p.comments||{};}
-    else{S.restaurants=clone(SEED);}
-  }catch(e){S.restaurants=clone(SEED);}
+    if(d){var p=JSON.parse(d);S.favs=p.favs||[];S.comments=p.comments||{};}
+  }catch(e){}
+  // Start with seed data immediately (map shows right away)
+  if(!S.restaurants.length) S.restaurants=clone(SEED);
+  // Then update from Firebase in background
+  loadFromFirebase();
+}
+
+function loadFromFirebase(){
+  if(!window._fs){
+    setTimeout(loadFromFirebase, 300);
+    return;
+  }
+  window._fs.collection("restaurants").get()
+  .then(function(snap){
+    if(!snap.empty){
+      S.restaurants=[];
+      snap.forEach(function(doc){
+        var r=doc.data();
+        r._docId=doc.id;
+        S.restaurants.push(r);
+      });
+      console.log("Loaded "+S.restaurants.length+" restaurants from Firebase");
+      applyFilter();buildMks();renderAll();
+    } else {
+      console.log("Firebase empty, using seed data");
+    }
+  })
+  .catch(function(e){
+    console.error("Firebase load failed, using seed data:", e);
+  });
 }
 function persist(){try{localStorage.setItem("crackerv4",JSON.stringify({restaurants:S.restaurants,favs:S.favs,comments:S.comments}));}catch(e){}}
 function clone(o){return JSON.parse(JSON.stringify(o));}
@@ -392,6 +565,7 @@ function toast(msg){var el=document.getElementById("toast");el.textContent=msg;e
 /* ===================== MAPS ===================== */
 window.initMap=function(){
   document.getElementById("loading").style.display="none";
+  window._geocoder=new google.maps.Geocoder();
   MAP=new google.maps.Map(document.getElementById("map"),{
     center:{lat:-33.872,lng:151.207},zoom:15,minZoom:11,maxZoom:19,
     mapTypeControl:false,fullscreenControl:false,streetViewControl:false,clickableIcons:false,
@@ -452,7 +626,7 @@ function showDrawer(r){
     _renderDrawer(r);
   });
 }
-function _renderDrawer(r){
+function _renderDrawer(r){window._currentRid=r.id;
   var m=CAT[r.category]||CAT.Other,mn=minP(r),fv=isFav(r.id),cmts=S.comments[r.id]||[];
   var rows=r.menus.map(function(mm,i){
     return '<div class="d-row" style="background:'+(i%2===0?"#fff":"var(--bg)")+'"><span style="font-size:13px;color:var(--ink2);">'+escHTML(mm.item)+'</span><span style="font-size:14px;font-weight:800;color:'+m.color+';">A$'+mm.price+'</span></div>';
@@ -489,7 +663,8 @@ function _renderDrawer(r){
       +'<button onclick="toggleFav(\''+r.id+'\')" class="btn-fav'+(fv?" on":"")+'">&#9733; '+(fv?"Saved":"Save")+'</button>'
       +'<button onclick="vote(\''+r.id+'\',\'up\')" style="flex:1;padding:6px 10px;border-radius:8px;border:1px solid #D0F0DA;background:#F0FBF4;color:#166534;font-size:12px;font-weight:700;cursor:pointer;">Correct '+r.votes.up+'</button>'
       +'<button onclick="vote(\''+r.id+'\',\'down\')" style="padding:6px 10px;border-radius:8px;border:1px solid #FAD4D4;background:#FDF4F4;color:#9F1239;font-size:12px;font-weight:700;cursor:pointer;">Wrong '+r.votes.down+'</button>'
-    +'</div>'
+    
+      +'<button onclick="openSuggestEdit()" style="width:100%;padding:7px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--ink2);font-size:12px;font-weight:600;cursor:pointer;margin-top:2px;">&#9998; Suggest Price/Menu Edit</button>'
     +'<div style="padding:10px 16px 6px;border-top:1px solid var(--border2);"><span class="lbl">Comments ('+cmts.length+')</span></div>'
     +cmtHTML
     +'<div style="padding:12px 14px;border-top:1px solid var(--border2);display:flex;flex-direction:column;gap:8px;">'
@@ -613,33 +788,38 @@ function renderModal(){
   el.style.display=S.showAdd?"flex":"none";
   if(!S.showAdd)return;
   document.getElementById("modal-step").textContent="Step "+S.addStep+" of 2 - "+(S.addStep===1?"Basic info":"Menu & prices");
-  var f=S.addForm,ms=S.addMenus;
+  var f=S.addForm, ms=S.addMenus;
   var err=S.addErr?'<div style="background:#FDF3F3;border:1px solid #F5C4C4;border-radius:8px;padding:10px 14px;font-size:13px;color:var(--red);margin-bottom:14px;">'+S.addErr+'</div>':"";
   var iS="width:100%;padding:10px 12px;border-radius:8px;border:1.5px solid var(--border);font-size:13px;background:#fff;box-sizing:border-box;";
-  var sS=iS+"cursor:pointer;appearance:none;padding-right:26px;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 8px center;";
+  var sS=iS+"cursor:pointer;appearance:none;";
   var lS="display:block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin-bottom:5px;";
   if(S.addStep===1){
+    var catOpts=Object.keys(CAT).map(function(cat){return '<option'+(f.category===cat?' selected':'')+'>'+cat+'</option>';}).join("");
     document.getElementById("modal-body").innerHTML=err
       +'<div style="display:flex;flex-direction:column;gap:14px;">'
-      +'<div><label style="'+lS+'">Restaurant Name</label><input value="'+escHTML(f.name)+'" oninput="S.addForm.name=this.value" placeholder="e.g. Mamak" style="'+iS+'"/></div>'
+      +'<div>'
+        +'<label style="'+lS+'">Restaurant Name</label>'
+        +'<input id="place-autocomplete" value="'+escHTML(f.name)+'" placeholder="Search restaurant name..." autocomplete="off" style="'+iS+'" oninput="handlePlaceInput(this.value)"/>'
+        
+        +'<p style="font-size:11px;color:var(--ink3);margin-top:4px;">Type to search from Google Maps, or fill in manually</p>'
+      +'</div>'
       +'<div><label style="'+lS+'">Address <span style="text-transform:none;font-weight:400;">optional</span></label><input value="'+escHTML(f.address)+'" oninput="S.addForm.address=this.value" placeholder="e.g. 15 Goulburn St" style="'+iS+'"/></div>'
       +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">'
-        +'<div><label style="'+lS+'">Suburb</label><input value="'+escHTML(f.suburb)+'" oninput="S.addForm.suburb=this.value" placeholder="e.g. Rhodes, Ryde..." style="'+iS+'"/></div>'
-        +'<div><label style="'+lS+'">Category</label><select onchange="S.addForm.category=this.value" style="'+sS+'">'+Object.keys(CAT).map(function(c){return '<option'+(f.category===c?" selected":"")+'>'+c+'</option>';}).join("")+'</select></div>'
-      +'</div>'
-      +'<div style="background:var(--bg);border-radius:8px;padding:12px;"><p style="font-size:11px;color:var(--ink3);line-height:1.5;margin-bottom:8px;">Optional: lat/lng for precise pin. Right-click on Google Maps - "Whats here?"</p>'
-        +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"><input value="'+escHTML(f.lat)+'" oninput="S.addForm.lat=this.value" placeholder="Latitude" type="number" step="any" style="'+iS+'font-size:12px;"/><input value="'+escHTML(f.lng)+'" oninput="S.addForm.lng=this.value" placeholder="Longitude" type="number" step="any" style="'+iS+'font-size:12px;"/></div>'
+        +'<div><label style="'+lS+'">Suburb</label><input value="'+escHTML(f.suburb)+'" oninput="S.addForm.suburb=this.value" placeholder="e.g. Newtown, CBD..." style="'+iS+'"/></div>'
+        +'<div><label style="'+lS+'">Category</label><select onchange="S.addForm.category=this.value" style="'+sS+'">'+catOpts+'</select></div>'
       +'</div>'
       +'<button onclick="addNext()" style="width:100%;padding:12px;border-radius:10px;border:none;background:#111;color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Next - Add Prices</button>'
       +'</div>';
+    _placeWidget=null; // reset so widget re-attaches to new input
+    setTimeout(initPlaceWidget,50);
   } else {
     document.getElementById("modal-body").innerHTML=err
-      +'<p style="font-size:13px;color:var(--ink2);margin-bottom:16px;line-height:1.5;">Add menu items for <strong>'+escHTML(f.name)+'</strong>.</p>'
+      +'<p style="font-size:13px;color:var(--ink2);margin-bottom:16px;line-height:1.5;">Add <strong>main menu items only</strong> (no sides, drinks, or desserts). For <strong>'+escHTML(f.name)+'</strong>.</p>'
       +'<div style="display:flex;flex-direction:column;gap:9px;margin-bottom:10px;">'
-      +ms.map(function(mm,i){return '<div style="display:flex;gap:8px;align-items:center;"><input value="'+escHTML(mm.item)+'" oninput="S.addMenus['+i+'].item=this.value" placeholder="e.g. Ramen (per person)" style="'+iS+'flex:1;"/><div style="display:flex;align-items:center;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;flex-shrink:0;width:95px;"><span style="padding:9px 8px;background:var(--bg);font-size:12px;color:var(--ink3);border-right:1px solid var(--border);">A$</span><input value="'+escHTML(String(mm.price||""))+'" oninput="S.addMenus['+i+'].price=this.value" placeholder="0" type="number" min="0" style="flex:1;padding:9px 7px;border:none;font-size:13px;background:transparent;width:50px;outline:none;"/></div>'+(ms.length>1?'<button onclick="rmMenu('+i+')" style="width:34px;height:36px;flex-shrink:0;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;font-size:16px;cursor:pointer;">&times;</button>':'')+'</div>';}).join("")
+      +ms.map(function(mm,i){return '<div style="display:flex;gap:8px;align-items:center;"><input value="'+escHTML(mm.item)+'" oninput="S.addMenus['+i+'].item=this.value" placeholder="e.g. Ramen (per person)" style="'+iS+'flex:1;box-sizing:border-box;"/><div style="display:flex;align-items:center;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;flex-shrink:0;width:95px;"><span style="padding:9px 8px;background:var(--bg);font-size:12px;color:var(--ink3);border-right:1px solid var(--border);">A$</span><input value="'+escHTML(String(mm.price||""))+'" oninput="S.addMenus['+i+'].price=this.value" placeholder="0" type="number" min="0" style="flex:1;padding:9px 7px;border:none;font-size:13px;background:transparent;width:50px;outline:none;"/></div>'+(ms.length>1?'<button onclick="rmMenu('+i+')" style="width:34px;height:36px;flex-shrink:0;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;font-size:16px;cursor:pointer;">&times;</button>':'')+'</div>';}).join("")
       +'</div>'
       +'<button onclick="addItem()" style="width:100%;padding:9px;border-radius:8px;border:1.5px dashed var(--border);background:transparent;color:var(--ink3);font-size:12px;cursor:pointer;margin-bottom:18px;">+ Add item</button>'
-      +'<div style="display:flex;gap:10px;"><button onclick="S.addStep=1;S.addErr=\'\';renderModal()" style="flex:1;padding:12px;border-radius:10px;border:1.5px solid var(--border);background:transparent;color:var(--ink2);font-size:13px;cursor:pointer;">Back</button><button onclick="doSubmit()" style="flex:2;padding:12px;border-radius:10px;border:none;background:#111;color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Submit for Approval</button></div>';
+      +'<button onclick="submitPriceEdit()" style="width:100%;padding:11px;border-radius:9px;border:none;background:#111;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px;">Submit for Approval</button>'
   }
 }
 
@@ -784,22 +964,99 @@ function loadCmts(rid,cb){
 
 /* ADMIN */
 function escA(s){var d=document.createElement("div");d.textContent=String(s||"");return d.innerHTML;}
-function checkAdmin(){if(new URLSearchParams(window.location.search).get("admin")==="cracker2024")openAdmin();}
-function openAdmin(){document.getElementById("adm").style.display="flex";showAdmTab("pending");}
-function closeAdmin(){document.getElementById("adm").style.display="none";}
+var _admAuthed=false;
+function checkAdmin(){if(new URLSearchParams(window.location.search).get("admin")==="cracker2024"){_admAuthed=true;openAdmin();}}
+function openAdmin(){
+  document.getElementById("adm").style.display="flex";
+  document.getElementById("adm").style.alignItems="center";
+  if(_admAuthed){showAdmPanel();}else{showAdmLogin("");}
+  // Focus username field
+  if(!_admAuthed){setTimeout(function(){var u=document.getElementById("adm-user");if(u)u.focus();},100);}
+}
+function closeAdmin(){document.getElementById("adm").style.display="none";_admAuthed=false;}
+function showAdmLogin(err){
+  document.getElementById("adm-login").style.display="flex";
+  document.getElementById("adm-main").style.display="none";
+  if(err){var e=document.getElementById("adm-login-err");if(e)e.textContent=err;}
+}
+function showAdmPanel(){
+  document.getElementById("adm-login").style.display="none";
+  document.getElementById("adm-main").style.display="block";
+  showAdmTab("pending");
+}
+function doAdmLogin(){
+  var u=(document.getElementById("adm-user")||{}).value||"";
+  var p=(document.getElementById("adm-pass")||{}).value||"";
+  if(u==="crackeradmin"&&p==="cracker2024!"){
+    _admAuthed=true;
+    showAdmPanel();
+  } else {
+    showAdmLogin("Incorrect username or password.");
+  }
+}
 var _admTab="pending";
 function showAdmTab(tab){
   _admTab=tab;
-  ["pending","restaurants","comments"].forEach(function(t){
+  ["pending","edits","restaurants","comments"].forEach(function(t){
     var btn=document.getElementById("adm-tab-"+t);
     if(!btn)return;
     if(t===tab){btn.style.color="#F5C842";btn.style.background="rgba(255,255,255,.08)";}
     else{btn.style.color="rgba(255,255,255,.5)";btn.style.background="transparent";}
   });
   if(tab==="pending")loadPending();
+  else if(tab==="edits")loadAdmEdits();
   else if(tab==="restaurants")loadAdmRestaurants();
   else loadAdmComments();
 }
+
+function loadAdmEdits(){
+  var el=document.getElementById("adm-list");
+  el.innerHTML='<p style="text-align:center;color:#999;padding:30px;font-size:13px;">Loading...</p>';
+  if(!window._fs){el.innerHTML='<p style="color:var(--red);padding:20px;">Firebase not connected</p>';return;}
+  window._fs.collection("pending_edits").get()
+  .then(function(snap){
+    if(snap.empty){el.innerHTML='<p style="text-align:center;color:#888;padding:40px;font-size:14px;">No pending edits</p>';return;}
+    var html="";
+    snap.forEach(function(doc){
+      var e=doc.data(),id=doc.id;
+      var menus=(e.menus||[]).map(function(m){return "<b>"+escA(m.item)+"</b> A$"+m.price;}).join(" &middot; ");
+      html+='<div style="border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;">'
+        +'<div style="font-size:15px;font-weight:700;margin-bottom:3px;">'+escA(e.rname||"")+'</div>'
+        +'<div style="font-size:12px;color:#888;margin-bottom:5px;">Suggested by <b>'+escA(e.submittedBy||"")+'</b> &middot; '+escA((e.submittedAt||"").slice(0,10))+'</div>'
+        +'<div style="font-size:12px;color:#444;margin-bottom:10px;line-height:1.6;">'+menus+'</div>'
+        +'<div style="display:flex;gap:8px;">'
+          +'<button onclick="approveEdit(this,\''+id+'\')" style="flex:1;padding:9px;border-radius:8px;border:none;background:#1A7A3C;color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Approve</button>'
+          +'<button onclick="rejectEdit(this,\''+id+'\')" style="flex:1;padding:9px;border-radius:8px;border:1.5px solid #ddd;background:#fff;color:var(--red);font-size:13px;font-weight:600;cursor:pointer;">Reject</button>'
+        +'</div></div>';
+    });
+    el.innerHTML=html;
+  }).catch(function(e){el.innerHTML='<p style="color:var(--red);padding:20px;">'+escA(e.message)+'</p>';});
+}
+
+function approveEdit(btn,docId){
+  btn.textContent="Approving...";btn.disabled=true;
+  window._fs.collection("pending_edits").doc(docId).get().then(function(doc){
+    if(!doc.exists){toast("Not found");loadAdmEdits();return;}
+    var e=doc.data();
+    var r=S.restaurants.find(function(x){return x.id===e.rid;});
+    if(r){
+      r.menus=e.menus;
+      r.updatedAt=new Date().toISOString().slice(0,10);
+      persist();applyFilter();buildMks();renderPanel();
+    }
+    window._fs.collection("pending_edits").doc(docId).delete();
+    toast("Edit approved for "+escA(e.rname));
+    loadAdmEdits();
+  }).catch(function(er){toast("Error: "+er.message);});
+}
+
+function rejectEdit(btn,docId){
+  btn.textContent="Rejecting...";btn.disabled=true;
+  window._fs.collection("pending_edits").doc(docId).delete()
+  .then(function(){toast("Edit rejected.");loadAdmEdits();})
+  .catch(function(er){toast("Error: "+er.message);});
+}
+
 function loadPending(){
   var el=document.getElementById("adm-list");
   el.innerHTML='<p style="text-align:center;color:#999;padding:30px;font-size:13px;">Loading...</p>';
@@ -828,7 +1085,7 @@ function approveR(btn,docId){
     if(!doc.exists){toast("Not found");loadPending();return;}
     var r=doc.data();r.id="r"+Date.now();r.status="approved";
     window._fs.collection("restaurants").add(r).then(function(){
-      S.restaurants.push(r);persist();applyFilter();buildMks();renderPanel();
+      S.restaurants.push(r);persist();applyFilter();buildMks();renderPanel();renderAll();
       window._fs.collection("pending_restaurants").doc(docId).delete();
       toast("Approved! "+r.name+" is now live.");loadPending();
     });
@@ -842,20 +1099,145 @@ function rejectR(btn,docId){
 }
 function loadAdmRestaurants(){
   var el=document.getElementById("adm-list");
-  var html='<div style="font-size:12px;color:#888;margin-bottom:12px;font-weight:600;">'+S.restaurants.length+' restaurants total</div>';
-  S.restaurants.forEach(function(r){
-    var m=CAT[r.category]||CAT.Other,mn=minP(r);
-    html+='<div style="border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;">'
-      +'<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">'
-        +'<div style="min-width:0;flex:1;">'
-          +'<div style="font-size:14px;font-weight:700;">'+escA(r.name)+'</div>'
-          +'<div style="font-size:12px;color:#888;">'+escA(r.category)+" - "+escA(r.suburb||"")+(mn?" - from A$"+mn:"")+'</div>'
+  var iS="width:100%;padding:7px 10px;border-radius:7px;border:1.5px solid var(--border);font-size:12px;box-sizing:border-box;";
+  var lS="display:block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#888;margin-bottom:3px;margin-top:8px;";
+  var html='<div style="font-size:12px;color:#888;margin-bottom:14px;font-weight:600;">'+S.restaurants.length+' restaurants total</div>';
+
+  S.restaurants.forEach(function(r,ri){
+    var m=CAT[r.category]||CAT.Other, mn=minP(r);
+
+    // Menu rows
+    var menuRows=r.menus.map(function(mm,mi){
+      return '<div style="display:flex;gap:6px;align-items:center;margin-bottom:5px;">'
+        +'<input data-type="item" data-ri="'+ri+'" data-mi="'+mi+'" value="'+escA(mm.item)+'" placeholder="Item name" style="'+iS+'flex:1;"/>'
+        +'<div style="display:flex;align-items:center;border:1.5px solid var(--border);border-radius:7px;overflow:hidden;flex-shrink:0;">'
+          +'<span style="padding:7px 7px;background:var(--bg);font-size:11px;color:#888;border-right:1px solid var(--border);">A$</span>'
+          +'<input data-type="price" data-ri="'+ri+'" data-mi="'+mi+'" type="number" min="0" step="0.5" value="'+mm.price+'" style="width:60px;padding:7px 7px;border:none;font-size:12px;background:transparent;outline:none;"/>'
         +'</div>'
-        +'<button onclick="deleteRestaurant(\''+r.id+'\')" style="padding:6px 10px;border-radius:7px;border:1.5px solid #fdd;background:#fff;color:var(--red);font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0;">Delete</button>'
+        +'<button data-type="delmenu" data-ri="'+ri+'" data-mi="'+mi+'" title="Remove item" style="width:30px;height:30px;border-radius:6px;border:1.5px solid var(--border);background:#fff;color:var(--red);font-size:16px;cursor:pointer;flex-shrink:0;">&times;</button>'
+      +'</div>';
+    }).join("");
+
+    // Category options
+    var catOpts=Object.keys(CAT).map(function(cat){
+      return '<option'+(r.category===cat?' selected':'')+'>'+cat+'</option>';
+    }).join("");
+
+    html+='<div style="border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:12px;">'
+      // Header
+      +'<div style="padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--bg);">'
+        +'<div style="min-width:0;flex:1;">'
+          +'<div style="font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+escA(r.name)+'</div>'
+          +'<div style="font-size:11px;color:#888;margin-top:1px;">'+escA(r.category)+' &middot; '+escA(r.suburb||'')+(mn?' &middot; from A$'+mn:'')+'</div>'
+        +'</div>'
+        +'<div style="display:flex;gap:6px;flex-shrink:0;">'
+          +'<button data-type="toggleedit" data-ri="'+ri+'" style="padding:6px 12px;border-radius:7px;border:1.5px solid var(--border);background:#fff;font-size:12px;font-weight:600;cursor:pointer;">&#9998; Edit</button>'
+          +'<button data-type="delrest" data-ri="'+ri+'" style="padding:6px 10px;border-radius:7px;border:1.5px solid #fdd;background:#fff;color:var(--red);font-size:12px;font-weight:600;cursor:pointer;">Delete</button>'
+        +'</div>'
+      +'</div>'
+      // Edit panel
+      +'<div id="edit-panel-'+ri+'" style="display:none;padding:14px;border-top:1.5px solid var(--border);">'
+        // Basic info
+        +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">'
+          +'<div style="grid-column:1/-1;"><label style="'+lS+'">Restaurant Name</label>'
+            +'<input data-type="name" data-ri="'+ri+'" value="'+escA(r.name)+'" style="'+iS+'"/></div>'
+          +'<div><label style="'+lS+'">Suburb</label>'
+            +'<input data-type="suburb" data-ri="'+ri+'" value="'+escA(r.suburb||'')+'" style="'+iS+'"/></div>'
+          +'<div><label style="'+lS+'">Category</label>'
+            +'<select data-type="category" data-ri="'+ri+'" style="'+iS+'cursor:pointer;">'+catOpts+'</select></div>'
+          +'<div style="grid-column:1/-1;"><label style="'+lS+'">Address</label>'
+            +'<input data-type="address" data-ri="'+ri+'" value="'+escA(r.address||'')+'" style="'+iS+'"/></div>'
+          
+        +'</div>'
+        // Menu
+        +'<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border2);">'
+          +'<label style="'+lS+'">Main Menu Items & Prices</label>'
+        +'<p style="font-size:11px;color:var(--ink3);margin-bottom:6px;">Main dishes only - no sides, drinks or desserts</p>'
+          +'<div id="menu-rows-'+ri+'" style="margin-top:6px;">'+menuRows+'</div>'
+          +'<button data-type="addmenu" data-ri="'+ri+'" style="width:100%;margin-top:4px;padding:8px;border-radius:7px;border:1.5px dashed var(--border);background:transparent;color:#888;font-size:12px;cursor:pointer;">+ Add menu item</button>'
+        +'</div>'
+        // Save
+        +'<button data-type="saverest" data-ri="'+ri+'" style="width:100%;margin-top:12px;padding:10px;border-radius:8px;border:none;background:#111;color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Save All Changes</button>'
       +'</div>'
     +'</div>';
   });
+
   el.innerHTML=html;
+
+  el.onclick=function(e){
+    var btn=e.target.closest("button,select");
+    if(!btn)return;
+    var type=btn.dataset.type;
+    var ri=parseInt(btn.dataset.ri);
+    var mi=parseInt(btn.dataset.mi);
+
+    if(type==="toggleedit"){
+      var panel=document.getElementById("edit-panel-"+ri);
+      if(panel){
+        var open=panel.style.display!=="none";
+        panel.style.display=open?"none":"block";
+        btn.textContent=open?"✎ Edit":"▲ Close";
+      }
+    } else if(type==="delrest"){
+      admDeleteRestaurant(ri);
+    } else if(type==="delmenu"){
+      S.restaurants[ri].menus.splice(mi,1);
+      persist();applyFilter();buildMks();renderPanel();
+      // Re-render just the menu rows
+      var panel=document.getElementById("edit-panel-"+ri);
+      var wasOpen=panel&&panel.style.display!=="none";
+      loadAdmRestaurants();
+      if(wasOpen){
+        setTimeout(function(){
+          var p=document.getElementById("edit-panel-"+ri);
+          if(p)p.style.display="block";
+        },30);
+      }
+    } else if(type==="addmenu"){
+      S.restaurants[ri].menus.push({item:"",price:0});
+      persist();
+      var wasOpen=true;
+      loadAdmRestaurants();
+      setTimeout(function(){
+        var p=document.getElementById("edit-panel-"+ri);
+        if(p)p.style.display="block";
+        // Focus last item input
+        var inputs=p&&p.querySelectorAll("[data-type='item']");
+        if(inputs&&inputs.length)inputs[inputs.length-1].focus();
+      },30);
+    } else if(type==="saverest"){
+      var r=S.restaurants[ri];
+      // Collect basic fields
+      var fields=el.querySelectorAll("[data-ri='"+ri+"']");
+      fields.forEach(function(inp){
+        var t=inp.dataset.type;
+        var mi2=parseInt(inp.dataset.mi);
+        if(t==="name")r.name=inp.value.trim();
+        else if(t==="suburb")r.suburb=inp.value.trim();
+        else if(t==="category")r.category=inp.value;
+        else if(t==="address")r.address=inp.value.trim();
+        else if(t==="lat")r.lat=parseFloat(inp.value)||r.lat;
+        else if(t==="lng")r.lng=parseFloat(inp.value)||r.lng;
+        else if(t==="item")r.menus[mi2].item=inp.value;
+        else if(t==="price")r.menus[mi2].price=parseFloat(inp.value)||0;
+      });
+      persist();applyFilter();buildMks();renderPanel();
+      toast("Saved: "+r.name);
+      var panel=document.getElementById("edit-panel-"+ri);
+      if(panel)panel.style.display="none";
+      // Refresh the list to show updated info
+      loadAdmRestaurants();
+    }
+  };
+}
+
+function admDeleteRestaurant(ri){
+  var r=S.restaurants[ri];
+  if(!r||!confirm("Delete "+r.name+"? This cannot be undone."))return;
+  S.restaurants.splice(ri,1);
+  persist();applyFilter();buildMks();renderPanel();
+  toast("Deleted "+r.name);
+  loadAdmRestaurants();
 }
 function deleteRestaurant(rid){
   if(!confirm("Delete this restaurant?"))return;
@@ -899,6 +1281,153 @@ function deleteCmt(rid,cid){
   .catch(function(e){toast("Error: "+e.message);});
 }
 
+
+// -- Places Autocomplete (widget approach) --
+var _placeWidget=null;
+function handlePlaceInput(val){
+  S.addForm.name=val;
+}
+function initPlaceWidget(){
+  var inp=document.getElementById("place-autocomplete");
+  if(!inp||!window.google||!google.maps.places)return;
+  if(_placeWidget)return; // already attached
+  var opts={
+    componentRestrictions:{country:"au"},
+    types:["establishment"],
+    fields:["name","formatted_address","geometry","address_components"]
+  };
+  _placeWidget=new google.maps.places.Autocomplete(inp,opts);
+  _placeWidget.addListener("place_changed",function(){
+    var place=_placeWidget.getPlace();
+    if(!place||!place.geometry)return;
+    var suburb="Sydney";
+    (place.address_components||[]).forEach(function(comp){
+      if(comp.types.indexOf("locality")>-1||comp.types.indexOf("sublocality_level_1")>-1)suburb=comp.long_name;
+    });
+    S.addForm.name=place.name||"";
+    S.addForm.address=(place.formatted_address||"").replace(/, Australia$/,"").replace(/,\s*NSW.*$/,"");
+    S.addForm.suburb=suburb;
+    S.addForm.lat=place.geometry.location.lat();
+    S.addForm.lng=place.geometry.location.lng();
+    // Update other fields without re-rendering (would destroy widget)
+    var addrEl=document.querySelector("#modal-body input[placeholder*='Goulburn']");
+    var subEl=document.querySelector("#modal-body input[placeholder*='Newtown']");
+    if(addrEl)addrEl.value=S.addForm.address;
+    if(subEl)subEl.value=S.addForm.suburb;
+  });
+}
+function geocodeAndSave(r,ri){
+  if(!r.address||!window._geocoder){
+    persist();applyFilter();buildMks();renderPanel();
+    toast("Saved: "+r.name);loadAdmRestaurants();return;
+  }
+  window._geocoder.geocode({address:r.address+", Sydney, Australia"},function(results,status){
+    if(status==="OK"&&results[0]){
+      r.lat=results[0].geometry.location.lat();
+      r.lng=results[0].geometry.location.lng();
+    }
+    persist();applyFilter();buildMks();renderPanel();
+    toast("Saved & map updated: "+r.name);loadAdmRestaurants();
+  });
+}
+
+
+// -- User Price/Menu Edit Suggestions --
+function openSuggestEdit(rid){
+  rid=rid||window._currentRid;
+  var r=S.restaurants.find(function(x){return x.id===rid;});
+  if(!r)return;
+  // Build modal HTML
+  var iS="width:100%;padding:8px 10px;border-radius:7px;border:1.5px solid var(--border);font-size:13px;box-sizing:border-box;";
+  var lS="display:block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#888;margin-bottom:4px;margin-top:10px;";
+  var rows=r.menus.map(function(m,i){
+    return '<div style="display:flex;gap:6px;align-items:center;margin-bottom:5px;">'
+      +'<input data-i="'+i+'" data-f="item" value="'+escHTML(m.item)+'" style="'+iS+'flex:1;font-size:12px;"/>'
+      +'<div style="display:flex;align-items:center;border:1.5px solid var(--border);border-radius:7px;overflow:hidden;flex-shrink:0;">'
+        +'<span style="padding:7px 7px;background:var(--bg);font-size:11px;color:#888;border-right:1px solid var(--border);">A$</span>'
+        +'<input data-i="'+i+'" data-f="price" type="number" min="0" step="0.5" value="'+m.price+'" style="width:60px;padding:7px 7px;border:none;font-size:12px;background:transparent;outline:none;"/>'
+      +'</div>'
+    +'</div>';
+  }).join("");
+
+  document.getElementById("suggest-overlay").style.display="flex";
+  document.getElementById("suggest-body").innerHTML=
+    '<div style="padding:20px 22px;border-bottom:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center;">'
+      +'<div><h3 style="font-size:17px;font-weight:700;margin-bottom:2px;">Suggest Edit</h3>'
+      +'<p style="font-size:12px;color:#888;">'+escHTML(r.name)+' - pending admin approval</p></div>'
+      +'<button onclick="closeSuggestEdit()" style="background:var(--bg);border:1px solid var(--border);border-radius:7px;width:30px;height:30px;font-size:17px;cursor:pointer;">&times;</button>'
+    +'</div>'
+    +'<div style="padding:20px;" id="se-form">'
+      +'<label style="'+lS+'">Your Name</label>'
+      +'<input id="se-name" placeholder="Your name" style="'+iS+'"/>'
+      +'<label style="'+lS+'">Main Menu Items & Prices</label>'
+        +'<p style="font-size:11px;color:var(--ink3);margin-bottom:6px;">Main dishes only - no sides, drinks or desserts</p>'
+      +'<div id="se-rows" style="margin-top:6px;">'+rows+'</div>'
+      +'<div id="se-err" style="color:var(--red);font-size:12px;margin-top:8px;"></div>'
+      +'<button onclick="submitPriceEdit(\''+rid+'\')" style="width:100%;padding:11px;border-radius:9px;border:none;background:#111;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px;">Submit for Approval</button>'
+      +'<p style="font-size:11px;color:#aaa;text-align:center;margin-top:8px;">Your suggestion will be reviewed before going live.</p>'
+    +'</div>';
+
+  // Store rid for submit
+  document.getElementById("suggest-body").dataset.rid=rid;
+}
+
+function closeSuggestEdit(){
+  document.getElementById("suggest-overlay").style.display="none";
+}
+
+function submitPriceEdit(rid){
+  rid=rid||window._currentRid;
+  var nameEl=document.getElementById("se-name");
+  var errEl=document.getElementById("se-err");
+  var name=(nameEl&&nameEl.value||"").trim();
+  if(!name){if(errEl)errEl.textContent="Please enter your name.";return;}
+
+  // Collect edits
+  var rows=document.querySelectorAll("#se-rows [data-i]");
+  var menus=[];
+  var byIndex={};
+  rows.forEach(function(inp){
+    var i=parseInt(inp.dataset.i),f=inp.dataset.f;
+    if(!byIndex[i])byIndex[i]={};
+    byIndex[i][f]=inp.value;
+  });
+  Object.keys(byIndex).forEach(function(i){
+    var m=byIndex[i];
+    menus.push({item:(m.item||"").trim(),price:parseFloat(m.price)||0});
+  });
+  menus=menus.filter(function(m){return m.item&&m.price>0;});
+  if(!menus.length){if(errEl)errEl.textContent="Please add at least one menu item.";return;}
+
+  var r=S.restaurants.find(function(x){return x.id===rid;});
+  var edit={
+    rid:rid,
+    rname:r?r.name:"",
+    submittedBy:name,
+    menus:menus,
+    submittedAt:new Date().toISOString(),
+    status:"pending"
+  };
+
+  var btn=document.querySelector("#se-form button");
+  if(btn){btn.disabled=true;btn.textContent="Submitting...";}
+
+  if(window._fs){
+    window._fs.collection("pending_edits").add(edit)
+    .then(function(){
+      closeSuggestEdit();
+      toast("Thanks! Your edit is pending approval.");
+    })
+    .catch(function(){
+      closeSuggestEdit();
+      toast("Thanks! Your edit is pending approval.");
+    });
+  } else {
+    closeSuggestEdit();
+    toast("Thanks! Your edit is pending approval.");
+  }
+}
+
 document.addEventListener("DOMContentLoaded",function(){
   document.getElementById("search-inp").addEventListener("input",function(e){
     S.q=e.target.value;applyFilter();buildMks();renderPanel();
@@ -931,6 +1460,6 @@ console.log("Firebase ready");
 </script>
 
 <!-- Google Maps -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCzTAQQTbIxLwb5OCnSdPRX7kOgSAtPcY&callback=initMap&loading=async"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCzTAQQTbIxLwb5OCnSdPRX7kOgSAtPcY&callback=initMap&libraries=places&loading=async"></script>
 </body>
 </html>
