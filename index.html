@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-<title>The 'Absolute Cracker' Aussie Cheap Eats List</title>
+<title>Cracker Eats - Aussie Cheap Eats List</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -181,7 +181,7 @@ input,select,button{font-family:inherit;font-size:13px;}
 <div id="hdr">
   <div style="max-width:1400px;margin:0 auto;padding:0 20px;height:56px;display:flex;align-items:center;gap:12px;">
     <div style="flex-shrink:0;">
-      <div style="font-family:'DM Serif Display',Georgia,serif;font-size:18px;color:#fff;line-height:1;letter-spacing:-.2px;">The <span style="font-style:italic;color:#F5C842;">'Absolute Cracker'</span></div>
+      <div style="font-family:'DM Serif Display',Georgia,serif;font-size:22px;color:#fff;line-height:1;letter-spacing:-.3px;"><span style="font-style:italic;color:#F5C842;">Cracker</span> Eats</div>
       <div style="font-family:'Inter',sans-serif;font-size:8.5px;color:#F5C842;letter-spacing:.25em;text-transform:uppercase;margin-top:3px;opacity:.75;font-weight:600;">Aussie Cheap Eats List</div>
     </div>
     <div style="flex:1;max-width:320px;position:relative;">
@@ -698,7 +698,10 @@ function _renderDrawer(r){window._currentRid=r.id;
             +'<span style="width:7px;height:7px;border-radius:50%;background:'+m.color+';display:inline-block;flex-shrink:0;"></span>'
             +'<span class="lbl" style="color:'+m.color+';">'+escHTML(r.category)+(r.chain?" - Chain":"")+'</span>'
           +'</div>'
+          +'<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">'
+          +(getLikeLevel(getLikes(r))?'<span title="'+getLikeLevel(getLikes(r)).name+'" style="font-size:18px;line-height:1;">'+getLikeLevel(getLikes(r)).badge+'</span>':'')
           +'<div class="serif" style="font-size:18px;font-weight:800;letter-spacing:-.2px;line-height:1.2;">'+escHTML(r.name)+'</div>'
+        +'</div>'
           +'<div style="font-size:12px;color:var(--ink3);margin-top:3px;">'+escHTML(r.suburb||"")+(r.address?" - "+escHTML(r.address):"")+'</div>'
         +'</div>'
         +'<div style="text-align:right;flex-shrink:0;">'
@@ -715,11 +718,14 @@ function _renderDrawer(r){window._currentRid=r.id;
     +'<div style="padding:8px 16px 4px;"><span class="lbl">Menu Prices</span></div>'
     +'<div>'+rows+'</div>'
     +'<div class="d-actions">'
-      +'<button onclick="toggleFav(\''+r.id+'\')" class="btn-fav'+(fv?" on":"")+'">&#9733; '+(fv?"Saved":"Save")+'</button>'
-      +'<button onclick="vote(\''+r.id+'\',\'up\')" style="flex:1;padding:6px 10px;border-radius:8px;border:1px solid #D0F0DA;background:#F0FBF4;color:#166534;font-size:12px;font-weight:700;cursor:pointer;">Correct '+r.votes.up+'</button>'
-      +'<button onclick="vote(\''+r.id+'\',\'down\')" style="padding:6px 10px;border-radius:8px;border:1px solid #FAD4D4;background:#FDF4F4;color:#9F1239;font-size:12px;font-weight:700;cursor:pointer;">Wrong '+r.votes.down+'</button>'
-    
+      +'<button onclick="toggleFav(\''+r.id+'\')" class="btn-fav'+(fv?' on':'')+'">&#9733; '+(fv?'Saved':'Save')+'</button>'
+      +'<button onclick="toggleLike(\''+r.id+'\',\'up\')" style="flex:1;padding:6px 10px;border-radius:8px;border:1px solid #D0F0DA;background:#F0FBF4;color:#166534;font-size:13px;font-weight:700;cursor:pointer;">&#128077; '+(r.likes||0)+'</button>'
+      +'<button onclick="toggleLike(\''+r.id+'\',\'down\')" style="padding:6px 10px;border-radius:8px;border:1px solid #FAD4D4;background:#FDF4F4;color:#9F1239;font-size:13px;font-weight:700;cursor:pointer;">&#128078; '+(r.dislikes||0)+'</button>'
+      +'<button onclick="vote(\''+r.id+'\',\'up\')" style="flex:1;padding:6px 10px;border-radius:8px;border:1px solid #E0E7FF;background:#EEF2FF;color:#3730A3;font-size:11px;font-weight:600;cursor:pointer;">&#10003; Price OK '+r.votes.up+'</button>'
+      +'<button onclick="vote(\''+r.id+'\',\'down\')" style="padding:6px 10px;border-radius:8px;border:1px solid #FAD4D4;background:#FDF4F4;color:#9F1239;font-size:11px;font-weight:600;cursor:pointer;">&#10007; Wrong '+r.votes.down+'</button>'
+      +'<label style="width:100%;padding:7px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--ink2);font-size:12px;font-weight:600;cursor:pointer;margin-top:2px;text-align:center;display:block;">&#128247; Add Photo<input type="file" accept="image/*" onchange="uploadPhoto(\''+r.id+'\',this)" style="display:none;"/></label>'
       +'<button onclick="openSuggestEdit()" style="width:100%;padding:7px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--ink2);font-size:12px;font-weight:600;cursor:pointer;margin-top:2px;">&#9998; Suggest Price/Menu Edit</button>'
+    +'</div>'
     +'<div style="padding:10px 16px 6px;border-top:1px solid var(--border2);"><span class="lbl">Comments ('+cmts.length+')</span></div>'
     +cmtHTML
     +'<div style="padding:12px 14px;border-top:1px solid var(--border2);display:flex;flex-direction:column;gap:8px;">'
@@ -731,6 +737,8 @@ function _renderDrawer(r){window._currentRid=r.id;
     +'</div>';
 
   document.getElementById("drawer").classList.add("open");
+  // Load photos
+  setTimeout(function(){loadPhotos(r.id);},100);
 }
 function closeDrawer(){
   document.getElementById("drawer").classList.remove("open");
@@ -778,7 +786,7 @@ function renderPanel(){
   var html=list.map(function(r){
     var m=CAT[r.category]||CAT.Other,mn=minP(r),isSel=S.sel===r.id;
     return '<div class="prow'+(isSel?" sel":"")+'" onclick="pickR(\''+r.id+'\')" style="border-left-color:'+(isSel?m.color:"transparent")+'">'
-      +'<div style="min-width:0;flex:1;"><div style="font-size:13px;font-weight:'+(isSel?"700":"500")+';color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+escHTML(r.name)+'</div>'
+      +'<div style="min-width:0;flex:1;"><div style="font-size:13px;font-weight:'+(isSel?"700":"500")+';color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+(getLikeLevel(getLikes(r))?getLikeLevel(getLikes(r)).badge+' ':'')+escHTML(r.name)+'</div>'
       +'<div style="font-size:11px;color:var(--ink3);margin-top:1px;">'+r.category+' - '+escHTML(r.suburb||"")+'</div></div>'
       +'<div style="text-align:right;flex-shrink:0;">'+(mn?'<div style="font-size:14px;font-weight:800;color:'+m.color+';">A$'+mn+'</div><div style="font-size:10px;color:var(--ink3);">from</div>':'-')+'</div>'
     +'</div>';
@@ -1741,6 +1749,117 @@ function checkNoticePopup(){
     document.getElementById('popup-body').textContent=found.text||'';
     document.getElementById('notice-popup').style.display='flex';
   }).catch(function(e){console.log('popup err:',e);});
+}
+
+
+// -- Restaurant Levels based on likes --
+function getLikeLevel(likes){
+  if(likes>=500)return{badge:"💎",name:"Diamond",color:"#00BCD4"};
+  if(likes>=100)return{badge:"🥇",name:"Gold",color:"#F5C842"};
+  if(likes>=50)return{badge:"🥈",name:"Silver",color:"#9E9E9E"};
+  if(likes>=10)return{badge:"🥉",name:"Bronze",color:"#CD7F32"};
+  return null;
+}
+
+function getLikes(r){return (r.likes)||0;}
+
+function toggleLike(rid,type){
+  // Check localStorage for user's previous vote on this restaurant
+  var key='like_'+rid;
+  var prev=localStorage.getItem(key);
+  if(prev===type){toast('You already '+(type==='up'?'liked':'disliked')+' this!');return;}
+  var r=S.restaurants.find(function(x){return x.id===rid;});
+  if(!r)return;
+  if(!r.likes)r.likes=0;
+  if(!r.dislikes)r.dislikes=0;
+  // Undo previous vote
+  if(prev==='up')r.likes=Math.max(0,r.likes-1);
+  if(prev==='down')r.dislikes=Math.max(0,r.dislikes-1);
+  // Apply new vote
+  if(type==='up')r.likes++;
+  if(type==='down')r.dislikes++;
+  localStorage.setItem(key,type);
+  persist();
+  // Update Firebase
+  if(window._fs&&r._docId){
+    window._fs.collection("restaurants").doc(r._docId).update({
+      likes:r.likes,dislikes:r.dislikes
+    }).catch(function(){});
+  }
+  // Re-render drawer
+  _renderDrawer(r);
+  toast(type==='up'?'👍 Liked!':'👎 Disliked');
+}
+
+
+// -- Photo System --
+function uploadPhoto(rid,input){
+  var file=input.files[0];
+  if(!file)return;
+  if(file.size>5*1024*1024){toast('Photo must be under 5MB');return;}
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var dataUrl=e.target.result;
+    var date=new Date().toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'});
+    if(!window._fs){toast('Not connected');return;}
+    toast('Uploading...');
+    // Store as base64 in Firestore (small images only)
+    // Compress first
+    var img=new Image();
+    img.onload=function(){
+      var canvas=document.createElement('canvas');
+      var maxW=800,maxH=600;
+      var w=img.width,h=img.height;
+      if(w>maxW){h=h*(maxW/w);w=maxW;}
+      if(h>maxH){w=w*(maxH/h);h=maxH;}
+      canvas.width=w;canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      var compressed=canvas.toDataURL('image/jpeg',0.7);
+      if(compressed.length>800000){toast('Photo too large. Try a smaller image.');return;}
+      window._fs.collection('restaurant_photos').add({
+        rid:rid,url:compressed,date:date,
+        ts:firebase.firestore.FieldValue.serverTimestamp()
+      }).then(function(){
+        toast('Photo uploaded! &#128247;');
+        loadPhotos(rid);
+      }).catch(function(e){toast('Error: '+e.message);});
+    };
+    img.src=dataUrl;
+  };
+  reader.readAsDataURL(file);
+  input.value='';
+}
+
+function loadPhotos(rid){
+  var grid=document.getElementById('photo-grid-'+rid);
+  if(!grid||!window._fs)return;
+  grid.innerHTML='<span style="font-size:12px;color:var(--ink3);">Loading...</span>';
+  window._fs.collection('restaurant_photos').where('rid','==',rid).orderBy('ts','desc').limit(10).get()
+  .then(function(snap){
+    if(snap.empty){grid.innerHTML='<span style="font-size:12px;color:var(--ink3);">No photos yet</span>';return;}
+    grid.innerHTML='';
+    snap.forEach(function(doc){
+      var d=doc.data(),id=doc.id;
+      var wrap=document.createElement('div');
+      wrap.style.cssText='position:relative;width:80px;height:80px;border-radius:8px;overflow:hidden;border:1px solid var(--border2);flex-shrink:0;';
+      var img=document.createElement('img');
+      img.src=d.url;
+      img.style.cssText='width:100%;height:100%;object-fit:cover;cursor:pointer;';
+      img.onclick=function(){window.open(d.url,'_blank');};
+      wrap.appendChild(img);
+      if(isAdminLoggedIn()){
+        var del=document.createElement('button');
+        del.textContent='×';
+        del.style.cssText='position:absolute;top:2px;right:2px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:4px;width:20px;height:20px;font-size:13px;cursor:pointer;line-height:1;';
+        del.onclick=function(){
+          if(!confirm('Delete photo?'))return;
+          window._fs.collection('restaurant_photos').doc(id).delete().then(function(){loadPhotos(rid);});
+        };
+        wrap.appendChild(del);
+      }
+      grid.appendChild(wrap);
+    });
+  }).catch(function(){grid.innerHTML='<span style="font-size:12px;color:var(--ink3);">No photos yet</span>';});
 }
 
 document.addEventListener("DOMContentLoaded",function(){
