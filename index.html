@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-<title>Cracker Eats - Aussie Cheap Eats List</title>
+<title>Cracker Eats - Sydney's Best Cheap Eats Guide</title>
+<meta name="description" content="Cracker Eats is Sydney's best cheap eats guide. Find affordable restaurants, compare prices, and discover the best value meals across Sydney's suburbs — from $10 ramen to $20 Korean BBQ."/>
+<meta name="keywords" content="cheap eats Sydney, affordable restaurants Sydney, best value meals Sydney, budget dining Sydney, Sydney food guide, cheap restaurants Sydney CBD"/>
+<meta name="robots" content="index, follow"/>
+<meta property="og:title" content="Cracker Eats - Sydney's Best Cheap Eats Guide"/>
+<meta property="og:description" content="Find and compare the best cheap eats across Sydney. Discover affordable restaurants with real prices, ratings, and reviews."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://crackereatlist.com.au/"/>
+<link rel="canonical" href="https://crackereatlist.com.au/"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -258,6 +266,16 @@ input,select,button{font-family:inherit;font-size:13px;}
     </div>
 <div id="plist" style="overflow-y:auto;flex:1;"></div>
     <div id="pfav" style="overflow-y:auto;flex:1;display:none;"></div>
+    <!-- Ad unit - desktop sidebar -->
+    <div style="padding:10px;border-top:1px solid var(--border);flex-shrink:0;">
+      <ins class="adsbygoogle"
+           style="display:block;width:100%;min-height:90px;"
+           data-ad-client="ca-pub-8267795564637907"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
   </div>
 
   <!-- List view (desktop) -->
@@ -296,6 +314,17 @@ input,select,button{font-family:inherit;font-size:13px;}
 
 <!-- Mobile list overlay -->
 <div id="mobile-list"></div>
+
+<!-- Mobile Ad Banner (shown at bottom above bnav) -->
+<div id="mobile-ad-banner" style="display:none;position:fixed;bottom:calc(56px + env(safe-area-inset-bottom, 0px));left:0;right:0;z-index:140;background:#fff;border-top:1px solid #eee;padding:4px 0;text-align:center;">
+  <ins class="adsbygoogle"
+       style="display:block;width:100%;height:50px;"
+       data-ad-client="ca-pub-8267795564637907"
+       data-ad-slot="auto"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 
 <!-- ADD MODAL -->
 <div id="modal" onclick="if(event.target===this)closeAdd()">
@@ -951,22 +980,26 @@ function setMobileTab(tab){
   var drawer=document.getElementById("drawer");
   var boardOv=document.getElementById("board-overlay");
   if(boardOv)boardOv.style.display="none";
+  var mobileAd=document.getElementById("mobile-ad-banner");
   if(tab==="map"){
     if(ml)ml.classList.remove("show");
     if(mapWrap)mapWrap.style.display="block";
     if(fbar)fbar.style.display="block";
+    if(mobileAd)mobileAd.style.display="none";
     if(MAP)setTimeout(function(){google.maps.event.trigger(MAP,"resize");},100);
   } else if(tab==="list"||tab==="saved"){
     if(ml)ml.classList.add("show");
     if(mapWrap)mapWrap.style.display="none";
     if(fbar)fbar.style.display="none";
     if(drawer)drawer.classList.remove("open");
+    if(mobileAd)mobileAd.style.display="block";
     renderMobileList(tab==="saved");
   } else if(tab==="board"){
     if(ml)ml.classList.remove("show");
     if(mapWrap)mapWrap.style.display="none";
     if(fbar)fbar.style.display="none";
     if(drawer)drawer.classList.remove("open");
+    if(mobileAd)mobileAd.style.display="none";
     if(boardOv)boardOv.style.display="flex";
     setBoardTab("notice");
   }
@@ -1901,5 +1934,83 @@ console.log("Firebase ready");
 
 <!-- Google Maps -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCzTAQQTbIxLwb5OCnSdPRX7kOgSAtPcY&callback=initMap&libraries=places&loading=async"></script>
+
+<!-- Privacy Policy Modal -->
+<div id="privacy-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.6);overflow-y:auto;">
+  <div style="background:#fff;max-width:680px;margin:40px auto;border-radius:14px;padding:40px;font-family:'Inter',sans-serif;font-size:14px;line-height:1.7;color:#222;position:relative;">
+    <button onclick="document.getElementById('privacy-modal').style.display='none'" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:#888;">✕</button>
+    <h1 style="font-size:22px;font-weight:700;margin-bottom:8px;">Privacy Policy</h1>
+    <p style="color:#888;font-size:12px;margin-bottom:24px;">Last updated: April 2026</p>
+    <h2 style="font-size:15px;font-weight:700;margin:20px 0 8px;">1. Information We Collect</h2>
+    <p>Cracker Eats ("we", "us", "our") collects information you provide directly, such as restaurant suggestions, comments, and price corrections. We also automatically collect usage data including pages visited, time spent, and general location (city/suburb level) through analytics tools.</p>
+    <h2 style="font-size:15px;font-weight:700;margin:20px 0 8px;">2. How We Use Your Information</h2>
+    <p>We use the information collected to improve the Cracker Eats service, moderate user-submitted content, analyse site traffic, and display relevant advertising. We do not sell your personal information to third parties.</p>
+    <h2 style="font-size:15px;font-weight:700;margin:20px 0 8px;">3. Google AdSense & Advertising</h2>
+    <p>This website uses Google AdSense to display advertisements. Google may use cookies and device identifiers to serve ads based on your interests. You can opt out of personalised advertising by visiting <a href="https://adssettings.google.com" target="_blank" style="color:#1A7A3C;">Google Ad Settings</a>. We participate in the Google AdSense program as a publisher. Our publisher ID is ca-pub-8267795564637907.</p>
+    <h2 style="font-size:15px;font-weight:700;margin:20px 0 8px;">4. Google Analytics</h2>
+    <p>We use Google Analytics (GA4) to understand how visitors use our site. This service uses cookies to collect anonymous data such as pages visited, session duration, and general geographic location. You can opt out via the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" style="color:#1A7A3C;">Google Analytics Opt-out Browser Add-on</a>.</p>
+    <h2 style="font-size:15px;font-weight:700;margin:20px 0 8px;">5. Firebase & Data Storage</h2>
+    <p>User-submitted content (comments, restaurant suggestions, price edits) is stored in Google Firebase Firestore. This data is moderated before being publicly displayed. Submitted content may include your comment text and a timestamp.</p>
+    <h2 style="font-size:15px;font-weight:700;margin:20px 0 8px;">6. Cookies</h2>
+    <p>We use cookies to remember your saved restaurants (favourites) via localStorage. Third-party services (Google AdSense, Google Analytics) may also set their own cookies. You can control cookies through your browser settings.</p>
+    <h2 style="font-size:15px;font-weight:700;margin:20px 0 8px;">7. Your Rights</h2>
+    <p>You have the right to access, correct, or request deletion of any personal data we hold about you. To make a request, contact us at <a href="mailto:hello@crackereatlist.com.au" style="color:#1A7A3C;">hello@crackereatlist.com.au</a>.</p>
+    <h2 style="font-size:15px;font-weight:700;margin:20px 0 8px;">8. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated date. Continued use of the site constitutes acceptance of the updated policy.</p>
+    <div style="margin-top:30px;padding-top:20px;border-top:1px solid #eee;text-align:center;">
+      <button onclick="document.getElementById('privacy-modal').style.display='none'" style="background:#111;color:#fff;border:none;border-radius:8px;padding:12px 28px;font-size:14px;font-weight:600;cursor:pointer;">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Static SEO content for Google crawler (visually hidden but indexable) -->
+<div id="seo-content" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
+  <article>
+    <h1>Cracker Eats — Sydney's Best Cheap Eats Guide</h1>
+    <p>Cracker Eats is a community-driven price comparison guide for affordable restaurants across Sydney, Australia. Compare prices, read reviews, and discover the best value meals from $10 to $25 across suburbs including CBD, Surry Hills, Newtown, Haymarket, Cabramatta, Bankstown, and more.</p>
+    <h2>Featured Cheap Eats in Sydney</h2>
+    <ul>
+      <li><strong>Mamak</strong> — Malaysian, Haymarket. Roti Canai with Curry $12.90, Nasi Lemak $14.50, Mee Goreng $17.50</li>
+      <li><strong>Gumshara Ramen</strong> — Japanese, Haymarket. Tonkotsu Ramen from $14.50</li>
+      <li><strong>Mappen</strong> — Japanese Ramen, CBD. All ramen $9.90 — best cheap ramen in Sydney</li>
+      <li><strong>Din Tai Fung</strong> — Chinese, CBD. Xiao Long Bao 10pcs $22, Pork Chop Fried Rice $18</li>
+      <li><strong>King's Banh Mi</strong> — Vietnamese, Surry Hills. Banh Mi from $12</li>
+      <li><strong>Tan Viet Noodle House</strong> — Vietnamese, Cabramatta. Crispy Chicken with Rice $19</li>
+      <li><strong>Pho Tau Bay</strong> — Vietnamese, Bankstown. Pho Dac Biet $19</li>
+      <li><strong>Spice I Am</strong> — Thai, Surry Hills. Green Curry with Rice $20, Pad Thai $19</li>
+      <li><strong>Ommi Don</strong> — Japanese Rice Bowls, Surry Hills. Fried Chicken Don $17.50</li>
+      <li><strong>Bourke St Bakery</strong> — Cafe, Surry Hills. Sausage Roll $9, Coffee + Pastry Combo $12</li>
+      <li><strong>Dae Jang Kum</strong> — Korean, Haymarket. Dolsot Bibimbap $20, Kimchi Jjigae Set $22</li>
+      <li><strong>Sayong Laksa</strong> — Malaysian, CBD World Square. Signature Laksa $19</li>
+    </ul>
+    <h2>About Cracker Eats</h2>
+    <p>Cracker Eats helps Sydneysiders find affordable, quality meals without breaking the bank. Our community updates prices regularly to keep the guide accurate. Categories include Korean, Japanese, Chinese, Vietnamese, Malaysian, Thai, Italian, and cafe dining. All restaurants listed offer meals under $25.</p>
+  </article>
+</div>
+
+<!-- Site Footer -->
+<div id="site-footer" style="display:none;">
+  <footer style="background:#111;color:rgba(255,255,255,.7);text-align:center;padding:16px;font-size:12px;font-family:'Inter',sans-serif;">
+    <span>© 2026 Cracker Eats — Sydney's Cheap Eats Guide</span>
+    &nbsp;·&nbsp;
+    <a href="#" onclick="document.getElementById('privacy-modal').style.display='block';return false;" style="color:rgba(255,255,255,.6);text-decoration:underline;">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <a href="mailto:hello@crackereatlist.com.au" style="color:rgba(255,255,255,.6);text-decoration:underline;">Contact</a>
+  </footer>
+</div>
+
+<script>
+// Show Privacy Policy link in header
+(function(){
+  var hdr = document.getElementById('hdr');
+  if(hdr){
+    var pp = document.createElement('div');
+    pp.style.cssText='position:absolute;right:12px;top:50%;transform:translateY(-50%);z-index:300;';
+    pp.innerHTML='<a href="#" onclick="document.getElementById(\'privacy-modal\').style.display=\'block\';return false;" style="color:rgba(255,255,255,.5);font-size:11px;text-decoration:underline;font-family:Inter,sans-serif;">Privacy Policy</a>';
+    hdr.style.position='relative';
+    hdr.appendChild(pp);
+  }
+})();
+</script>
 </body>
 </html>
