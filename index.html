@@ -266,16 +266,6 @@ input,select,button{font-family:inherit;font-size:13px;}
     </div>
 <div id="plist" style="overflow-y:auto;flex:1;"></div>
     <div id="pfav" style="overflow-y:auto;flex:1;display:none;"></div>
-    <!-- Ad unit - desktop sidebar -->
-    <div style="padding:10px;border-top:1px solid var(--border);flex-shrink:0;">
-      <ins class="adsbygoogle"
-           style="display:block;width:100%;min-height:90px;"
-           data-ad-client="ca-pub-8267795564637907"
-           data-ad-slot="auto"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
   </div>
 
   <!-- List view (desktop) -->
@@ -625,7 +615,7 @@ function loadFromFirebase(){
 }
 function persist(){try{localStorage.setItem("crackerv4",JSON.stringify({restaurants:S.restaurants,favs:S.favs,comments:S.comments}));}catch(e){}}
 function clone(o){return JSON.parse(JSON.stringify(o));}
-function minP(r){return r.menus.length?Math.min.apply(null,r.menus.map(function(m){return m.price;})):null;}
+function minP(r){if(!r||!r.menus||!r.menus.length)return null;return Math.min.apply(null,r.menus.map(function(m){return m.price;}));}
 function isFav(id){return S.favs.indexOf(id)>-1;}
 function escHTML(s){var d=document.createElement("div");d.textContent=String(s||"");return d.innerHTML;}
 function applyFilter(){
@@ -634,7 +624,7 @@ function applyFilter(){
   if(S.suburb!=="All")list=list.filter(function(r){return r.suburb===S.suburb;});
   if(S.priceMax)list=list.filter(function(r){var m=minP(r);return m&&m<=S.priceMax;});
   if(S.favOnly)list=list.filter(function(r){return isFav(r.id);});
-  if(S.q){var q=S.q.toLowerCase();list=list.filter(function(r){return r.name.toLowerCase().indexOf(q)>-1||r.suburb.toLowerCase().indexOf(q)>-1||r.menus.some(function(m){return m.item.toLowerCase().indexOf(q)>-1;});});}
+  if(S.q){var q=S.q.toLowerCase();list=list.filter(function(r){return r.name.toLowerCase().indexOf(q)>-1||r.suburb.toLowerCase().indexOf(q)>-1||(r.menus||[]).some(function(m){return m.item.toLowerCase().indexOf(q)>-1;});});}
   S.filtered=list.sort(function(a,b){
     if(S.sort==="rating")return b.rating-a.rating;
     if(S.sort==="price_asc")return (minP(a)||999)-(minP(b)||999);
@@ -705,16 +695,23 @@ function updateMks(){
 /* ===================== DRAWER ===================== */
 function showDrawer(r){
   if(!r)return;
+  try{
+    // Render immediately with cached comments (so drawer always appears instantly)
+    _renderDrawer(r);
+  }catch(e){console.error("Drawer render error:",e);}
+  // Then update comments from Firebase in background
   loadCmts(r.id,function(cmts){
     S.comments[r.id]=cmts;
-    _renderDrawer(r);
+    if(window._currentRid===r.id){try{_renderDrawer(r);}catch(e){console.error("Drawer re-render error:",e);}}
   });
 }
 function _renderDrawer(r){window._currentRid=r.id;
+  // Defensive: ensure required fields exist (Firebase data may be incomplete)
+  r.menus=r.menus||[];r.votes=r.votes||{up:0,down:0};r.rating=r.rating||0;r.likes=r.likes||0;r.dislikes=r.dislikes||0;
   var m=CAT[r.category]||CAT.Other,mn=minP(r),fv=isFav(r.id),cmts=S.comments[r.id]||[];
   var rows=r.menus.map(function(mm,i){
     return '<div class="d-row" style="background:'+(i%2===0?"#fff":"var(--bg)")+'"><span style="font-size:13px;color:var(--ink2);">'+escHTML(mm.item)+'</span><span style="font-size:14px;font-weight:800;color:'+m.color+';">A$'+mm.price+'</span></div>';
-  }).join("");
+  }).join("")||'<div style="padding:12px 16px;font-size:13px;color:var(--ink3);">No menu info yet</div>';
   var cmtHTML=cmts.length?cmts.map(function(c){
     return '<div class="cmt-item"><div style="display:flex;justify-content:space-between;"><span style="font-size:11px;font-weight:700;">'+escHTML(c.name)+'</span><span style="font-size:10px;color:var(--ink3);">'+escHTML(c.date||"")+'</span></div><div style="font-size:13px;color:var(--ink2);margin-top:3px;">'+escHTML(c.text)+'</div></div>';
   }).join(""):'<div style="padding:14px 16px;font-size:13px;color:var(--ink3);">No comments yet - be the first!</div>';
@@ -938,7 +935,12 @@ function pickR(id){
   S.sel=S.sel===id?null:id;updateMks();renderPanel();
   if(S.sel){
     var r=S.restaurants.find(function(x){return x.id===id;});
-    if(r&&MAP)MAP.panTo({lat:r.lat,lng:r.lng});
+    if(r&&MAP){
+      // Pan to restaurant but ensure minimum zoom level of 13 so map doesn't show wrong area
+      var curZoom=MAP.getZoom();
+      MAP.panTo({lat:r.lat,lng:r.lng});
+      if(curZoom<13)MAP.setZoom(13);
+    }
     if(r)showDrawer(r);
   } else closeDrawer();
 }
