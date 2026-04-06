@@ -869,7 +869,12 @@ function renderMobileList(savedOnly){
     +'</div>';
   }).join("");
   if(!list.length)items='<div style="padding:60px 20px;text-align:center;color:var(--ink3);font-size:14px;">'+(savedOnly?"No saved restaurants yet":"No restaurants found")+'</div>';
-  el.innerHTML=hdr+'<div style="padding-bottom:calc(80px + env(safe-area-inset-bottom));">'+items+'</div>';
+  var mobileFooter='<div style="padding:20px 16px 8px;display:flex;justify-content:center;gap:20px;border-top:1px solid var(--border);">'
+    +'<a href="/blog.html" style="font-size:13px;color:var(--ink3);text-decoration:none;font-weight:500;">📝 Blog</a>'
+    +'<a href="/about.html" style="font-size:13px;color:var(--ink3);text-decoration:none;font-weight:500;">ℹ️ About</a>'
+    +'<a href="#" onclick="document.getElementById(\'privacy-modal\').style.display=\'block\';return false;" style="font-size:13px;color:var(--ink3);text-decoration:none;">Privacy</a>'
+    +'</div>';
+  el.innerHTML=hdr+'<div style="padding-bottom:calc(80px + env(safe-area-inset-bottom));">'+items+mobileFooter+'</div>';
 }
 
 function renderModal(){
@@ -2002,20 +2007,25 @@ console.log("Firebase ready");
 </div>
 
 <script>
-// Show Privacy Policy link in header
+// Show nav links in header — desktop only
 (function(){
   var hdr = document.getElementById('hdr');
-  if(hdr){
-    var pp = document.createElement('div');
-    pp.style.cssText='position:absolute;right:12px;top:50%;transform:translateY(-50%);z-index:300;';
-    pp.innerHTML='<div style="display:flex;align-items:center;gap:14px;">'
-      +'<a href="/blog.html" style="color:rgba(255,255,255,.6);font-size:12px;font-weight:500;text-decoration:none;font-family:Inter,sans-serif;">Blog</a>'
-      +'<a href="/about.html" style="color:rgba(255,255,255,.6);font-size:12px;font-weight:500;text-decoration:none;font-family:Inter,sans-serif;">About</a>'
-      +'<a href="#" onclick="document.getElementById(\'privacy-modal\').style.display=\'block\';return false;" style="color:rgba(255,255,255,.4);font-size:11px;text-decoration:underline;font-family:Inter,sans-serif;">Privacy Policy</a>'
-      +'</div>';
-    hdr.style.position='relative';
-    hdr.appendChild(pp);
+  if(!hdr) return;
+  var pp = document.createElement('div');
+  // Desktop only: position absolute right side
+  pp.style.cssText='position:absolute;right:12px;top:50%;transform:translateY(-50%);z-index:300;display:none;align-items:center;gap:16px;';
+  pp.innerHTML=
+      '<a href="/blog.html" style="color:rgba(255,255,255,.65);font-size:12px;font-weight:500;text-decoration:none;font-family:Inter,sans-serif;white-space:nowrap;">Blog</a>'
+    +'<a href="/about.html" style="color:rgba(255,255,255,.65);font-size:12px;font-weight:500;text-decoration:none;font-family:Inter,sans-serif;white-space:nowrap;">About</a>'
+    +'<a href="#" onclick="document.getElementById(\'privacy-modal\').style.display=\'block\';return false;" style="color:rgba(255,255,255,.35);font-size:11px;text-decoration:underline;font-family:Inter,sans-serif;white-space:nowrap;">Privacy</a>';
+  hdr.style.position='relative';
+  hdr.appendChild(pp);
+  // Only show on desktop
+  function checkWidth(){
+    pp.style.display = window.innerWidth > 768 ? 'flex' : 'none';
   }
+  checkWidth();
+  window.addEventListener('resize', checkWidth);
 })();
 </script>
 </body>
