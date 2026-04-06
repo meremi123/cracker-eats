@@ -726,7 +726,7 @@ function _renderDrawer(r){window._currentRid=r.id;
       +'<label style="width:100%;padding:7px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--ink2);font-size:12px;font-weight:600;cursor:pointer;margin-top:2px;text-align:center;display:block;">&#128247; Add Photo<input type="file" accept="image/*" onchange="uploadPhoto(\''+r.id+'\',this)" style="display:none;"/></label>'
       +'<button onclick="openSuggestEdit()" style="width:100%;padding:7px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--ink2);font-size:12px;font-weight:600;cursor:pointer;margin-top:2px;">&#9998; Suggest Price/Menu Edit</button>'
     +'</div>'
-    +'<div style="padding:10px 16px 6px;border-top:1px solid var(--border2);"><span class="lbl">Comments ('+cmts.length+')</span></div>'
+    +'<div style="padding:10px 16px 8px;border-top:1px solid var(--border2);">'+'<span class="lbl" style="display:block;margin-bottom:8px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);">Photos</span>'+'<div id="photo-grid-'+r.id+'" style="display:flex;gap:6px;flex-wrap:wrap;min-height:28px;align-items:center;"><span style="font-size:12px;color:var(--ink3);">Loading...</span></div>'+'</div>'    +'<div style="padding:10px 16px 6px;border-top:1px solid var(--border2);"><span class="lbl">Comments ('+cmts.length+')</span></div>'
     +cmtHTML
     +'<div style="padding:12px 14px;border-top:1px solid var(--border2);display:flex;flex-direction:column;gap:8px;">'
       +'<div style="display:grid;grid-template-columns:130px 1fr;gap:8px;">'
