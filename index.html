@@ -240,6 +240,16 @@ input,select,button{font-family:inherit;font-size:13px;}
 </div>
 
 
+<!-- Desktop Ad Banner - between filter bar and map (safe zone, no clickable content below) -->
+<div id="desktop-ad-strip" style="display:none;background:#fff;border-bottom:1px solid #eee;overflow:hidden;max-height:90px;">
+  <ins class="adsbygoogle"
+       style="display:block;width:100%;height:90px;"
+       data-ad-client="ca-pub-8267795564637907"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
 <!-- BODY -->
 <div id="body">
   <!-- Map -->
@@ -266,16 +276,6 @@ input,select,button{font-family:inherit;font-size:13px;}
     </div>
 <div id="plist" style="overflow-y:auto;flex:1;"></div>
     <div id="pfav" style="overflow-y:auto;flex:1;display:none;"></div>
-    <!-- Ad unit - desktop sidebar -->
-    <div style="padding:10px;border-top:1px solid var(--border);flex-shrink:0;">
-      <ins class="adsbygoogle"
-           style="display:block;width:100%;min-height:90px;"
-           data-ad-client="ca-pub-8267795564637907"
-           data-ad-slot="auto"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
   </div>
 
   <!-- List view (desktop) -->
@@ -2000,6 +2000,14 @@ console.log("Firebase ready");
 </div>
 
 <script>
+// Show desktop ad strip only on desktop
+(function(){
+  if(window.innerWidth > 768){
+    var ad = document.getElementById('desktop-ad-strip');
+    if(ad) ad.style.display = 'block';
+  }
+})();
+
 // Show Privacy Policy link in header
 (function(){
   var hdr = document.getElementById('hdr');
