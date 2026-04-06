@@ -1673,7 +1673,7 @@ function deleteBoardComment(btn){
   if(!confirm('Delete this comment?'))return;
   window._fs.collection(col).doc(pid).collection('comments').doc(cid).delete()
   .then(function(){loadBoardComments(col,pid);loadBoardCommentCount(col,pid);toast('Deleted.');})
-  .catch(function(e){toast('Error: '+e.message);});
+  .catch(function(e){console.error('upload error:',e);toast('Upload failed: '+e.message);});
 }
 
 
@@ -1834,7 +1834,8 @@ function loadPhotos(rid){
   var grid=document.getElementById('photo-grid-'+rid);
   if(!grid||!window._fs)return;
   grid.innerHTML='<span style="font-size:12px;color:var(--ink3);">Loading...</span>';
-  window._fs.collection('restaurant_photos').where('rid','==',rid).orderBy('ts','desc').limit(10).get()
+  // No orderBy to avoid composite index requirement
+  window._fs.collection('restaurant_photos').where('rid','==',rid).limit(10).get()
   .then(function(snap){
     if(snap.empty){grid.innerHTML='<span style="font-size:12px;color:var(--ink3);">No photos yet</span>';return;}
     grid.innerHTML='';
@@ -1859,7 +1860,10 @@ function loadPhotos(rid){
       }
       grid.appendChild(wrap);
     });
-  }).catch(function(){grid.innerHTML='<span style="font-size:12px;color:var(--ink3);">No photos yet</span>';});
+  }).catch(function(e){
+    console.error('loadPhotos error:',e);
+    grid.innerHTML='<span style="font-size:12px;color:var(--ink3);">No photos yet</span>';
+  });
 }
 
 document.addEventListener("DOMContentLoaded",function(){
