@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sydney Cheap Eats Blog - Budget Dining Tips & Guides | Cracker Eats</title>
+<meta name="description" content="Sydney cheap eats guides, budget dining tips, and suburb-by-suburb food reviews. Find the best value meals in Sydney CBD, Newtown, Haymarket, Cabramatta and more."/>
+<meta name="keywords" content="Sydney cheap eats blog, budget dining Sydney, cheap restaurants guide, best value meals Sydney, Sydney food guide 2026"/>
+<meta property="og:title" content="Sydney Cheap Eats Blog | Cracker Eats"/>
+<meta property="og:description" content="Guides to the best budget dining across Sydney — from $9 ramen to $20 Korean BBQ."/>
+<link rel="canonical" href="https://crackereatlist.com.au/blog.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8267795564637907" crossorigin="anonymous"></script>
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-81W3Y7JB7V"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-81W3Y7JB7V');
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#F6F4F0;--surf:#fff;--ink:#0A0A0A;--ink2:#3A3A3A;--ink3:#888;
+  --border:#E5E2DD;--green:#1A7A3C;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.7;}
+.serif{font-family:'DM Serif Display',Georgia,serif;}
+a{color:var(--green);text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+/* NAV */
+nav{background:#111;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:20px;color:#fff;text-decoration:none;}
+.nav-logo span{color:#F5C842;}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-links a{color:rgba(255,255,255,.7);font-size:13px;font-weight:500;text-decoration:none;transition:color .15s;}
+.nav-links a:hover{color:#fff;}
+.nav-links .btn{background:#F5C842;color:#111;padding:6px 16px;border-radius:20px;font-weight:700;font-size:13px;}
+.nav-links .btn:hover{background:#f0bb30;text-decoration:none;}
+
+/* HERO */
+.hero{background:#111;color:#fff;padding:56px 24px 44px;}
+.hero-inner{max-width:860px;margin:0 auto;}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,52px);line-height:1.1;margin-bottom:12px;}
+.hero h1 em{color:#F5C842;font-style:italic;}
+.hero p{color:rgba(255,255,255,.65);font-size:16px;}
+
+/* LAYOUT */
+.page{max-width:1080px;margin:0 auto;padding:48px 24px;}
+.grid{display:grid;grid-template-columns:1fr 340px;gap:40px;align-items:start;}
+
+/* ARTICLES */
+.articles{display:flex;flex-direction:column;gap:0;}
+.article{background:#fff;border:1px solid var(--border);border-radius:14px;padding:36px;margin-bottom:24px;}
+.article-tag{display:inline-block;background:#F6F4F0;border:1px solid var(--border);border-radius:20px;padding:3px 12px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px;}
+.article h2{font-family:'DM Serif Display',serif;font-size:26px;line-height:1.2;margin-bottom:10px;}
+.article .meta{font-size:12px;color:var(--ink3);margin-bottom:18px;}
+.article p{color:var(--ink2);margin-bottom:14px;font-size:14px;}
+.article p:last-of-type{margin-bottom:0;}
+.article h3{font-size:16px;font-weight:700;margin:22px 0 8px;color:var(--ink);}
+.pick{background:#F6F4F0;border-left:3px solid #111;border-radius:0 8px 8px 0;padding:12px 16px;margin:16px 0;}
+.pick strong{font-size:14px;font-weight:700;display:block;margin-bottom:2px;}
+.pick span{font-size:13px;color:var(--ink3);}
+.pick .price{float:right;font-weight:800;font-size:15px;color:var(--green);}
+.article-footer{margin-top:24px;padding-top:18px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.article-footer a{display:inline-flex;align-items:center;gap:6px;background:#111;color:#fff;font-size:13px;font-weight:700;padding:9px 18px;border-radius:20px;text-decoration:none;}
+.article-footer a:hover{background:#333;}
+.read-time{font-size:12px;color:var(--ink3);}
+
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:20px;}
+.sidebar-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;}
+.sidebar-card h3{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:12px;}
+.sidebar-card p{font-size:13px;color:var(--ink2);margin-bottom:14px;}
+.sidebar-card a.big-btn{display:block;text-align:center;background:#F5C842;color:#111;font-weight:700;padding:12px;border-radius:10px;font-size:14px;text-decoration:none;}
+.sidebar-card a.big-btn:hover{background:#f0bb30;}
+.suburb-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.suburb-list li{display:flex;justify-content:space-between;font-size:13px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.suburb-list li:last-child{border-bottom:none;padding-bottom:0;}
+.suburb-list .count{background:#F6F4F0;border-radius:20px;padding:2px 10px;font-size:11px;font-weight:700;}
+
+/* AD */
+.ad-wrap{background:#fff;border:1px solid var(--border);border-radius:10px;padding:8px;text-align:center;overflow:hidden;}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:8px 0 32px;}
+
+/* FOOTER */
+footer{background:#111;color:rgba(255,255,255,.5);text-align:center;padding:24px;font-size:12px;margin-top:60px;}
+footer a{color:rgba(255,255,255,.5);text-decoration:underline;}
+
+@media(max-width:768px){
+  .grid{grid-template-columns:1fr;}
+  .sidebar{order:-1;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Cracker<span>Eats</span></a>
+  <div class="nav-links">
+    <a href="/blog.html">Blog</a>
+    <a href="/about.html">About</a>
+    <a href="/" class="btn">Find Cheap Eats →</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>Sydney Cheap Eats <em>Blog</em></h1>
+    <p>Guides, tips, and suburb-by-suburb breakdowns for budget dining across Sydney.</p>
+  </div>
+</div>
+
+<div class="page">
+  <div class="grid">
+
+    <!-- ARTICLES -->
+    <div class="articles">
+
+      <!-- ARTICLE 1 -->
+      <article class="article">
+        <span class="article-tag">Guide</span>
+        <h2>Best Cheap Eats in Sydney CBD Under $20 (2026)</h2>
+        <div class="meta">Published April 2026 &nbsp;·&nbsp; 5 min read</div>
+
+        <p>Sydney's CBD has a reputation for expensive lunches and tourist trap restaurants. But if you know where to look, there are dozens of genuinely brilliant meals to be had for under $20 — and many for under $15.</p>
+        <p>Here's our guide to the best value restaurants in the Sydney CBD right now, based on current menu prices tracked on Cracker Eats.</p>
+
+        <h3>Best under $10</h3>
+        <div class="pick">
+          <span class="price">A$9.90</span>
+          <strong>Mappen / Menya Mappen</strong>
+          <span>Japanese ramen — World Square & 480 George St, CBD</span>
+        </div>
+        <p>Mappen is the best kept secret in the CBD. Tonkotsu, shoyu, and miso ramen all priced at $9.90 — a flat, honest price with no hidden extras. The broth is rich and the portions are generous. Expect a short queue at peak lunch.</p>
+
+        <h3>Best under $15</h3>
+        <div class="pick">
+          <span class="price">A$12</span>
+          <strong>Oiden</strong>
+          <span>Japanese rice bowls — Level 1, World Square</span>
+        </div>
+        <p>Oiden does exceptional Japanese rice bowls — gyudon (beef), chicken karaage, and more — all starting at $12. The beef bowl in particular rivals much pricier Japanese restaurants in the CBD.</p>
+
+        <h3>Best under $20</h3>
+        <div class="pick">
+          <span class="price">A$18</span>
+          <strong>Dae Jang Kum</strong>
+          <span>Korean — 35 Goulburn St, Haymarket</span>
+        </div>
+        <p>In the heart of Haymarket's Koreatown strip, Dae Jang Kum is consistently rated as one of the best value Korean restaurants in the city. The dolsot bibimbap ($20) and kimchi jjigae set ($22 per person) are outstanding. Book ahead on weekends.</p>
+
+        <div class="pick">
+          <span class="price">A$18</span>
+          <strong>Gumshara Ramen</strong>
+          <span>Japanese — Kimber Lane, Haymarket</span>
+        </div>
+        <p>Gumshara is a Sydney institution. Located in the Eating World food court in Haymarket, their tonkotsu ramen is made from pork bones boiled for 60+ hours. The small bowl starts at $14.50 and the large at $18.50. Arrive before noon to avoid the queue.</p>
+
+        <h3>Pro Tips</h3>
+        <p><strong>Avoid peak hour.</strong> Most CBD restaurants are quieter between 11:30am–12pm and 1:30pm–2pm. You'll get faster service and sometimes better seats.</p>
+        <p><strong>Check the daily specials.</strong> Many Haymarket and World Square restaurants run weekday lunch specials not listed on their regular menus — often $2–$4 cheaper than the dinner price.</p>
+
+        <div class="article-footer">
+          <a href="/">Browse all CBD restaurants →</a>
+          <span class="read-time">Updated April 2026</span>
+        </div>
+      </article>
+
+      <!-- AD MID -->
+      <div class="ad-wrap" style="margin-bottom:24px;">
+        <ins class="adsbygoogle"
+             style="display:block;width:100%;min-height:90px;"
+             data-ad-client="ca-pub-8267795564637907"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+
+      <!-- ARTICLE 2 -->
+      <article class="article">
+        <span class="article-tag">Guide</span>
+        <h2>Best Ramen in Sydney Under $20 — Our Top Picks</h2>
+        <div class="meta">Published April 2026 &nbsp;·&nbsp; 4 min read</div>
+
+        <p>Sydney has an exceptional ramen scene for a city outside Japan. In the last decade, dozens of ramen-specialist restaurants have opened across the city, and the quality has shot up while prices have stayed (relatively) reasonable. Here's where to get the best bowl for your money.</p>
+
+        <h3>1. Mappen — $9.90</h3>
+        <div class="pick">
+          <span class="price">A$9.90</span>
+          <strong>Mappen</strong>
+          <span>World Square & 480 George St, CBD</span>
+        </div>
+        <p>The best price-to-quality ratio in Sydney ramen. All ramen at $9.90 flat. The broth is clean and satisfying, and the noodles have the right bite. An essential stop for budget-conscious ramen lovers.</p>
+
+        <h3>2. Gumshara Ramen — from $14.50</h3>
+        <div class="pick">
+          <span class="price">A$14.50</span>
+          <strong>Gumshara Ramen</strong>
+          <span>Kimber Lane, Haymarket</span>
+        </div>
+        <p>A legendary Sydney ramen shop. The tonkotsu broth is exceptionally thick — almost gelatinous — because of the long boiling process. Rated 4.7 stars and voted accurate by hundreds of Cracker Eats users. The Eating World food court location is no-frills, but the ramen is the star.</p>
+
+        <h3>3. Chaco Ramen — from $19</h3>
+        <div class="pick">
+          <span class="price">A$19</span>
+          <strong>Chaco Ramen</strong>
+          <span>2 Kensington St, Darlinghurst</span>
+        </div>
+        <p>Chaco occupies a different niche — it's a sit-down, full-service restaurant with a refined atmosphere. The Hakata ramen ($19) and char siu ramen ($21) are made with care and served in a proper bowl. Slightly above budget but worth the splurge.</p>
+
+        <h3>4. Neko Neko Ramen — from $17</h3>
+        <div class="pick">
+          <span class="price">A$17</span>
+          <strong>Neko Neko Ramen</strong>
+          <span>557 Crown St, Surry Hills</span>
+        </div>
+        <p>A cosy neighbourhood ramen spot in Surry Hills. Known for its rich pork broth and thoughtful vegan option. The vegan ramen ($17) is one of the better plant-based bowls in Sydney.</p>
+
+        <h3>What to look for in a good ramen bowl</h3>
+        <p>Good ramen has three components working together: the broth (tare + stock), the noodles (firm, not mushy), and the toppings (at minimum: chashu pork, nori, menma, soft-boiled egg). A great bowl under $20 should deliver all three.</p>
+        <p>Avoid places that charge extra for the egg or have meagre toppings at the base price — it's usually a sign that corners are being cut in the kitchen too.</p>
+
+        <div class="article-footer">
+          <a href="/?cats=Japanese">Browse all Japanese restaurants →</a>
+          <span class="read-time">Updated April 2026</span>
+        </div>
+      </article>
+
+      <!-- ARTICLE 3 -->
+      <article class="article">
+        <span class="article-tag">Suburb Guide</span>
+        <h2>Cheap Eats in Haymarket & Chinatown — The Complete Guide</h2>
+        <div class="meta">Published March 2026 &nbsp;·&nbsp; 6 min read</div>
+
+        <p>Haymarket is Sydney's most densely packed cheap eats neighbourhood. Within a few city blocks around Dixon Street and George Street, you'll find Korean BBQ, Vietnamese pho, Malaysian laksa, Japanese ramen, Chinese dumplings, and more — most of it under $20.</p>
+        <p>Here's our complete breakdown of the best budget dining in Haymarket and Chinatown.</p>
+
+        <h3>Malaysian</h3>
+        <div class="pick">
+          <span class="price">A$12.90</span>
+          <strong>Mamak</strong>
+          <span>15 Goulburn St, Haymarket</span>
+        </div>
+        <p>Mamak is one of Sydney's most beloved Malaysian restaurants and one of the rare places that's both genuinely authentic and affordable. The roti canai with curry ($12.90) is a classic — flaky, layered flatbread with a rich lentil and meat curry. Expect a queue on weekends.</p>
+
+        <div class="pick">
+          <span class="price">A$18</span>
+          <strong>Sayong Laksa</strong>
+          <span>World Square, CBD</span>
+        </div>
+        <p>Sayong Laksa has quietly built a loyal following in the World Square food court. Their signature laksa ($19) is deeply flavourful with a rich coconut broth. Also try the curry laksa ($18).</p>
+
+        <div class="pick">
+          <span class="price">A$17</span>
+          <strong>Albee's Kitchen</strong>
+          <span>723 George St, Haymarket</span>
+        </div>
+        <p>A casual Malaysian restaurant that does all the classics — nasi lemak ($18), laksa ($19), and curry chicken rice ($17). Generous portions and fast service.</p>
+
+        <h3>Vietnamese</h3>
+        <div class="pick">
+          <span class="price">A$18</span>
+          <strong>Pho Pasteur</strong>
+          <span>709 George St, Haymarket</span>
+        </div>
+        <p>One of the better pho options in the CBD. The beef pho large ($19) has a clean, fragrant broth and comes with a generous plate of fresh herbs. Open late, which is a bonus after a night out.</p>
+
+        <h3>Korean</h3>
+        <div class="pick">
+          <span class="price">A$20</span>
+          <strong>Seoul Ria</strong>
+          <span>605 George St, CBD</span>
+        </div>
+        <p>Seoul Ria offers proper Korean meals — bibimbap, galbi lunch sets, and their famous snow chicken — in a sit-down setting with full service. The galbi lunch set ($24 per person) is excellent value for table BBQ in the CBD.</p>
+
+        <h3>Best for groups</h3>
+        <p>Haymarket is ideal for groups because of the variety and density of restaurants. For a group of 4–6, consider Myung Jang & Obaltan's BBQ buffet ($24 per person) on Pitt St — unlimited Korean BBQ with all the banchan you can eat.</p>
+
+        <div class="article-footer">
+          <a href="/?suburb=Haymarket">Browse all Haymarket restaurants →</a>
+          <span class="read-time">Updated March 2026</span>
+        </div>
+      </article>
+
+      <!-- AD -->
+      <div class="ad-wrap" style="margin-bottom:24px;">
+        <ins class="adsbygoogle"
+             style="display:block;width:100%;min-height:90px;"
+             data-ad-client="ca-pub-8267795564637907"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+
+      <!-- ARTICLE 4 -->
+      <article class="article">
+        <span class="article-tag">Suburb Guide</span>
+        <h2>Cabramatta: Sydney's Best Cheap Vietnamese Food</h2>
+        <div class="meta">Published March 2026 &nbsp;·&nbsp; 4 min read</div>
+
+        <p>For the best Vietnamese food in Sydney, you need to make the trip to Cabramatta. About 35 minutes from the CBD by train, this suburb is home to one of Australia's most vibrant Vietnamese communities — and some of the finest, most affordable Vietnamese restaurants you'll find anywhere outside Vietnam.</p>
+
+        <h3>Why Cabramatta?</h3>
+        <p>The Vietnamese community in Cabramatta has been established since the late 1970s, and the food culture has had decades to mature. The restaurants here serve dishes from across Vietnam — not just the pho and banh mi that dominate Sydney's CBD eateries — at prices that reflect a local, working-class neighbourhood rather than inner-city rents.</p>
+
+        <h3>Where to go</h3>
+        <div class="pick">
+          <span class="price">A$18</span>
+          <strong>Tan Viet Noodle House</strong>
+          <span>100 John St, Cabramatta</span>
+        </div>
+        <p>The standout restaurant in Cabramatta. Tan Viet is famous for their combination pho ($19), crispy skin chicken with rice ($19), and roast pork noodle soup ($18). Rated 4.7 stars with over 300 upvotes on Cracker Eats — one of the highest-rated restaurants in our entire database. Come hungry, the portions are massive.</p>
+
+        <div class="pick">
+          <span class="price">A$18.90</span>
+          <strong>Krazy Bird Cabramatta</strong>
+          <span>Shop 16/180 Railway Pde, Cabramatta</span>
+        </div>
+        <p>A Korean fried chicken stop right near Cabramatta station. Ideal if you want to mix cuisines — start with pho at Tan Viet, grab Korean corn dogs or snow cheese chips here for dessert. Halal certified.</p>
+
+        <h3>Getting there</h3>
+        <p>Take the T2 Western Line from Central or Town Hall to Cabramatta station. The restaurant strip is a 2-minute walk from the station exit. Most restaurants are cash-preferred, though many now accept card. Budget an afternoon — it's worth exploring the whole neighbourhood.</p>
+
+        <div class="article-footer">
+          <a href="/?suburb=Cabramatta">Browse Cabramatta restaurants →</a>
+          <span class="read-time">Updated March 2026</span>
+        </div>
+      </article>
+
+      <!-- ARTICLE 5 -->
+      <article class="article">
+        <span class="article-tag">Guide</span>
+        <h2>Sydney Cheap Eats Under $10 — Yes, They Exist</h2>
+        <div class="meta">Published February 2026 &nbsp;·&nbsp; 3 min read</div>
+
+        <p>Finding a genuinely good meal in Sydney for under $10 feels almost impossible in 2026. But it's not — you just need to know where to look. Here are the best options currently tracked on Cracker Eats.</p>
+
+        <div class="pick">
+          <span class="price">A$9.90</span>
+          <strong>Mappen — Ramen</strong>
+          <span>World Square, CBD</span>
+        </div>
+        <p>The gold standard for cheap Sydney ramen. Any bowl on the menu, $9.90. No catches.</p>
+
+        <div class="pick">
+          <span class="price">A$9</span>
+          <strong>Bourke St Bakery — Sausage Roll</strong>
+          <span>633 Bourke St, Surry Hills</span>
+        </div>
+        <p>Bourke St Bakery's pork and fennel sausage roll is an institution. At $9, it's one of the most satisfying snacks in Sydney. Grab one fresh from the oven if you can — the pastry is extraordinary.</p>
+
+        <div class="pick">
+          <span class="price">A$9</span>
+          <strong>Lode Pies — Sausage Roll</strong>
+          <span>487 Crown St, Surry Hills</span>
+        </div>
+        <p>Lode Pies does premium artisan pies and sausage rolls. At $10 for a sausage roll, it's in the same tier as Bourke St Bakery — different style, equally good.</p>
+
+        <div class="pick">
+          <span class="price">A$9</span>
+          <strong>El Jannah — Chicken Roll</strong>
+          <span>239 Woodville Rd, Granville</span>
+        </div>
+        <p>El Jannah's charcoal chicken roll ($9) comes with the famous garlic sauce that has a cult following in Western Sydney. A quarter chicken with chips starts at $19 — still remarkable value for charcoal chicken this good.</p>
+
+        <div class="pick">
+          <span class="price">A$9</span>
+          <strong>Mr Crackles — Pork Roll</strong>
+          <span>193 Oxford St, Darlinghurst</span>
+        </div>
+        <p>The pork roll at Mr Crackles ($9) is one of the best street food items in Sydney. Porchetta with crackling in a roll — that's it. Brilliant.</p>
+
+        <h3>The honest truth about eating for under $10 in Sydney</h3>
+        <p>Most of the sub-$10 options are snacks or single items rather than full meals. If you need a proper lunch, budget $12–$16 and you'll have a much wider range of genuinely satisfying meals to choose from. Mappen ($9.90) is the exception — a proper, filling meal at that price point is almost unheard of in 2026.</p>
+
+        <div class="article-footer">
+          <a href="/?priceMax=10">Browse restaurants under $10 →</a>
+          <span class="read-time">Updated February 2026</span>
+        </div>
+      </article>
+
+    </div><!-- /articles -->
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="sidebar-card">
+        <h3>Find Cheap Eats Near You</h3>
+        <p>Browse 60+ restaurants on our interactive Sydney map — filter by price, cuisine, and suburb.</p>
+        <a href="/" class="big-btn">Open the Map →</a>
+      </div>
+
+      <div class="ad-wrap">
+        <ins class="adsbygoogle"
+             style="display:block;width:100%;min-height:250px;"
+             data-ad-client="ca-pub-8267795564637907"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+
+      <div class="sidebar-card">
+        <h3>Suburbs Covered</h3>
+        <ul class="suburb-list">
+          <li>CBD & Haymarket <span class="count">18</span></li>
+          <li>Surry Hills <span class="count">10</span></li>
+          <li>Newtown <span class="count">8</span></li>
+          <li>Darlinghurst <span class="count">5</span></li>
+          <li>Cabramatta <span class="count">4</span></li>
+          <li>Bankstown <span class="count">4</span></li>
+          <li>Pyrmont <span class="count">4</span></li>
+          <li>Bondi Junction <span class="count">2</span></li>
+          <li>Hornsby <span class="count">1</span></li>
+          <li>Campbelltown <span class="count">1</span></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-card">
+        <h3>Browse by Cuisine</h3>
+        <ul class="suburb-list">
+          <li>Japanese & Ramen <span class="count">14</span></li>
+          <li>Korean <span class="count">14</span></li>
+          <li>Vietnamese <span class="count">10</span></li>
+          <li>Chinese <span class="count">5</span></li>
+          <li>Malaysian <span class="count">5</span></li>
+          <li>Thai <span class="count">4</span></li>
+          <li>Italian <span class="count">4</span></li>
+          <li>Cafe & Bakery <span class="count">4</span></li>
+          <li>Other <span class="count">6</span></li>
+        </ul>
+      </div>
+
+      <div class="ad-wrap">
+        <ins class="adsbygoogle"
+             style="display:block;width:100%;min-height:250px;"
+             data-ad-client="ca-pub-8267795564637907"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+
+    </aside>
+
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Cracker Eats &nbsp;·&nbsp; <a href="/about.html">About</a> &nbsp;·&nbsp; <a href="/blog.html">Blog</a> &nbsp;·&nbsp; <a href="mailto:hello@crackereatlist.com.au">Contact</a> &nbsp;·&nbsp; <a href="/">Privacy Policy</a></p>
+</footer>
+
+</body>
+</html>

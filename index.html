@@ -2008,7 +2008,11 @@ console.log("Firebase ready");
   if(hdr){
     var pp = document.createElement('div');
     pp.style.cssText='position:absolute;right:12px;top:50%;transform:translateY(-50%);z-index:300;';
-    pp.innerHTML='<a href="#" onclick="document.getElementById(\'privacy-modal\').style.display=\'block\';return false;" style="color:rgba(255,255,255,.5);font-size:11px;text-decoration:underline;font-family:Inter,sans-serif;">Privacy Policy</a>';
+    pp.innerHTML='<div style="display:flex;align-items:center;gap:14px;">'
+      +'<a href="/blog.html" style="color:rgba(255,255,255,.6);font-size:12px;font-weight:500;text-decoration:none;font-family:Inter,sans-serif;">Blog</a>'
+      +'<a href="/about.html" style="color:rgba(255,255,255,.6);font-size:12px;font-weight:500;text-decoration:none;font-family:Inter,sans-serif;">About</a>'
+      +'<a href="#" onclick="document.getElementById(\'privacy-modal\').style.display=\'block\';return false;" style="color:rgba(255,255,255,.4);font-size:11px;text-decoration:underline;font-family:Inter,sans-serif;">Privacy Policy</a>'
+      +'</div>';
     hdr.style.position='relative';
     hdr.appendChild(pp);
   }
