@@ -839,9 +839,13 @@ function _renderDrawer(r){window._currentRid=r.id;
   }).join(""):'<div style="padding:14px 16px;font-size:13px;color:var(--ink3);">No comments yet - be the first!</div>';
 
   // Google Maps directions URL using lat/lng for accuracy
-  var mapsUrl='https://www.google.com/maps/dir/?api=1&destination='+r.lat+','+r.lng+'&destination_place_id=&travelmode=walking';
-  var mapsQuery=encodeURIComponent(r.name+(r.address?', '+r.address:''));
-  var mapsUrlFull='https://www.google.com/maps/search/?api=1&query='+mapsQuery+'&query_place_id=';
+  // Build Google Maps directions URL:
+  // - If place_id exists (user-added via Google Places) → use it for exact business
+  // - Otherwise → search by name + address + Sydney for best match
+  var mapsDestQuery=encodeURIComponent(r.name+(r.address?', '+r.address:'')+', Sydney NSW');
+  var mapsUrl= r.place_id
+    ? 'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(r.name)+'&destination_place_id='+r.place_id+'&travelmode=walking'
+    : 'https://www.google.com/maps/dir/?api=1&destination='+mapsDestQuery+'&travelmode=walking';
 
   document.getElementById("drawer-inner").innerHTML=
     '<div class="d-head">'
