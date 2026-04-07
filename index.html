@@ -573,6 +573,21 @@ var CAT={
   Other:{color:"#4A4A46",bg:"#F3F2F0"}
 };
 var SUBURBS=["Haymarket","CBD","Surry Hills","The Rocks","Newtown","Pyrmont","Parramatta","Chatswood","Bondi Junction","Kingsford","Cabramatta","Hornsby","Marrickville","Bankstown","Chester Hill","Campbelltown","Darlinghurst","Mittagong"];
+// Order URLs — keyed by restaurant ID, always applied regardless of Firebase data
+var ORDER_URLS={
+  kb1:"https://krazybird.bitebusiness.com/",
+  kb2:"https://krazybird.bitebusiness.com/",
+  kb3:"https://krazybird.bitebusiness.com/",
+  kb4:"https://krazybird.bitebusiness.com/",
+  kb5:"https://krazybird.bitebusiness.com/",
+  kb6:"https://krazybird.bitebusiness.com/",
+  kb7:"https://krazybird.bitebusiness.com/",
+  kb8:"https://krazybird.bitebusiness.com/",
+  kb9:"https://krazybird.bitebusiness.com/",
+  kb10:"https://krazybird.bitebusiness.com/",
+  domori1:"https://domori.com.au/"
+};
+
 var SEED=[
   {id:"kb1",name:"Krazy Bird - World Square",suburb:"CBD",category:"Korean",address:"644 George St",lat:-33.8768,lng:151.2063,orderUrl:"https://krazybird.bitebusiness.com/",menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Half & Half 6pcs",price:22.9},{item:"Tteok-Bokki",price:18.9},{item:"Korean Corn Dog",price:9.9}],rating:4.2,votes:{up:88,down:12},chain:true,updatedAt:"2026-03-15"},
   {id:"kb2",name:"Krazy Bird - Kingsford",suburb:"Kingsford",category:"Korean",address:"522 Anzac Pde",lat:-33.9188,lng:151.2268,orderUrl:"https://krazybird.bitebusiness.com/",menus:[{item:"Boneless Chicken (per serve)",price:18.9},{item:"Chicken Mayo Rice Bowl",price:20.5},{item:"Buldak Loaded Chips",price:16.9},{item:"K-Dumpling 5pcs",price:12.9}],rating:4.3,votes:{up:71,down:8},chain:true,updatedAt:"2026-03-15"},
@@ -831,6 +846,8 @@ function showDrawer(r){
 function _renderDrawer(r){window._currentRid=r.id;
   // Defensive: ensure required fields exist (Firebase data may be incomplete)
   r.menus=r.menus||[];r.votes=r.votes||{up:0,down:0};r.rating=r.rating||0;r.likes=r.likes||0;r.dislikes=r.dislikes||0;
+  // Always apply order URL from lookup map (Firebase may not have this field)
+  var orderUrl=ORDER_URLS[r.id]||r.orderUrl||null;
   var m=CAT[r.category]||CAT.Other,mn=minP(r),fv=isFav(r.id),cmts=S.comments[r.id]||[];
   var rows=r.menus.map(function(mm,i){
     return '<div class="d-row" style="background:'+(i%2===0?"#fff":"var(--bg)")+'"><span style="font-size:13px;color:var(--ink2);">'+escHTML(mm.item)+'</span><span style="font-size:14px;font-weight:800;color:'+m.color+';">A$'+mm.price+'</span></div>';
@@ -879,8 +896,8 @@ function _renderDrawer(r){window._currentRid=r.id;
       // Visit buttons row
       +'<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">'
         // Order Pickup button — shown first & prominently if orderUrl exists
-        +(r.orderUrl
-          ? '<a href="'+escHTML(r.orderUrl)+'" target="_blank" rel="noopener" style="width:100%;display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 16px;border-radius:9px;background:#F5C842;color:#111;font-size:14px;font-weight:800;text-decoration:none;cursor:pointer;margin-bottom:2px;">'
+        +(orderUrl
+          ? '<a href="'+escHTML(orderUrl)+'" target="_blank" rel="noopener" style="width:100%;display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 16px;border-radius:9px;background:#F5C842;color:#111;font-size:14px;font-weight:800;text-decoration:none;cursor:pointer;margin-bottom:2px;">'
               +'🛍️ Order Pickup'
             +'</a>'
           : '')
