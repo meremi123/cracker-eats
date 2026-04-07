@@ -168,6 +168,7 @@ input,select,button{font-family:inherit;font-size:13px;}
 .mk:hover .mk-pill,.mk.sel .mk-pill{box-shadow:var(--sh1);}
 .mk.sel .mk-pill{background:#111;border-color:#111;}
 .mk-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.mk-badge{font-size:13px;line-height:1;flex-shrink:0;}
 .mk-name{font-size:11px;font-weight:600;color:#111;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .mk.sel .mk-name{color:#fff;}
 .mk-price{font-size:11px;font-weight:700;flex-shrink:0;}
@@ -769,9 +770,13 @@ window.initMap=function(){
   PinClass.prototype.onAdd=function(){
     var r=this.r,m=CAT[r.category]||CAT.Other,mn=minP(r),lbl=mn?"A$"+mn:"?";
     var name=r.name.length>18?r.name.slice(0,17)+"...":r.name;
+    var level=getLikeLevel(getLikes(r));
+    var badge=level
+      ? '<span class="mk-badge">'+level.badge+'</span>'
+      : '<span class="mk-dot" style="background:'+m.color+'"></span>';
     var el=document.createElement("div");
     el.className="mk";el.setAttribute("data-id",r.id);
-    el.innerHTML='<div class="mk-pill"><span class="mk-dot" style="background:'+m.color+'"></span><span class="mk-name">'+escHTML(name)+'</span><span class="mk-price" style="color:'+m.color+'">'+lbl+'</span></div><div class="mk-stem"></div><div class="mk-tip" style="background:'+m.color+'"></div>';
+    el.innerHTML='<div class="mk-pill">'+badge+'<span class="mk-name">'+escHTML(name)+'</span><span class="mk-price" style="color:'+m.color+'">'+lbl+'</span></div><div class="mk-stem"></div><div class="mk-tip" style="background:'+m.color+'"></div>';
     var id=r.id;
     el.addEventListener("click",function(e){e.stopPropagation();pickR(id);});
     this.el=el;MK_ELS[r.id]=el;
